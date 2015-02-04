@@ -11,12 +11,12 @@ public class Car {
                    , dir;
     private int wheelsAngle;
     private double maxWheelsAngle;
-    private int length,width;
-
+    private int length;
+    private int width;
     private int speed;
     private double maxSpeed;
-
-    CarControl carControl;
+    private CarControl carControl;
+    private double sharps[] = new double[3];
 
     public Car(Vector2f pos
             , Vector2f dir

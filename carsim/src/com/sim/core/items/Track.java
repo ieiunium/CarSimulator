@@ -7,18 +7,18 @@ import java.io.*;
  */
 public class Track {
     private boolean field[][];
-    private int n,m;
-    public Track(int n,int m){
-        this.n=n;
-        this.m=m;
+    private int height, width;
+    public Track(int width, int height){
+        this.height = height;
+        this.width = width;
         clear();
     }
     public void clear(){
-        field = new boolean[n][];
-        for(int i = 0; i<n; i++){
-            field[i] = new boolean[m];
-            for(int j = 0; j<n; j++){
-                field[i][j]=false;
+        field = new boolean[height][];
+        for(int y = 0; y< height; y++){
+            field[y] = new boolean[width];
+            for(int x = 0; x< width; x++){
+                field[y][x]=false;
             }
         }
     }
@@ -27,10 +27,10 @@ public class Track {
         OutputStream os = null;
         try {
             PrintWriter pw = new PrintWriter(fileName);
-            pw.println(n);
-            pw.println(m);
-            for(int i = 0; i<n; i++){
-                for(int j = 0; j<n; j++){
+            pw.println(height);
+            pw.println(width);
+            for(int i = 0; i< height; i++){
+                for(int j = 0; j< width; j++){
                     pw.print(field[i][j]?1:0);
                 }
                 pw.println();
@@ -46,12 +46,12 @@ public class Track {
         try {
             FileReader fr = new FileReader(f);
             BufferedReader br = new BufferedReader(fr);
-            n = Integer.parseInt(br.readLine());
-            m = Integer.parseInt(br.readLine());
+            height = Integer.parseInt(br.readLine());
+            width = Integer.parseInt(br.readLine());
             clear();
-            for(int i=0;i<n;i++){
+            for(int i=0;i< height;i++){
                 String buf = br.readLine();
-                for(int j = 0;j<m;j++){
+                for(int j = 0;j< width;j++){
                     field[i][j] = buf.charAt(j)=='1';
                 }
             }
@@ -62,12 +62,18 @@ public class Track {
         }
 
     }
-
-    public int getM() {
-        return m;
+    public boolean getPix(int i,int j){
+        return field[j][i];
+    }
+    public void setPix(int i,int j, boolean p){
+        field[j][i]=p;
     }
 
-    public int getN() {
-        return n;
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

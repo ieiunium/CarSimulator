@@ -2,7 +2,6 @@ package com.swing;
 
 import com.sim.core.items.Car;
 import com.sim.core.items.CarControls.CarControl;
-import com.swing.SimpleFrame;
 
 import javax.swing.*;
 import java.awt.*;

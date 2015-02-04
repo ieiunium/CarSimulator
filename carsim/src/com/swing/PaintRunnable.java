@@ -2,6 +2,8 @@ package com.swing;
 
 import com.sim.core.items.Car;
 import com.sim.core.Game;
+import com.sim.core.items.Track;
+
 import java.util.List;
 import javax.swing.*;
 import java.awt.*;
@@ -10,21 +12,24 @@ import java.awt.*;
  * Created by kirill-good on 4.2.15.
  */
 public class PaintRunnable implements Runnable{
+    public static final int DX =0;
+    public static final int DY =30;
     private volatile Game game;
     private volatile List<Car> cars;
     private JFrame frame;
+    private Track track;
     private long millisPerTicks = 100;
 
     public PaintRunnable(Game game, JFrame frame) {
         this.game = game;
         this.frame = frame;
         cars = this.game.getCars();
+        track = game.getTrack();
     }
 
     @Override
     public void run() {
         while(true){
-            //System.out.println("!");
             paint();
             try {
                 Thread.sleep(millisPerTicks,0);
@@ -36,16 +41,26 @@ public class PaintRunnable implements Runnable{
 
     public void paint(){
         Graphics g = frame.getGraphics();
-        g.clearRect(0,0,frame.getWidth(),frame.getHeight());
+        //g.clearRect(0,0,frame.getWidth(),frame.getHeight());
+        for(int i = 0; i<track.getWidth();i++){
+            for(int j = 0; j<track.getHeight();j++){
+                if(track.getPix(i,j)){
+                    g.setColor(Color.BLACK);
+                }else{
+                    g.setColor(Color.WHITE);
+                }
+                g.drawOval(i+DX,j+DY,1,1);
+            }
+        }
         for(Car car:cars){
             paintCar(g,car);
         }
     }
     public static void paintCar(Graphics g,Car car){
-        int x1 = (int)car.getPos().getX();
-        int y1 = (int)car.getPos().getY();
-        int x2 = (int)car.getHeadX();
-        int y2 = (int)car.getHeadY();
+        int x1 = (int)car.getPos().getX() + DX;
+        int y1 = (int)car.getPos().getY() + DY;
+        int x2 = (int)car.getHeadX() + DX;
+        int y2 = (int)car.getHeadY() + DY;
         g.drawLine(x1,y1,x2,y2);
     }
 }

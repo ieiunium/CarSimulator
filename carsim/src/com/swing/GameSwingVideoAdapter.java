@@ -9,13 +9,14 @@ import javax.swing.*;
  */
 public class GameSwingVideoAdapter {
     private volatile Game game;
-    private JFrame mainFrame = new SimpleFrame();
+    private JFrame mainFrame = new JFrame();
     private Thread mainThread;
     private PaintRunnable paintRunnable;
 
     public GameSwingVideoAdapter(Game game){
         this.game = game;
-        mainFrame.setSize(640,480);
+        mainFrame.setSize(game.getTrack().getWidth(),game.getTrack().getHeight()+paintRunnable.DY);
+
         mainFrame.setVisible(true);
     }
 

@@ -15,13 +15,14 @@ public class Game{
 
 
     private final List<Car> cars = new ArrayList<Car>();
-    private Track track = new Track(100,100);
+    private Track track;
     private Thread mainThread;
 
     public Game(){
 
     }
     public void startSimulation(){
+
         mainThread = new Thread(new SimulationRunnable(this));
         mainThread.start();
     }
@@ -30,19 +31,33 @@ public class Game{
         mainThread.start();
     }
     public void tick(){
-        for(Car c:cars){
-            c.tick();
+        for(Car car:cars){
+            if(!collision(car)) {
+                car.tick();
+            }
         }
+    }
+
+    public boolean collision(Car car){
+        int x1 = (int)car.getPos().getX();
+        int y1 = (int)car.getPos().getY();
+        int x2 = (int)car.getHeadX();
+        int y2 = (int)car.getHeadY();
+        boolean res=false;
+        if( track.getPix(x1,y1) || track.getPix(x2,y2)){
+            res=true;
+        }
+        return res;
+    }
+
+    public Track getTrack() {
+        return track;
+    }
+    public void setTrack(Track track) {
+        this.track = track;
     }
     public void addCar(Car car){
         cars.add(car);
-    }
-
-    public int getTrackX() {
-        return track.getM();
-    }
-    public int getTrackY() {
-        return track.getN();
     }
     public List<Car> getCars() {
         return cars;
