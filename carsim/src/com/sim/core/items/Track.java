@@ -1,14 +1,22 @@
 package com.sim.core.items;
 
+import com.sim.core.interfaces.OnlyReadableTrack;
+
 import java.io.*;
 
 /**
  * Created by kirill-good on 4.2.15.
  */
-public class Track {
+public class Track implements OnlyReadableTrack {
     private boolean field[][];
     private int height, width;
     public Track(int width, int height){
+        if(width<1){
+            width=640;
+        }
+        if(height<1){
+            height=480;
+        }
         this.height = height;
         this.width = width;
         clear();
@@ -31,7 +39,7 @@ public class Track {
             pw.println(width);
             for(int i = 0; i< height; i++){
                 for(int j = 0; j< width; j++){
-                    pw.print(field[i][j]?1:0);
+                    pw.print(field[i][j] ? 1 : 0);
                 }
                 pw.println();
             }
@@ -62,17 +70,25 @@ public class Track {
         }
 
     }
+    @Override
     public boolean getPix(int i,int j){
-        return field[j][i];
-    }
-    public void setPix(int i,int j, boolean p){
-        field[j][i]=p;
+        if(i>=0 && j>=0 && i<width && j<height) {
+            return field[j][i];
+        }else{
+            return false;
+        }
     }
 
+    public void setPix(int i,int j, boolean p){
+        if(i>=0 && j>=0 && i<width && j<height) {
+            field[j][i] = p;
+        }
+    }
+    @Override
     public int getWidth() {
         return width;
     }
-
+    @Override
     public int getHeight() {
         return height;
     }

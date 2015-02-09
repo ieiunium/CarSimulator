@@ -1,6 +1,6 @@
 package com.swing;
 
-import com.sim.core.Game;
+import com.sim.simulation.Game;
 
 import javax.swing.*;
 
@@ -25,5 +25,11 @@ public class GameSwingVideoAdapter {
         mainThread = new Thread(paintRunnable);
         mainThread.start();
     }
-
+    public void kill(){
+        stop();
+        mainFrame.dispose();
+    }
+    public void stop(){
+        mainThread.stop();
+    }
 }

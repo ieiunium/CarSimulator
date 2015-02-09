@@ -1,23 +1,30 @@
 package com.sim.core.items;
 
-import com.sim.core.items.CarControls.CarControl;
+import com.sim.core.interfaces.CarControl;
+import com.sim.core.interfaces.OnlyReadableTrack;
+import com.sim.core.items.CarControls.SimpleNeuralNetworkControl;
+import com.sim.core.items.Sensors.Sharp;
+import com.sim.core.items.Sensors.SharpManager;
 import com.sim.core.items.math.Vector2f;
 
 /**
  * Created by kirill-good on 3.2.15.
  */
-public class Car {
-    private Vector2f pos
-                   , dir;
-    private int wheelsAngle;
-    private double maxWheelsAngle;
-    private int length;
-    private int width;
-    private int speed;
-    private double maxSpeed;
-    private CarControl carControl;
-    private double sharps[] = new double[3];
+public class Car{
+    private Vector2f pos = new Vector2f(0,0)
+                   , dir = new Vector2f(1,0);
+    private int wheelsAngle=0;
+    private double maxWheelsAngle=Math.PI/3;
+    private int length=50;
+    private int width=10;
+    private int speed=0;
+    private double maxSpeed=5;
+    private CarControl carControl = new SimpleNeuralNetworkControl();;
+    private SharpManager sharpManager = new SharpManager();
+    private OnlyReadableTrack track = null;
+    public Car(){
 
+    }
     public Car(Vector2f pos
             , Vector2f dir
             , double maxWheelsAngle
@@ -25,18 +32,33 @@ public class Car {
             , int length
             , int width
             , CarControl carControl) {
-
-        this.pos = pos;
-        this.dir = dir;
+        if(pos!=null){
+            this.pos = pos;
+        }
+        if(dir!=null){
+            this.dir = dir;
+        }
         this.dir.normalization();
-        this.maxWheelsAngle = maxWheelsAngle;
-        this.maxSpeed=maxSpeed;
-        this.length = length;
-        this.width = width;
+        if(maxWheelsAngle>0){
+            this.maxWheelsAngle = maxWheelsAngle;
+        }
+        if(maxSpeed>0) {
+            this.maxSpeed = maxSpeed;
+        }
+        if(length>0) {
+            this.length = length;
+        }
+        if(width>0) {
+            this.width = width;
+        }
         this.carControl=carControl;
+        if(carControl==null) {
+            this.carControl = new SimpleNeuralNetworkControl();
+        }
     }
 
     public void tick(){
+        sharpManager.tick(track,pos,dir,length);
         carControl.tick(this);
         double R = length/Math.tan(Math.abs(wheelsAngle*maxWheelsAngle/100.0));
         if(!( Double.isNaN(R) || Double.isInfinite(R) ) ){
@@ -149,5 +171,21 @@ public class Car {
     }
     public double getHeadY() {
         return pos.getY()+dir.getY()*length;
+    }
+    public void addSharp(Sharp sharp){
+        sharpManager.addSharp(sharp);
+    }
+    public void removeSharp(Sharp sharp){
+        sharpManager.removeSharp(sharp);
+    }
+    public Sharp[] getSharps(){
+        return sharpManager.getSharps();
+    }
+    public OnlyReadableTrack getTrack() {
+        return track;
+    }
+
+    public void setTrack(OnlyReadableTrack track) {
+        this.track = track;
     }
 }

@@ -45,7 +45,6 @@ public class TrackEditor {
         public void mouseClicked(MouseEvent mouseEvent) {
 
         }
-        private volatile boolean drawing=false;
         @Override
         public void mousePressed(MouseEvent mouseEvent) {
             boolean color=true;
@@ -124,8 +123,5 @@ public class TrackEditor {
 
     public Track getTrack() {
         return track;
-    }
-    public void setTrack(Track track) {
-        this.track = track;
     }
 }

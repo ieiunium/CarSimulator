@@ -1,7 +1,7 @@
 package com.swing;
 
 import com.sim.core.items.Car;
-import com.sim.core.items.CarControls.CarControl;
+import com.sim.core.interfaces.CarControl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +21,6 @@ public class SimpleCarControl implements CarControl {
     private BListener listener2 = new BListener(b2,sl2);
 
     public SimpleCarControl() {
-
         frame.setSize(300,300);
         frame.setLayout(new GridLayout(2, 2));
         b1.addActionListener(listener1);

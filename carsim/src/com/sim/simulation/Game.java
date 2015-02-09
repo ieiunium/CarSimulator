@@ -1,9 +1,7 @@
-package com.sim.core;
+package com.sim.simulation;
 
 import com.sim.core.items.Car;
 import com.sim.core.items.Track;
-import com.sim.simulation.RealTimeSimulationRunnable;
-import com.sim.simulation.SimulationRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,15 +24,27 @@ public class Game{
         mainThread = new Thread(new SimulationRunnable(this));
         mainThread.start();
     }
+    public void waitEnd(){
+        try {
+            mainThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     public void startRealTimeSimulation(){
         mainThread = new Thread(new RealTimeSimulationRunnable(this));
         mainThread.start();
     }
     public void tick(){
+        boolean carsAreDead = true;
         for(Car car:cars){
             if(!collision(car)) {
                 car.tick();
+                carsAreDead = false;
             }
+        }
+        if(carsAreDead){
+            mainThread.stop();
         }
     }
 
@@ -55,9 +65,13 @@ public class Game{
     }
     public void setTrack(Track track) {
         this.track = track;
+        for(Car car:cars){
+            car.setTrack(this.track);
+        }
     }
     public void addCar(Car car){
         cars.add(car);
+        car.setTrack(this.track);
     }
     public List<Car> getCars() {
         return cars;

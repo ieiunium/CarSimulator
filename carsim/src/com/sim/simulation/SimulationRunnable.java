@@ -1,7 +1,5 @@
 package com.sim.simulation;
 
-import com.sim.core.Game;
-
 /**
  * Created by kirill-good on 4.2.15.
  */

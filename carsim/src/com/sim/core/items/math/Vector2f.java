@@ -25,7 +25,17 @@ public class Vector2f{
         this.x = x;
         this.y = y;
     }
-
+    public void setXY(double x,double y){
+        this.x = x;
+        this.y = y;
+    }
+    public void setXY(Vector2f vector){
+        this.x = vector.x;
+        this.y = vector.y;
+    }
+    public Vector2f getCopy(){
+        return new Vector2f(x, y);
+    }
     public double getY() {
         return y;
     }
