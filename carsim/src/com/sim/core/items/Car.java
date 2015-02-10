@@ -2,10 +2,10 @@ package com.sim.core.items;
 
 import com.sim.core.interfaces.CarControl;
 import com.sim.core.interfaces.OnlyReadableTrack;
-import com.sim.core.items.CarControls.SimpleNeuralNetworkControl;
-import com.sim.core.items.Sensors.Sharp;
-import com.sim.core.items.Sensors.SharpManager;
-import com.sim.core.items.math.Vector2f;
+import com.sim.core.CarControls.SimpleNeuralNetworkControl;
+import com.sim.core.Sensors.Sharp;
+import com.sim.core.Sensors.SharpManager;
+import com.sim.core.math.Vector2f;
 
 /**
  * Created by kirill-good on 3.2.15.
@@ -60,7 +60,10 @@ public class Car{
     public void tick(){
         sharpManager.tick(track,pos,dir,length);
         carControl.tick(this);
-        double R = length/Math.tan(Math.abs(wheelsAngle*maxWheelsAngle/100.0));
+        double k = 0.2;
+        double skidding = (k + (1-k) * Math.exp(Math.abs(speed)/100.0));
+        double R = ( length/Math.tan(Math.abs(wheelsAngle*maxWheelsAngle/100.0)) ) * skidding;
+        //System.out.println(skidding);
         if(!( Double.isNaN(R) || Double.isInfinite(R) ) ){
 
             dir.normalization();
@@ -70,8 +73,7 @@ public class Car{
 
             double circleX = pos.getX() + circleDirX;
             double circleY = pos.getY() + circleDirY;
-            /*
-            for(double t=0;t<Math.PI;t+=0.1){
+            /*for(double t=0;t<Math.PI;t+=0.1){
                 g.drawOval((int)(circleX+R*Math.cos(t)),(int)(circleY+R*Math.sin(t)),1,1);
                 g.drawOval((int)(circleX-R*Math.cos(t)),(int)(circleY-R*Math.sin(t)),1,1);
             }*/
@@ -101,7 +103,11 @@ public class Car{
     }
 
     public void setSpeed(int speed) {
-        this.speed = speed;
+        if(Math.abs(speed)>100) {
+            this.speed = Integer.signum(speed) * 100;
+        }else{
+            this.speed = speed;
+        }
     }
 
     public int getWheelsAngle() {
@@ -110,7 +116,7 @@ public class Car{
 
     public void setWheelsAngle(int wheelsAngle) {
         if(Math.abs(wheelsAngle)>100){
-            this.wheelsAngle = 100;
+            this.wheelsAngle = Integer.signum(wheelsAngle) * 100;
         }else {
             this.wheelsAngle = wheelsAngle;
         }

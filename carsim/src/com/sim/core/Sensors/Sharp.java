@@ -1,6 +1,4 @@
-package com.sim.core.items.Sensors;
-
-import com.sim.core.interfaces.OnlyReadableTrack;
+package com.sim.core.Sensors;
 
 /**
  * Created by kirill-good on 6.2.15.

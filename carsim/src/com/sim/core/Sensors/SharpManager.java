@@ -1,8 +1,7 @@
-package com.sim.core.items.Sensors;
+package com.sim.core.Sensors;
 
 import com.sim.core.interfaces.OnlyReadableTrack;
-import com.sim.core.items.Sensors.Sharp;
-import com.sim.core.items.math.Vector2f;
+import com.sim.core.math.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +48,9 @@ public class SharpManager {
                     break;
                 }
             }
-            System.out.println(s.value+" "+s.angle);
+            //System.out.println(s.value+" "+s.angle);
         }
-        System.out.println();
+        //System.out.println();
     }
     protected void makeArray(){
         if(arrayOfSharps.length != sharps.size()){

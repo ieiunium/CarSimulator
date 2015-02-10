@@ -1,4 +1,4 @@
-package com.sim.core.items.math;
+package com.sim.core.math;
 
 /**
  * Created by kirill-good on 3.2.15.
