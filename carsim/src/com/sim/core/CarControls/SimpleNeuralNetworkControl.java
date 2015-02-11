@@ -9,10 +9,20 @@ import com.sim.core.math.neural.NeuralNetwork;
  * Created by kirill-good on 5.2.15.
  */
 public class SimpleNeuralNetworkControl implements CarControl {
-    private NeuralNetwork nn;
-    private double in[];
-    private double out[];
+    protected NeuralNetwork nn;
+    protected double in[];
+    protected double out[];
+    public int numOfGens(){
+        return nn.numOfGens();
+    }
+    public double[] getGens(){
+        return nn.getGens();
+    }
+    public void setGens(double[] gens){
+        nn.setGens(gens);
+    }
     public SimpleNeuralNetworkControl(){
+
         int []config={3,2};
         nn = new NeuralNetwork(config);
         in = new double[3];

@@ -20,8 +20,11 @@ public class Game{
 
     }
     public void startSimulation(){
-
         mainThread = new Thread(new SimulationRunnable(this));
+        mainThread.start();
+    }
+    public void startSimulation(int tickLimit){
+        mainThread = new Thread(new SimulationRunnable(this,tickLimit));
         mainThread.start();
     }
     public void waitEnd(){
@@ -33,6 +36,10 @@ public class Game{
     }
     public void startRealTimeSimulation(){
         mainThread = new Thread(new RealTimeSimulationRunnable(this));
+        mainThread.start();
+    }
+    public void startRealTimeSimulation(int tickLimit){
+        mainThread = new Thread(new RealTimeSimulationRunnable(this, tickLimit));
         mainThread.start();
     }
     public void tick(){

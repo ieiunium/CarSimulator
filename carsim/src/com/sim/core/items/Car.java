@@ -22,6 +22,7 @@ public class Car{
     private CarControl carControl = new SimpleNeuralNetworkControl();;
     private SharpManager sharpManager = new SharpManager();
     private OnlyReadableTrack track = null;
+    private double leftOfPath = 100;
     public Car(){
 
     }
@@ -60,10 +61,16 @@ public class Car{
     public void tick(){
         sharpManager.tick(track,pos,dir,length);
         carControl.tick(this);
+        double realSpeed = speed*maxSpeed/100.0;
+        if(leftOfPath < Math.abs(realSpeed)){
+            realSpeed = leftOfPath;
+        }
+
+        leftOfPath -= Math.abs(realSpeed);
         double k = 0.2;
         double skidding = (k + (1-k) * Math.exp(Math.abs(speed)/100.0));
         double R = ( length/Math.tan(Math.abs(wheelsAngle*maxWheelsAngle/100.0)) ) * skidding;
-        //System.out.println(skidding);
+        //System.out.println(leftOfPath);
         if(!( Double.isNaN(R) || Double.isInfinite(R) ) ){
 
             dir.normalization();
@@ -78,16 +85,24 @@ public class Car{
                 g.drawOval((int)(circleX-R*Math.cos(t)),(int)(circleY-R*Math.sin(t)),1,1);
             }*/
             Vector2f tmp = new Vector2f(-circleDirX,-circleDirY);
-            double turnAngle = (speed*maxSpeed/100)/R;
+            double turnAngle = (realSpeed)/R;
             tmp.turn(sign * turnAngle);
             pos.setX(circleX+tmp.getX());
             pos.setY(circleY+tmp.getY());
             dir.turn(sign * turnAngle);
         }else{
-            pos.setX(pos.getX() + (speed*maxSpeed/100) * dir.getX());
-            pos.setY(pos.getY() + (speed*maxSpeed/100) * dir.getY());
+            pos.setX(pos.getX() + (realSpeed) * dir.getX());
+            pos.setY(pos.getY() + (realSpeed) * dir.getY());
         }
 
+    }
+
+    public double getLeftOfPath() {
+        return leftOfPath;
+    }
+
+    public void setLeftOfPath(double leftOfPath) {
+        this.leftOfPath = leftOfPath;
     }
 
     public CarControl getCarControl() {
