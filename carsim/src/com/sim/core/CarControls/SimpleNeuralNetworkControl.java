@@ -23,7 +23,7 @@ public class SimpleNeuralNetworkControl implements CarControl {
     }
     public SimpleNeuralNetworkControl(){
 
-        int []config={3,2};
+        int []config={3,5,2};
         nn = new NeuralNetwork(config);
         in = new double[3];
         out = new double[2];

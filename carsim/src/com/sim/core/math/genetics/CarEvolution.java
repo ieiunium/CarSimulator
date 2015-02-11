@@ -62,7 +62,8 @@ public class CarEvolution extends ChromosomeManager{
             chromosomes = tmp;
         }
 
-
+    }
+    public void test1(List<Chromosome> list){
         Car car = new Car();
         car.setMaxWheelsAngle(Math.PI / 3);
         car.setMaxSpeed(2);
@@ -82,13 +83,44 @@ public class CarEvolution extends ChromosomeManager{
         adapter.startPaint();
 
         for(Chromosome i:list){
-            car.setLeftOfPath(2000);
+            car.setLeftOfPath(200000);
             car.setPos(50,50);
-            car.setDir(0, 1);
+            car.setDir(1, 1);
             simpleNeuralNetworkControl.setGens(i.gens);
             game.startRealTimeSimulation(1500);
             game.waitEnd();
         }
+    }
+
+    public void test2(List<Chromosome> list){
+/*
+        Track tr = new Track(600,300);
+        tr.loadFromFile("track.map");
+        Game game = new Game();
+        game.setTrack(tr);
+
+        GameSwingVideoAdapter adapter = new GameSwingVideoAdapter(game);
+        adapter.startPaint();
+
+        for(Chromosome i:list){
+            Car car = new Car();
+            car.setMaxWheelsAngle(Math.PI / 3);
+            car.setMaxSpeed(2);
+            car.setLength(50);
+            car.setWidth(3);
+            SimpleNeuralNetworkControl simpleNeuralNetworkControl = new SimpleNeuralNetworkControl();
+            car.setCarControl(simpleNeuralNetworkControl);
+            car.addSharp(new Sharp(5, 110, -Math.PI / 4));
+            car.addSharp(new Sharp(5,110,0));
+            car.addSharp(new Sharp(5,110,+Math.PI/4));
+            car.setLeftOfPath(200000);
+            car.setPos(50,50);
+            car.setDir(1, 1);
+            simpleNeuralNetworkControl.setGens(i.gens);
+            game.addCar(car);
+            game.startRealTimeSimulation(1500);
+            game.waitEnd();
+        }*/
     }
 }
 
