@@ -18,7 +18,7 @@ public class PaintRunnable implements Runnable{
     private volatile List<Car> cars;
     private JFrame frame;
     private Track track;
-    private long millisPerTicks = 100;
+    private long millisPerTicks = 20;
 
     public PaintRunnable(Game game, JFrame frame) {
         this.game = game;

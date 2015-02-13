@@ -5,6 +5,7 @@ package com.sim.core.math.neural;
  */
 public class ActivationFunction{
     public double F(double x){
-        return x;
+        //return x;
+        return (2/(1+Math.exp(-x)))-1;
     }
 }

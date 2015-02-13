@@ -61,7 +61,7 @@ public class CarEvolution extends ChromosomeManager{
             children = chromosomes;
             chromosomes = tmp;
         }
-
+        test2(list);
     }
     public void test1(List<Chromosome> list){
         Car car = new Car();
@@ -90,10 +90,11 @@ public class CarEvolution extends ChromosomeManager{
             game.startRealTimeSimulation(1500);
             game.waitEnd();
         }
+
     }
 
     public void test2(List<Chromosome> list){
-/*
+        System.out.println(list.size());
         Track tr = new Track(600,300);
         tr.loadFromFile("track.map");
         Game game = new Game();
@@ -110,17 +111,18 @@ public class CarEvolution extends ChromosomeManager{
             car.setWidth(3);
             SimpleNeuralNetworkControl simpleNeuralNetworkControl = new SimpleNeuralNetworkControl();
             car.setCarControl(simpleNeuralNetworkControl);
-            car.addSharp(new Sharp(5, 110, -Math.PI / 4));
-            car.addSharp(new Sharp(5,110,0));
-            car.addSharp(new Sharp(5,110,+Math.PI/4));
+            car.addSharp(new Sharp(5, 200, -Math.PI / 4));
+            car.addSharp(new Sharp(5,200,0));
+            car.addSharp(new Sharp(5,200,+Math.PI/4));
             car.setLeftOfPath(200000);
             car.setPos(50,50);
             car.setDir(1, 1);
             simpleNeuralNetworkControl.setGens(i.gens);
             game.addCar(car);
-            game.startRealTimeSimulation(1500);
-            game.waitEnd();
-        }*/
+
+        }
+        game.startRealTimeSimulation(10000);
+        game.waitEnd();
     }
 }
 

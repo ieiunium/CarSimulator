@@ -34,7 +34,7 @@ public class Main {
         game.setTrack(tr);
         game.addCar(car);
         CarEvolution carEvolution = new CarEvolution(car,game,1000, simpleNeuralNetworkControl);
-        carEvolution.evolution(40);
+        carEvolution.evolution(10);
     }
     public static void test(){
         Car car = new Car();
