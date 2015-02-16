@@ -6,7 +6,6 @@ import com.sim.core.items.Car;
 import com.sim.core.items.Track;
 import com.sim.simulation.Game;
 import com.swing.GameSwingVideoAdapter;
-import com.swing.SimpleCarControl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,10 +15,13 @@ import java.util.List;
  * Created by kirill-good on 11.2.15.
  */
 public class CarEvolution extends ChromosomeManager{
+    private List<Chromosome> bestCarChromosome = new ArrayList<Chromosome>();
+    private Car etalonCar;
 
     public CarEvolution(Car car, Game game, int numberOfChromosome, SimpleNeuralNetworkControl simpleNeuralNetworkControl){
         super(numberOfChromosome, simpleNeuralNetworkControl.numOfGens());
         CarFitness fitnessFunction = new CarFitness();
+        this.etalonCar = car;
         fitnessFunction.car = car;
         fitnessFunction.game = game;
         fitnessFunction.simpleNeuralNetworkControl = simpleNeuralNetworkControl;
@@ -29,17 +31,13 @@ public class CarEvolution extends ChromosomeManager{
     }
 
     public void evolution(int steps){
-
-        List<Chromosome> list = new ArrayList<Chromosome>();
-
-
         Chromosome children[] = chromosomes.clone();
         for(int step = 0; step < steps; step++) {
 
             for(Chromosome i: chromosomes){
                 i.calcFitness();
-                if(i.fitness()>450){
-                    list.add(i.getCopy());
+                if(i.fitness()>750){
+                    bestCarChromosome.add(i.getCopy());
                 }
             }
             Arrays.sort(chromosomes);
@@ -61,23 +59,22 @@ public class CarEvolution extends ChromosomeManager{
             children = chromosomes;
             chromosomes = tmp;
         }
-        test2(list);
+
     }
-    public void test1(List<Chromosome> list){
+    @Deprecated
+    public void showOne(List<Chromosome> list,Track track){
         Car car = new Car();
         car.setMaxWheelsAngle(Math.PI / 3);
         car.setMaxSpeed(2);
-        car.setLength(50);
+        car.setLength(30);
         car.setWidth(3);
         SimpleNeuralNetworkControl simpleNeuralNetworkControl = new SimpleNeuralNetworkControl();
         car.setCarControl(simpleNeuralNetworkControl);
-        car.addSharp(new Sharp(5, 110, -Math.PI / 4));
-        car.addSharp(new Sharp(5,110,0));
-        car.addSharp(new Sharp(5,110,+Math.PI/4));
-        Track tr = new Track(600,300);
-        tr.loadFromFile("track.map");
+        car.addSharp(new Sharp(5, 80, -Math.PI / 4));
+        car.addSharp(new Sharp(5,80,0));
+        car.addSharp(new Sharp(5,80,+Math.PI/4));
         Game game = new Game();
-        game.setTrack(tr);
+        game.setTrack(track);
         game.addCar(car);
         GameSwingVideoAdapter adapter = new GameSwingVideoAdapter(game);
         adapter.startPaint();
@@ -85,7 +82,7 @@ public class CarEvolution extends ChromosomeManager{
         for(Chromosome i:list){
             car.setLeftOfPath(200000);
             car.setPos(50,50);
-            car.setDir(1, 1);
+            car.setDir(1, 0);
             simpleNeuralNetworkControl.setGens(i.gens);
             game.startRealTimeSimulation(1500);
             game.waitEnd();
@@ -93,12 +90,11 @@ public class CarEvolution extends ChromosomeManager{
 
     }
 
-    public void test2(List<Chromosome> list){
+    public void showAll(List<Chromosome> list,Track track){
         System.out.println(list.size());
-        Track tr = new Track(600,300);
-        tr.loadFromFile("track.map");
+
         Game game = new Game();
-        game.setTrack(tr);
+        game.setTrack(track);
 
         GameSwingVideoAdapter adapter = new GameSwingVideoAdapter(game);
         adapter.startPaint();
@@ -111,9 +107,36 @@ public class CarEvolution extends ChromosomeManager{
             car.setWidth(3);
             SimpleNeuralNetworkControl simpleNeuralNetworkControl = new SimpleNeuralNetworkControl();
             car.setCarControl(simpleNeuralNetworkControl);
-            car.addSharp(new Sharp(5, 200, -Math.PI / 4));
-            car.addSharp(new Sharp(5,200,0));
-            car.addSharp(new Sharp(5,200,+Math.PI/4));
+            car.addSharp(new Sharp(5, 80, -Math.PI / 4));
+            car.addSharp(new Sharp(5,80,0));
+            car.addSharp(new Sharp(5,80,+Math.PI/4));
+            car.setLeftOfPath(200000);
+            car.setPos(50,200);
+            car.setDir(0, 1);
+            simpleNeuralNetworkControl.setGens(i.gens);
+            game.addCar(car);
+
+        }
+        game.startRealTimeSimulation(10000);
+        game.waitEnd();
+    }
+
+    public void removeCrashed(List<Chromosome> list,Track track){
+        System.out.println(list.size());
+        Game game = new Game();
+        game.setTrack(track);
+
+        for(Chromosome i:list){
+            Car car = new Car();
+            car.setMaxWheelsAngle(Math.PI / 3);
+            car.setMaxSpeed(2);
+            car.setLength(50);
+            car.setWidth(3);
+            SimpleNeuralNetworkControl simpleNeuralNetworkControl = new SimpleNeuralNetworkControl();
+            car.setCarControl(simpleNeuralNetworkControl);
+            car.addSharp(new Sharp(5, 80, -Math.PI / 4));
+            car.addSharp(new Sharp(5,80,0));
+            car.addSharp(new Sharp(5,80,+Math.PI/4));
             car.setLeftOfPath(200000);
             car.setPos(50,50);
             car.setDir(1, 1);
@@ -121,8 +144,29 @@ public class CarEvolution extends ChromosomeManager{
             game.addCar(car);
 
         }
-        game.startRealTimeSimulation(10000);
+        game.startSimulation(10000);
         game.waitEnd();
+        List<Car> l = game.getCars();
+        list.clear();
+        for(Car i:l){
+            if(game.collision(i)){
+
+            }else{
+                double p[] = ((SimpleNeuralNetworkControl) i.getCarControl()).getGens();
+                Chromosome chromosome = new Chromosome(p.length);
+                chromosome.gens = p;
+                list.add(chromosome);
+            }
+        }
+
+    }
+
+    public List<Chromosome> getCopyOfBestCarChromosome() {
+        List<Chromosome> res = new ArrayList<Chromosome>();
+        for(Chromosome i:bestCarChromosome){
+            res.add(i.getCopy());
+        }
+        return res;
     }
 }
 
@@ -134,7 +178,7 @@ class CarFitness extends FitnessFunction{
         simpleNeuralNetworkControl.setGens(chromosome.gens);
         car.setPos(50,50);
         car.setDir(1, 0);
-        car.setLeftOfPath(530);
+        car.setLeftOfPath(1100);
         car.setSpeed(0);
         car.setWheelsAngle(0);
         double x = car.getPos().getX();
