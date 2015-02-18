@@ -6,7 +6,7 @@ package com.sim.core.math.neural;
 public class NeuralNetwork {
     private NeuralLayer layer[];
     private double []gens;
-
+    protected NeuralNetwork(){}
     public NeuralNetwork(int config[]){
         layer = new NeuralLayer[config.length-1];
         for(int i=0;i<config.length-1;i++){
@@ -14,6 +14,7 @@ public class NeuralNetwork {
         }
         gens = new double[numOfGens()];
     }
+
     public int numOfGens(){
         int res = 0;
         for(NeuralLayer i: layer){

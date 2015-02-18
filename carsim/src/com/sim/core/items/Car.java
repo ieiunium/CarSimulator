@@ -7,10 +7,14 @@ import com.sim.core.Sensors.Sharp;
 import com.sim.core.Sensors.SharpManager;
 import com.sim.core.math.Vector2f;
 
+import java.awt.*;
+
 /**
  * Created by kirill-good on 3.2.15.
  */
 public class Car{
+    private static int carId=0;
+    private int id = carId++;
     private Vector2f pos = new Vector2f(0,0)
                    , dir = new Vector2f(1,0);
     private int wheelsAngle=0;
@@ -208,5 +212,18 @@ public class Car{
 
     public void setTrack(OnlyReadableTrack track) {
         this.track = track;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void paint(Graphics g,int DX,int DY){
+        int x1 = (int)this.getPos().getX() + DX;
+        int y1 = (int)this.getPos().getY() + DY;
+        int x2 = (int)this.getHeadX() + DX;
+        int y2 = (int)this.getHeadY() + DY;
+        g.drawString(String.valueOf(id),(x1+x2)/2,(y1+y2)/2);
+        g.drawLine(x1,y1,x2,y2);
     }
 }

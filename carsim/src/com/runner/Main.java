@@ -41,7 +41,9 @@ public class Main {
         List<Chromosome> chromosomeList = carEvolution.getCopyOfBestCarChromosome();
         tr.loadFromFile("megatrack.map");
         carEvolution.removeCrashed(chromosomeList,tr);
-        carEvolution.showAll(chromosomeList,tr);
+
+        carEvolution.showAll2(chromosomeList,tr);
+
     }
     public static void test(){
         Track tr = new Track(1000,800);

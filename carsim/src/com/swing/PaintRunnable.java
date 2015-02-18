@@ -53,29 +53,7 @@ public class PaintRunnable implements Runnable{
             }
         }
         for(Car car:cars){
-            paintCar(g,car);
+            car.paint(g,DX,DY);
         }
-    }
-    public static void paintCar(Graphics g,Car car){
-        int x1 = (int)car.getPos().getX() + DX;
-        int y1 = (int)car.getPos().getY() + DY;
-        int x2 = (int)car.getHeadX() + DX;
-        int y2 = (int)car.getHeadY() + DY;
-        g.drawLine(x1,y1,x2,y2);
-        /*Sharp[] sharps = car.getSharps();
-        double x0 = car.getPos().getX() + (car.getLength() / 2) * car.getDir().getX();
-        double y0 = car.getPos().getY() + (car.getLength() / 2) * car.getDir().getY();
-        Vector2f vector = new Vector2f(0,0);
-        for(Sharp s: sharps){
-            vector.setXY(car.getDir());
-            vector.turn(s.angle);
-            vector.normalization();
-
-
-            int x = (int)( x0 + s.getValue() * vector.getX() );
-            int y = (int)( y0 + s.getValue() * vector.getY() );
-
-            g.drawLine((int)x0+ DX,(int)y0 + DY,x+ DX,y + DY);
-        }*/
     }
 }
