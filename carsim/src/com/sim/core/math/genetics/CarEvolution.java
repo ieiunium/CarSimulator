@@ -4,6 +4,7 @@ import com.sim.core.CarControls.SimpleIntegerNeuralNetworkControl;
 import com.sim.core.CarControls.SimpleNeuralNetworkControl;
 import com.sim.core.Sensors.Sharp;
 import com.sim.core.items.Car;
+import com.sim.core.items.Tank;
 import com.sim.core.items.Track;
 import com.sim.core.math.neural.integer.IntegerNeuralNetwork;
 import com.sim.simulation.Game;
@@ -11,6 +12,7 @@ import com.swing.GameSwingVideoAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,7 +40,7 @@ public class CarEvolution extends ChromosomeManager{
 
             for(Chromosome i: chromosomes){
                 i.calcFitness();
-                if(i.fitness()>750){
+                if(i.fitness()>400){
                     bestCarChromosome.add(i.getCopy());
                 }
             }
@@ -60,6 +62,10 @@ public class CarEvolution extends ChromosomeManager{
             Chromosome tmp[] = children;
             children = chromosomes;
             chromosomes = tmp;
+            /*List<Chromosome> listT = Arrays.asList(chromosomes);
+            Track tr = new Track(600,300);
+            tr.loadFromFile("track2.map");
+            this.showAll(listT,tr);*/
         }
 
     }
@@ -86,7 +92,7 @@ public class CarEvolution extends ChromosomeManager{
             car.setPos(50,50);
             car.setDir(1, 0);
             simpleNeuralNetworkControl.setGens(i.gens);
-            game.startRealTimeSimulation(1500);
+            game.startRealTimeSimulation(200);
             game.waitEnd();
         }
 
@@ -102,7 +108,7 @@ public class CarEvolution extends ChromosomeManager{
         adapter.startPaint();
 
         for(Chromosome i:list){
-            Car car = new Car();
+            Car car = new Tank();
             car.setMaxWheelsAngle(Math.PI / 3);
             car.setMaxSpeed(2);
             car.setLength(50);
@@ -119,7 +125,7 @@ public class CarEvolution extends ChromosomeManager{
             game.addCar(car);
             System.out.println(car.getId() + " " + i.toString());
         }
-        game.startRealTimeSimulation(10000);
+        game.startRealTimeSimulation(200000);
         game.waitEnd();
     }
     public void showAll2(List<Chromosome> list,Track track){
@@ -169,7 +175,7 @@ public class CarEvolution extends ChromosomeManager{
         game.setTrack(track);
 
         for(Chromosome i:list){
-            Car car = new Car();
+            Car car = new Tank();
             car.setMaxWheelsAngle(Math.PI / 3);
             car.setMaxSpeed(2);
             car.setLength(50);

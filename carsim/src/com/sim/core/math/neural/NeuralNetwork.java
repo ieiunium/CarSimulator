@@ -1,5 +1,7 @@
 package com.sim.core.math.neural;
 
+import java.util.Arrays;
+
 /**
  * Created by kirill-good on 10.2.15.
  */
@@ -55,6 +57,14 @@ public class NeuralNetwork {
                 }
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        getGens();
+        return "NeuralNetwork{" +
+                "gens=" + Arrays.toString(gens) +
+                '}';
     }
 }
 

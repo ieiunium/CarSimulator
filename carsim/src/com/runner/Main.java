@@ -38,17 +38,17 @@ public class Main {
         Game game = new Game();
         game.setTrack(tr);
         game.addCar(car);
-        CarEvolution carEvolution = new CarEvolution(car,game,1000, simpleNeuralNetworkControl);
+        CarEvolution carEvolution = new CarEvolution(car,game,10000, simpleNeuralNetworkControl);
         carEvolution.evolution(10);
         List<Chromosome> chromosomeList = carEvolution.getCopyOfBestCarChromosome();
-        tr.loadFromFile("megatrack.map");
-        carEvolution.removeCrashed(chromosomeList,tr);
+        tr.loadFromFile("track.map");
+        //carEvolution.removeCrashed(chromosomeList,tr);
 
-        carEvolution.showAll2(chromosomeList,tr);
+        carEvolution.showAll(chromosomeList, tr);
 
     }
     public static void test(){
-        Car car = new Car();
+        Car car = new Tank();
         car.setPos(50,50);
         car.setDir(1, 0);
         car.setMaxWheelsAngle(Math.PI / 3);
@@ -71,6 +71,7 @@ public class Main {
         adapter.startPaint();
         game.startRealTimeSimulation();
         game.waitEnd();
+        System.out.println(simpleNeuralNetworkControl);
         while (true);
     }
     public static void editor(){

@@ -44,8 +44,16 @@ public class Chromosome implements Comparable {
             father.gens[i] = mother.gens[i];
             mother.gens[i] = tmp;
         }
-        father.gens[random.nextInt(mother.gens.length)] = ( random.nextBoolean()?1:-1 ) * random.nextDouble();
-        mother.gens[random.nextInt(mother.gens.length)] = ( random.nextBoolean()?1:-1 ) * random.nextDouble();
+        for(int i = 0; i < father.gens.length; i++){
+            if(random.nextInt(father.gens.length)<10){
+                father.gens[i] = ( random.nextBoolean()?1:-1 ) * random.nextDouble();
+            }
+            if(random.nextInt(father.gens.length)<10){
+                mother.gens[i] = ( random.nextBoolean()?1:-1 ) * random.nextDouble();
+            }
+        }
+        //father.gens[random.nextInt(mother.gens.length)] = ( random.nextBoolean()?1:-1 ) * random.nextDouble();
+        //mother.gens[random.nextInt(mother.gens.length)] = ( random.nextBoolean()?1:-1 ) * random.nextDouble();
     }
 
     @Override

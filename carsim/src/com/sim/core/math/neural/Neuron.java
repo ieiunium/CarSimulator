@@ -13,6 +13,7 @@ public class Neuron{
     public Neuron(int n){
         Random random = new Random();
         w = new double[n];
+        T = (random.nextBoolean()?1:-1) * random.nextDouble();
         for(int i = 0;i<w.length;i++){
             w[i] = (random.nextBoolean()?1:-1) * random.nextDouble();
         }

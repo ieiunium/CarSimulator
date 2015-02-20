@@ -17,6 +17,7 @@ public class Tank extends Car{
     @Override
     public void paint(Graphics g, int DX, int DY) {
         g.drawLine((int)this.getBackX()+DX,(int)this.getBackY()+DY,(int)this.getHeadX()+DX,(int)this.getHeadY()+DY);
+        g.drawString(String.valueOf(id),(int)pos.getX(),(int)pos.getY());
     }
     @Override
     public void tick() {
@@ -37,12 +38,13 @@ public class Tank extends Car{
             double circleX = pos.getX() + circleDirX;
             double circleY = pos.getY() + circleDirY;
             Vector2f tmp = new Vector2f(-circleDirX,-circleDirY);
-            sign *= Math.signum((speedL+speedR)/2);
-            double turnAngle = sign * Math.abs( this.getRealSpeed(Math.max(Math.abs(speedL),Math.abs(speedR))) ) / (R + width/2);
+            int sign2 = (int)Math.signum((speedL+speedR)/2);
+            double turnAngle = sign * (sign2==0?1:sign2) * Math.abs( this.getRealSpeed(Math.max(Math.abs(speedL),Math.abs(speedR))) ) / (R + width/2);
             tmp.turn(turnAngle);
             pos.setX(circleX+tmp.getX());
             pos.setY(circleY+tmp.getY());
             dir.turn(turnAngle);
+            //System.out.println(R*turnAngle);
         }
         /*double realSpeed = speed*maxSpeed/100.0;
         if(leftOfPath < Math.abs(realSpeed)){
@@ -52,8 +54,12 @@ public class Tank extends Car{
 
     @Override
     public void setAction(int in1, int in2) {
-        this.setSpeedL(in1);
-        this.setSpeedR(in2);
+        int L=(int)( in2 * (in1 / -800.0 +0.5) );
+        int R=(int)( in2 * (in1 / +800.0 +0.5) );
+        this.setSpeedL(L);
+        this.setSpeedR(R);
+        //this.setSpeedL(in1);
+        //this.setSpeedR(in2);
     }
 
     public double getBackY() {
@@ -80,6 +86,12 @@ public class Tank extends Car{
 
     public void setSpeedL(int speedL) {
         this.speedL = speedL;
+        if(this.speedL>100){
+            this.speedL = 100;
+        }
+        if(this.speedL< -100){
+            this.speedL = -100;
+        }
     }
 
     public int getSpeedR() {
@@ -88,6 +100,12 @@ public class Tank extends Car{
 
     public void setSpeedR(int speedR) {
         this.speedR = speedR;
+        if(this.speedR>100){
+            this.speedR = 100;
+        }
+        if(this.speedR< -100){
+            this.speedR = -100;
+        }
     }
 
     @Override

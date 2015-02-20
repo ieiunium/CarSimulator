@@ -26,6 +26,7 @@ public class SimpleCarControl implements CarControl {
         frame.setLayout(new GridLayout(2, 2));
         b1.addActionListener(listener1);
         b2.addActionListener(listener2);
+        sl1.setInverted(true);
         frame.add(sl1);
         frame.add(sl2);
         frame.add(b1);
@@ -35,12 +36,12 @@ public class SimpleCarControl implements CarControl {
     @Override
     public void tick(Car car) {
         frame.setTitle(sl1.getValue()+" "+sl2.getValue());
-        if(car instanceof Tank) {
-            sl1.setOrientation(1);
+        /*if(car instanceof Tank) {
+            //sl1.setOrientation(1);
         }else{
-            sl1.setOrientation(0);
-            sl1.setInverted(true);
-        }
+            //sl1.setOrientation(0);
+
+        }*/
         car.setAction(sl1.getValue(),sl2.getValue());
     }
 }
