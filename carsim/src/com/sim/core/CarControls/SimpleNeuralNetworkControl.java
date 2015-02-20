@@ -35,7 +35,6 @@ public class SimpleNeuralNetworkControl implements CarControl {
         in[1] = sharps[1].getValue();
         in[2] = sharps[2].getValue();
         out = nn.getOut(in);
-        car.setWheelsAngle((int)(out[0]*100));
-        car.setSpeed((int)(out[1]*100));
+        car.setAction((int)(out[0]*100),(int)(out[1]*100));
     }
 }

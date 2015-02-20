@@ -2,6 +2,7 @@ package com.swing;
 
 import com.sim.core.items.Car;
 import com.sim.core.interfaces.CarControl;
+import com.sim.core.items.Tank;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,9 +34,14 @@ public class SimpleCarControl implements CarControl {
     }
     @Override
     public void tick(Car car) {
-        frame.setTitle(-sl1.getValue()+" "+sl2.getValue());
-        car.setWheelsAngle(-sl1.getValue());
-        car.setSpeed(sl2.getValue());
+        frame.setTitle(sl1.getValue()+" "+sl2.getValue());
+        if(car instanceof Tank) {
+            sl1.setOrientation(1);
+        }else{
+            sl1.setOrientation(0);
+            sl1.setInverted(true);
+        }
+        car.setAction(sl1.getValue(),sl2.getValue());
     }
 }
 

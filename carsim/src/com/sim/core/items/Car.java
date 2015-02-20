@@ -13,20 +13,20 @@ import java.awt.*;
  * Created by kirill-good on 3.2.15.
  */
 public class Car{
-    private static int carId=0;
-    private int id = carId++;
-    private Vector2f pos = new Vector2f(0,0)
+    protected static int carId=0;
+    protected int id = carId++;
+    protected Vector2f pos = new Vector2f(0,0)
                    , dir = new Vector2f(1,0);
-    private int wheelsAngle=0;
-    private double maxWheelsAngle=Math.PI/3;
-    private int length=50;
-    private int width=10;
-    private int speed=0;
-    private double maxSpeed=5;
-    private CarControl carControl = new SimpleNeuralNetworkControl();;
-    private SharpManager sharpManager = new SharpManager();
-    private OnlyReadableTrack track = null;
-    private double leftOfPath = 100;
+    protected int wheelsAngle=0;
+    protected double maxWheelsAngle=Math.PI/3;
+    protected int length=50;
+    protected int width=10;
+    protected int speed=0;
+    protected double maxSpeed=5;
+    protected CarControl carControl = new SimpleNeuralNetworkControl();;
+    protected SharpManager sharpManager = new SharpManager();
+    protected OnlyReadableTrack track = null;
+    protected double leftOfPath = 100;
     public Car(){
 
     }
@@ -100,7 +100,13 @@ public class Car{
         }
 
     }
-
+    public void setAction(int in1,int in2){
+        this.setWheelsAngle(in1);
+        this.setSpeed(in2);
+    }
+    public double getRealSpeed(int x){
+        return x*maxSpeed/100.0;
+    }
     public double getLeftOfPath() {
         return leftOfPath;
     }
