@@ -54,12 +54,14 @@ public class Tank extends Car{
 
     @Override
     public void setAction(int in1, int in2) {
-        int L=(int)( in2 * (in1 / -800.0 +0.5) );
-        int R=(int)( in2 * (in1 / +800.0 +0.5) );
-        this.setSpeedL(L);
-        this.setSpeedR(R);
-        //this.setSpeedL(in1);
-        //this.setSpeedR(in2);
+        //int L=(int)( in2 * (in1 / -800.0 +0.5) );
+        //int R=(int)( in2 * (in1 / +800.0 +0.5) );
+        //int L=(int)( in2 * (in1 / -40 + 1) );
+        //int R=(int)( in2 * (in1 / +40 + 1) );
+        //this.setSpeedL(L);
+        //this.setSpeedR(R);
+        this.setSpeedL(in1);
+        this.setSpeedR(in2);
     }
 
     public double getBackY() {

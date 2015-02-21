@@ -20,7 +20,7 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
         //test();
-        Car car = new Car();
+        Car car = new Tank();
         car.setPos(50,50);
         car.setDir(1, 0);
         car.setMaxWheelsAngle(Math.PI / 3);
@@ -39,12 +39,12 @@ public class Main {
         game.setTrack(tr);
         game.addCar(car);
         CarEvolution carEvolution = new CarEvolution(car,game,10000, simpleNeuralNetworkControl);
-        carEvolution.evolution(10);
+        carEvolution.evolution(100);
         List<Chromosome> chromosomeList = carEvolution.getCopyOfBestCarChromosome();
         tr.loadFromFile("track.map");
         //carEvolution.removeCrashed(chromosomeList,tr);
 
-        carEvolution.showAll(chromosomeList, tr);
+        carEvolution.showAll2(chromosomeList, tr);
 
     }
     public static void test(){

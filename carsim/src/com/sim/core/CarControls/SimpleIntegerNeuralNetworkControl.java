@@ -37,4 +37,11 @@ public class SimpleIntegerNeuralNetworkControl implements CarControl {
         out = nn.getOut(in);
         car.setAction((int)(out[0]),(int)(out[1]));
     }
+
+    @Override
+    public String toString() {
+        return "SimpleIntegerNeuralNetworkControl{" +
+                "nn=" + nn +
+                '}';
+    }
 }

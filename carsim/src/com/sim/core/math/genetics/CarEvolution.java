@@ -138,7 +138,7 @@ public class CarEvolution extends ChromosomeManager{
         adapter.startPaint();
 
         for(Chromosome i:list){
-            Car car = new Car();
+            Car car = new Tank();
             car.setMaxWheelsAngle(Math.PI / 3);
             car.setMaxSpeed(2);
             car.setLength(50);
