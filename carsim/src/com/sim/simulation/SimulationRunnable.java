@@ -6,6 +6,7 @@ package com.sim.simulation;
 public class SimulationRunnable implements Runnable{
     private volatile Game game;
     private final int tickLimit;
+
     public SimulationRunnable(Game game) {
         this.game = game;
         this.tickLimit = 0;
