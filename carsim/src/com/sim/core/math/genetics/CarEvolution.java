@@ -1,9 +1,11 @@
 package com.sim.core.math.genetics;
 
+import com.sim.core.CarControls.NNControlForSimpleTank;
 import com.sim.core.CarControls.SimpleIntegerNeuralNetworkControl;
 import com.sim.core.CarControls.SimpleNeuralNetworkControl;
 import com.sim.core.Sensors.Sharp;
 import com.sim.core.items.Car;
+import com.sim.core.items.SimpleTank;
 import com.sim.core.items.Tank;
 import com.sim.core.items.Track;
 import com.sim.core.math.neural.integer.IntegerNeuralNetwork;
@@ -138,12 +140,13 @@ public class CarEvolution extends ChromosomeManager{
         adapter.startPaint();
 
         for(Chromosome i:list){
-            Car car = new Tank();
+            Car car = new SimpleTank();
             car.setMaxWheelsAngle(Math.PI / 3);
             car.setMaxSpeed(2);
             car.setLength(50);
             car.setWidth(3);
-            SimpleIntegerNeuralNetworkControl simpleNeuralNetworkControl = new SimpleIntegerNeuralNetworkControl();
+            //SimpleIntegerNeuralNetworkControl simpleNeuralNetworkControl = new SimpleIntegerNeuralNetworkControl();
+            NNControlForSimpleTank simpleNeuralNetworkControl= new NNControlForSimpleTank();
             car.setCarControl(simpleNeuralNetworkControl);
             car.addSharp(new Sharp(5, 80, -Math.PI / 4));
             car.addSharp(new Sharp(5,80,0));

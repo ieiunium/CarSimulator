@@ -7,9 +7,9 @@ import com.sim.core.math.neural.NeuralNetwork;
 import com.sim.core.math.neural.integer.IntegerNeuralNetwork;
 
 /**
- * Created by kirill-good on 5.2.15.
+ * Created by kirill-good on 23.2.15.
  */
-public class SimpleIntegerNeuralNetworkControl extends SimpleNeuralNetworkControl {
+public class NNControlForSimpleTank extends SimpleIntegerNeuralNetworkControl{
     protected IntegerNeuralNetwork nn;
     protected int in[];
     protected int out[];
@@ -22,11 +22,12 @@ public class SimpleIntegerNeuralNetworkControl extends SimpleNeuralNetworkContro
     public void setGens(int[] gens){
         nn.setGens(gens);
     }
-    public SimpleIntegerNeuralNetworkControl(){
-        int []config={3,2};
+    public NNControlForSimpleTank(){
+
+        int []config={3,4};
         nn = new IntegerNeuralNetwork(config);
         in = new int[3];
-        out = new int[2];
+        out = new int[4];
     }
     @Override
     public void tick(Car car) {
@@ -35,7 +36,13 @@ public class SimpleIntegerNeuralNetworkControl extends SimpleNeuralNetworkContro
         in[1] = (int)sharps[1].getValue();
         in[2] = (int)sharps[2].getValue();
         out = nn.getOut(in);
-        car.setAction((int)(out[0]),(int)(out[1]));
+        int res = 0;
+        for(int i = 0;i<out.length;i++){
+            if(out[res]>out[i]){
+                res = i;
+            }
+        }
+        car.setAction(res,0);
     }
 
     @Override

@@ -9,7 +9,7 @@ public class IntegerNeuralNetwork extends NeuralNetwork {
     public static int MULTIPLIER = 10000;
     private IntegerNeuralLayer layer[];
     private int []gens;
-
+    protected IntegerNeuralNetwork(){}
     public IntegerNeuralNetwork(int config[]){
         super();
         layer = new IntegerNeuralLayer[config.length-1];
