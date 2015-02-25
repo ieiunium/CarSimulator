@@ -60,13 +60,13 @@ public class Game {
         }
     }
 
-    public void addCar(Agent agent){
+    public void addAgent(Agent agent){
 
         agents.add(agent);
         agent.setTrack(this.track);
     }
 
-    public List<Agent> getCars() {
+    public List<Agent> getAgents() {
 
         return agents;
     }

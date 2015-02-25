@@ -73,7 +73,7 @@ public class Track implements OnlyReadableTrack {
         }
 
     }
-    public void saveToBMP(String fileName){
+    public void saveToPNG(String fileName){
 
         BufferedImage image = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
         try {
@@ -92,7 +92,7 @@ public class Track implements OnlyReadableTrack {
             e.printStackTrace();
         }
     }
-    public void loadFromBMP(String fileName){
+    public void loadFromPNG(String fileName){
 
 
 
