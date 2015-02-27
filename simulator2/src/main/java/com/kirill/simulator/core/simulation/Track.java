@@ -1,8 +1,10 @@
 package com.kirill.simulator.core.simulation;
 
 import com.kirill.simulator.core.interfaces.OnlyReadableTrack;
+import com.kirill.simulator.view.jogl.JavaRenderer;
 
 import javax.imageio.ImageIO;
+import javax.media.opengl.GL2;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -136,4 +138,14 @@ public class Track implements OnlyReadableTrack {
         return height;
     }
 
+
+    public void glPaint(GL2 gl,int dX,int dY,int dZ){
+        for(int i=0;i<this.getWidth();i++){
+            for(int j=0;j<this.getHeight();j++){
+                if(this.getPix(i, j)){
+                    JavaRenderer.drawSquare(gl, i, j,dX,dY,dZ);
+                }
+            }
+        }
+    }
 }

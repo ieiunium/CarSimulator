@@ -4,8 +4,10 @@ import com.kirill.simulator.core.agents.controls.simpletank.SimpleTankControl;
 import com.kirill.simulator.core.interfaces.Agent;
 import com.kirill.simulator.core.interfaces.OnlyReadableTrack;
 import com.kirill.simulator.core.math.Vector2f;
+import com.kirill.simulator.core.sensors.Sharp;
 import com.kirill.simulator.core.sensors.SharpManager;
 
+import javax.media.opengl.GL2;
 import java.awt.*;
 
 /**
@@ -20,6 +22,7 @@ public class SimpleTank implements Agent {
     protected Vector2f pos = new Vector2f(0,0)
                      , dir = new Vector2f(1,0);
     protected int length=50;
+    protected double width = 5;
     protected double maxSpeed;
     protected SimpleTankControl simpleTankControl;
     protected SharpManager sharpManager = new SharpManager();
@@ -67,7 +70,21 @@ public class SimpleTank implements Agent {
 
     @Override
     public boolean collision() {
-        return false;
+        double halfLength = length /2;
+        double tmpX = ( -dir.getY()*width );
+        double tmpY = ( +dir.getX()*width );
+        int x1 = (int)(pos.getX() + dir.getX() * halfLength + tmpX)
+                ,y1 = (int)(pos.getY() + dir.getY() * halfLength + tmpY);
+        int x2 = (int)(pos.getX() + dir.getX() * halfLength - tmpX)
+                ,y2 = (int)(pos.getY() + dir.getY() * halfLength - tmpY);
+        int x3 = (int)(x1 - length * dir.getX())
+                ,y3 = (int)(y1 - length * dir.getY());
+        int x4 = (int)(x2 - length * dir.getX())
+                ,y4 = (int)(y2 - length * dir.getY());
+        return track.getPix(x1,y1)
+             ||track.getPix(x2,y2)
+             ||track.getPix(x3,y3)
+             ||track.getPix(x4,y4);
     }
 
     @Override
@@ -83,6 +100,41 @@ public class SimpleTank implements Agent {
     @Override
     public void setPos(double x, double y) {
         pos.setXY(x,y);
+    }
+
+    @Override
+    public SharpManager getSharpManager() {
+        return sharpManager;
+    }
+
+    @Override
+    public void addSharp(Sharp sharp) {
+        sharpManager.addSharp(sharp);
+    }
+
+    @Override
+    public void glPaint(GL2 gl, int dX, int dY, int dZ) {
+        double halfLength = length /2;
+
+        double tmpX = ( -dir.getY()*width );
+        double tmpY = ( +dir.getX()*width );
+
+        int x1 = (int)(pos.getX() + dir.getX() * halfLength + tmpX)
+           ,y1 = (int)(pos.getY() + dir.getY() * halfLength + tmpY);
+
+        int x2 = (int)(pos.getX() + dir.getX() * halfLength - tmpX)
+           ,y2 = (int)(pos.getY() + dir.getY() * halfLength - tmpY);
+
+        int x3 = (int)(x1 - length * dir.getX())
+           ,y3 = (int)(y1 - length * dir.getY());
+        int x4 = (int)(x2 - length * dir.getX())
+           ,y4 = (int)(y2 - length * dir.getY());
+
+        gl.glColor3f(0.0f, 1.0f, 1.0f);
+        gl.glVertex3f(x1 + dX,  y1 + dY,      +dZ);
+        gl.glVertex3f(x2 + dX,  y2 + dY,      +dZ);
+        gl.glVertex3f(x4 + dX,  y4 + dY,    +dZ);
+        gl.glVertex3f(x3 + dX,  y3 + dY,    +dZ);
     }
 
     public TankState getTankState() {

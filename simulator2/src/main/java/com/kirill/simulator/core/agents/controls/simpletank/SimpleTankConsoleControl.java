@@ -9,12 +9,12 @@ import java.io.InputStreamReader;
 /**
  * Created by kirill-good on 25.2.15.
  */
-public class SimpleSimpleTankConsoleControl implements SimpleTankControl,Runnable {
+public class SimpleTankConsoleControl implements SimpleTankControl,Runnable {
     private SimpleTank simpleTank;
     private Thread thread;
     private volatile SimpleTank.TankState tankState = SimpleTank.TankState.STOP;
 
-    public SimpleSimpleTankConsoleControl() {
+    public SimpleTankConsoleControl() {
         startControl();
     }
     public void startControl(){

@@ -3,16 +3,29 @@ package com.kirill.simulator.view.jogl;
 /**
  * Created by kirill-good on 25.2.15.
  */
+import com.kirill.simulator.core.interfaces.Agent;
+import com.kirill.simulator.core.simulation.Track;
+
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.glu.GLU;
+import java.util.List;
 
 public class JavaRenderer implements GLEventListener {
     private float rotateT = 0.0f;
     private static final GLU glu = new GLU();
-    public volatile int x=0,y=0;
+    protected volatile int dX=0,dY=0,dZ=-800;
+
+    public JavaRenderer(Track track, List<Agent> agents) {
+        this.track = track;
+        this.agents = agents;
+    }
+
+    private volatile List<Agent> agents;
+    private Track track;
+
     public void display(GLAutoDrawable gLDrawable) {
         final GL2 gl = gLDrawable.getGL().getGL2();
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
@@ -20,68 +33,34 @@ public class JavaRenderer implements GLEventListener {
         gl.glLoadIdentity();
         gl.glTranslatef(0.0f, 0.0f, -5.0f);
 
-        //gl.glRotatef(rotateT, 1.0f, 0.0f, 0.0f);
-        //gl.glRotatef(rotateT, 0.0f, 1.0f, 0.0f);
-        //gl.glRotatef(rotateT, 0.0f, 0.0f, 1.0f);
-        //gl.glRotatef(rotateT, 0.0f, 1.0f, 0.0f);
-
         gl.glBegin(GL2.GL_QUADS);
 
-        drawSquare(gl, x, y);
+        track.glPaint(gl,dX,dY,dZ);
+        for(Agent i:agents){
+            i.glPaint(gl,dX,dY,dZ);
+        }
 
         gl.glEnd();
 
         rotateT += 0.2f;
     }
 
-    public static void drawSquare(GL2 gl,int x,int y){
+    public static void drawSquare(GL2 gl,int x,int y,int dX,int dY,int dZ){
 
-        gl.glColor3f(1.0f, 1.0f, 1.0f);
+        gl.glColor3f(0.0f, 0.0f, 0.0f);
 
         // front :
-        float a = 0.5f;
-
-        float az = -100f;
-        gl.glVertex3f(x,    y,      +az);
-        gl.glVertex3f(x+a,  y,      +az);
-        gl.glVertex3f(x+a,  y+a,    +az);
-        gl.glVertex3f(x,    y+a,    +az);
-/*
-        // back :
-        gl.glVertex3f(+0.5f, -0.5f, -0.5f);
-        gl.glVertex3f(+0.5f, +0.5f, -0.5f);
-        gl.glVertex3f(-0.5f, +0.5f, -0.5f);
-        gl.glVertex3f(-0.5f, -0.5f, -0.5f);
-
-        // left :
-        gl.glVertex3f(-0.5f, +0.5f, +0.5f);
-        gl.glVertex3f(-0.5f, +0.5f, -0.5f);
-        gl.glVertex3f(-0.5f, -0.5f, -0.5f);
-        gl.glVertex3f(-0.5f, -0.5f, +0.5f);
-
-        // right :
-        gl.glVertex3f(+0.5f, +0.5f, -0.5f);
-        gl.glVertex3f(+0.5f, +0.5f, +0.5f);
-        gl.glVertex3f(+0.5f, -0.5f, +0.5f);
-        gl.glVertex3f(+0.5f, -0.5f, -0.5f);
-
-        // top :
-        gl.glVertex3f(+0.5f, +0.5f, +0.5f);
-        gl.glVertex3f(-0.5f, +0.5f, +0.5f);
-        gl.glVertex3f(-0.5f, +0.5f, -0.5f);
-        gl.glVertex3f(+0.5f, +0.5f, -0.5f);
-
-        // bottom :
-        gl.glVertex3f(+0.5f, -0.5f, +0.5f);
-        gl.glVertex3f(+0.5f, -0.5f, -0.5f);
-        gl.glVertex3f(-0.5f, -0.5f, -0.5f);
-        gl.glVertex3f(-0.5f, -0.5f, +0.5f);*/
+        float a = 1.0f;
+        gl.glVertex3f(x + dX,    y + dY,      +dZ);
+        gl.glVertex3f(x+a + dX,  y + dY,      +dZ);
+        gl.glVertex3f(x+a + dX,  y+a + dY,    +dZ);
+        gl.glVertex3f(x + dX,    y+a + dY,    +dZ);
     }
 
     public void init(GLAutoDrawable gLDrawable) {
         final GL2 gl = gLDrawable.getGL().getGL2();
         gl.glShadeModel(GL2.GL_SMOOTH);
-        gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        gl.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
         gl.glClearDepth(1.0f);
         gl.glEnable(GL.GL_DEPTH_TEST);
         gl.glDepthFunc(GL.GL_LEQUAL);
@@ -97,7 +76,7 @@ public class JavaRenderer implements GLEventListener {
         final float h = (float)width / (float)height;
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
-        glu.gluPerspective(50.0f, h, 1.0, 1000.0);
+        glu.gluPerspective(50.0f, h, 1.0, 2000.0);
         gl.glMatrixMode(GL2.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
