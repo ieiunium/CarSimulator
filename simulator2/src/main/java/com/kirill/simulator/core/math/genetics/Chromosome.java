@@ -40,25 +40,31 @@ public class Chromosome  implements Comparable {
         return chromosome;
     }
 
-    public static void crossOver(Chromosome mother,Chromosome father){
+    public void crossOver(Chromosome mother,Chromosome father){
+        final int border = random.nextInt(gens.length);
+        int i;
+        int p = 1;
+        for(i = 0; i < border; i++){
+            gens[i] = father.gens[i];
+            if(random.nextInt(father.gens.length)<p){
+                father.gens[i] = 2 * random.nextDouble() - 1;
+            }
+            if(random.nextInt(father.gens.length)<p){
+                mother.gens[i] = 2 * random.nextDouble() - 1;
+            }
+        }
+        for(;i<this.gens.length;i++){
+            gens[i] = mother.gens[i];
+            if(random.nextInt(father.gens.length)<p){
+                father.gens[i] = 2 * random.nextDouble() - 1;
+            }
+            if(random.nextInt(father.gens.length)<p){
+                mother.gens[i] = 2 * random.nextDouble() - 1;
+            }
+        }
+        /*for(int i = 0; i < father.gens.length; i++){
 
-        if(mother.gens.length!=father.gens.length){
-            return;
-        }
-        final int border = random.nextInt(mother.gens.length);
-        for(int i = 0; i < border; i++){
-            double  tmp = father.gens[i];
-            father.gens[i] = mother.gens[i];
-            mother.gens[i] = tmp;
-        }
-        for(int i = 0; i < father.gens.length; i++){
-            if(random.nextInt(father.gens.length)<10){
-                father.gens[i] = ( random.nextBoolean()?1:-1 ) * random.nextDouble();
-            }
-            if(random.nextInt(father.gens.length)<10){
-                mother.gens[i] = ( random.nextBoolean()?1:-1 ) * random.nextDouble();
-            }
-        }
+        }*/
     }
 
     @Override

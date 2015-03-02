@@ -23,4 +23,7 @@ public interface Agent {
     public double getX();
     public double getY();
     public void reset();
+    public double getLeftOfPath();
+
+    public void setLeftOfPath(double leftOfPath);
 }

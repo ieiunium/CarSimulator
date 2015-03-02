@@ -45,19 +45,23 @@ public class SimpleTank implements Agent {
 
     @Override
     public void tick() {
+        if(leftOfPath<0){
+            return;
+        }
         sharpManager.tick(track,pos,dir,length);
         simpleTankControl.tick();
         switch (tankState){
             case STOP:
-
                 break;
             case FORWARD:
                 this.pos.setXY( this.pos.getX() + this.maxSpeed * this.dir.getX()
                                ,this.pos.getY() + this.maxSpeed * this.dir.getY() );
+                leftOfPath-=maxSpeed;
                 break;
             case BACKWARD:
                 this.pos.setXY(this.pos.getX() - this.maxSpeed * this.dir.getX()
                         , this.pos.getY() - this.maxSpeed * this.dir.getY());
+                leftOfPath-=maxSpeed;
                 break;
             case LEFTTURN:
                 this.dir.turn(-Math.PI/180);
@@ -175,5 +179,13 @@ public class SimpleTank implements Agent {
 
     public void setResetFunction(ResetFunction resetFunction) {
         this.resetFunction = resetFunction;
+    }
+
+    public double getLeftOfPath() {
+        return leftOfPath;
+    }
+
+    public void setLeftOfPath(double leftOfPath) {
+        this.leftOfPath = leftOfPath;
     }
 }

@@ -27,7 +27,7 @@ public class App
         //test();
 
         SimpleTankNNControl simpleTankNNControl = new SimpleTankNNControl();
-        final SimpleTank simpleTank = new SimpleTank(simpleTankNNControl);
+        SimpleTank simpleTank = new SimpleTank(simpleTankNNControl);
         simpleTank.setPos(50,25);
         simpleTank.addSharp(new Sharp(5,80,+Math.PI/4));
         simpleTank.addSharp(new Sharp(5,80,0));
@@ -37,6 +37,7 @@ public class App
             public void reset(Agent agent) {
                 agent.setPos(50,25);
                 agent.setDir(1,0);
+                agent.setLeftOfPath(950);
             }
         });
         Track tr = new Track(0,0);
@@ -45,8 +46,8 @@ public class App
         game.setTrack(tr);
         game.addAgent(simpleTank);
         ChromosomeManager chromosomeManager = new ChromosomeManager(10000,simpleTankNNControl.getNumOfGens());
-        chromosomeManager.setFitnessFunction(new AgentFitnessFunction(simpleTank,game,simpleTankNNControl,600,600));
-        chromosomeManager.evolution(10);
+        chromosomeManager.setFitnessFunction(new AgentFitnessFunction(simpleTank,game,simpleTankNNControl,700,600));
+        chromosomeManager.evolution(5);
 
         List<Chromosome> best= ((AgentFitnessFunction) (chromosomeManager.getFitnessFunction())).getBest();
         showAll(best);
@@ -58,7 +59,35 @@ public class App
         System.out.println( "Hello World!" );*/
     }
     public static void showAll(List<Chromosome> chromosomes){
-
+        Game game = new Game();
+        Track track = new Track(0,0);
+        track.loadFromPNG("g2.png");
+        game.setTrack(track);
+        for(Chromosome i:chromosomes){
+            SimpleTankNNControl simpleTankNNControl = new SimpleTankNNControl();
+            simpleTankNNControl.setChromosome(i);
+            SimpleTank simpleTank = new SimpleTank(simpleTankNNControl);
+            simpleTank.setPos(50,25);
+            simpleTank.addSharp(new Sharp(5,80,+Math.PI/4));
+            simpleTank.addSharp(new Sharp(5,80,0));
+            simpleTank.addSharp(new Sharp(5,80,-Math.PI/4));
+            simpleTank.setResetFunction(new ResetFunction() {
+                @Override
+                public void reset(Agent agent) {
+                    agent.setLeftOfPath(950);
+                    agent.setPos(50,25);
+                    agent.setDir(1,0);
+                }
+            });
+            simpleTank.reset();
+            game.addAgent(simpleTank);
+        }
+        GameView gameView = new GameView(game);
+        JavaDia javaDia = new JavaDia(game);
+        //gameView.startPaint();
+        javaDia.start();
+        game.startSimulation(0,40);
+        game.waitEnd();
     }
     public static void test(){
         Track tr = new Track(0,0);
@@ -78,7 +107,6 @@ public class App
         //gameView.startPaint();
         game.startSimulation(0,0);
 
-        javaDia.start();
 
         for(;;);
     }

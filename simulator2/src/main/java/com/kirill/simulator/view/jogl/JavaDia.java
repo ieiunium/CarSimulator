@@ -39,6 +39,8 @@ public class JavaDia implements Runnable, KeyListener {
         GLCanvas canvas = new GLCanvas();
         int size = frame.getExtendedState();
         javaRenderer = new JavaRenderer(track,agents);
+        javaRenderer.dX = -track.getWidth()/2;
+        javaRenderer.dY = -track.getHeight()/2;
         canvas.addGLEventListener(javaRenderer);
         frame.add(canvas);
         frame.setUndecorated(true);

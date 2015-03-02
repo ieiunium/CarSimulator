@@ -42,12 +42,12 @@ public class AgentFitnessFunction extends FitnessFunction {
         if(res>saveDistance){
             System.out.println("\t" + res);
             chromosomes.add(chromosome.getCopy());
-            agent.reset();
+            /*agent.reset();
             GameView gameView = new GameView(game);
             gameView.startPaint();
             game.startSimulation(tickLimit,40);
             game.waitEnd();
-            gameView.kill();
+            gameView.kill();*/
         }
         return res;
     }

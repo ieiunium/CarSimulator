@@ -32,18 +32,14 @@ public class ChromosomeManager {
             Arrays.sort(chromosomes);
             System.out.println(step + " " + chromosomes[0].fitness());
             int half = chromosomes.length / 2;
-            for (int i = 0; i < half; i++) {
+            for (int i = 0; i < chromosomes.length; i++) {
 
                 int i1 = Chromosome.random.nextInt(half);
                 int i2;
                 do{
                     i2 = Chromosome.random.nextInt(half);
                 }while (i1==i2);
-                Chromosome d1 = chromosomes[i1].getCopy();
-                Chromosome d2 = chromosomes[i2].getCopy();
-                Chromosome.crossOver(d1, d2);
-                children[i * 2] = d1;
-                children[i * 2 + 1] = d2;
+                children[i].crossOver(chromosomes[i1],chromosomes[i2]);
             }
             Chromosome tmp[] = children;
             children = chromosomes;
