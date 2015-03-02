@@ -36,6 +36,7 @@ public class SimulationRunnable implements Runnable {
 
         while (true){
             game.tick();
+            game.curTic++;
             try {
                 Thread.sleep(millisPerTicks,0);
             } catch (InterruptedException e) {

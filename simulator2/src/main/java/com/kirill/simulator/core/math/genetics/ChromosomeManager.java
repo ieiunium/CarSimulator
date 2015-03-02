@@ -26,14 +26,14 @@ public class ChromosomeManager {
 
         Chromosome children[] = chromosomes.clone();
         for(int step = 0; step < steps; step++) {
-
             for(Chromosome i: chromosomes){
                 this.calcFitness(i);
             }
             Arrays.sort(chromosomes);
+            System.out.println(step + " " + chromosomes[0].fitness());
             int half = chromosomes.length / 2;
             for (int i = 0; i < half; i++) {
-                //System.out.println(chromosomes[i].fitness());
+
                 int i1 = Chromosome.random.nextInt(half);
                 int i2;
                 do{

@@ -8,7 +8,6 @@ import java.util.Random;
 public class Chromosome  implements Comparable {
 
     protected double gens[];
-
     protected double fitnessValue;
     public static final Random random = new Random();
 
@@ -79,5 +78,9 @@ public class Chromosome  implements Comparable {
     public double fitness(){
 
         return fitnessValue;
+    }
+
+    public double[] getGens() {
+        return gens;
     }
 }

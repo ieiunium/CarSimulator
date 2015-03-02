@@ -1,5 +1,6 @@
 package com.kirill.simulator.core.interfaces;
 
+import com.kirill.simulator.core.math.genetics.Chromosome;
 import com.kirill.simulator.core.sensors.Sharp;
 import com.kirill.simulator.core.sensors.SharpManager;
 
@@ -14,8 +15,12 @@ public interface Agent {
     public void setTrack(OnlyReadableTrack onlyReadableTrack);
     public boolean collision();
     public void paint(Graphics g,int dx,int dy);
-    void setPos(double x,double y);
+    public void setPos(double x,double y);
+    public void setDir(double x,double y);
     public SharpManager getSharpManager();
     public void addSharp(Sharp sharp);
     public void glPaint(GL2 gl,int dX,int dY,int dZ);
+    public double getX();
+    public double getY();
+    public void reset();
 }

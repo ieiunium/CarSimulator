@@ -30,6 +30,7 @@ public class PaintRunnable implements Runnable{
     @Override
     public void run() {
         while(true){
+            frame.setTitle(String.valueOf(game.getCurTic()) );
             paint();
             try {
                 Thread.sleep(millisPerTicks,0);

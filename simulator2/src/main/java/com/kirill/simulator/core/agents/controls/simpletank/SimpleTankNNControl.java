@@ -1,6 +1,8 @@
 package com.kirill.simulator.core.agents.controls.simpletank;
 
 import com.kirill.simulator.core.agents.SimpleTank;
+import com.kirill.simulator.core.interfaces.Chromosomal;
+import com.kirill.simulator.core.math.genetics.Chromosome;
 import com.kirill.simulator.core.math.neural.NeuralNetwork;
 import com.kirill.simulator.core.math.neural.functions.ActivationFunction;
 import com.kirill.simulator.core.sensors.Sharp;
@@ -8,7 +10,7 @@ import com.kirill.simulator.core.sensors.Sharp;
 /**
  * Created by kirill-good on 28.2.15.
  */
-public class SimpleTankNNControl implements SimpleTankControl {
+public class SimpleTankNNControl implements SimpleTankControl,Chromosomal {
     private SimpleTank simpleTank;
     private NeuralNetwork nn;
     private double in[],out[];
@@ -33,8 +35,6 @@ public class SimpleTankNNControl implements SimpleTankControl {
         for(int i = 0;i<in.length;i++) {
             in[i] = sharps[i].getValue();
         }
-        System.out.println();
-
         out = nn.getOut(in);
         int max = 0;
         for(int i = 0;i<out.length;i++) {
@@ -56,5 +56,22 @@ public class SimpleTankNNControl implements SimpleTankControl {
                 simpleTank.setTankState(SimpleTank.TankState.RIGHTTURN);
                 break;
         }
+    }
+
+    @Override
+    public void setChromosome(Chromosome chromosome) {
+        nn.setGens(chromosome.getGens());
+    }
+
+    @Override
+    public Chromosome getChromosome() {
+        //Chromosome res = new Chromosome(nn.numOfGens());
+
+        return null;
+    }
+
+    @Override
+    public int getNumOfGens() {
+        return this.nn.numOfGens();
     }
 }

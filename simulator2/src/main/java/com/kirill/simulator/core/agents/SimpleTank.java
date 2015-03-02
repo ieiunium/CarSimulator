@@ -3,6 +3,7 @@ package com.kirill.simulator.core.agents;
 import com.kirill.simulator.core.agents.controls.simpletank.SimpleTankControl;
 import com.kirill.simulator.core.interfaces.Agent;
 import com.kirill.simulator.core.interfaces.OnlyReadableTrack;
+import com.kirill.simulator.core.interfaces.ResetFunction;
 import com.kirill.simulator.core.math.Vector2f;
 import com.kirill.simulator.core.sensors.Sharp;
 import com.kirill.simulator.core.sensors.SharpManager;
@@ -32,9 +33,15 @@ public class SimpleTank implements Agent {
     public SimpleTank(SimpleTankControl simpleTankControl) {
         this.simpleTankControl = simpleTankControl;
         this.simpleTankControl.setTank(this);
-        this.maxSpeed = 1;
+        this.maxSpeed = 3;
     }
     protected TankState tankState = TankState.STOP;
+    protected ResetFunction resetFunction = new ResetFunction() {
+        @Override
+        public void reset(Agent agent) {
+
+        }
+    };
 
     @Override
     public void tick() {
@@ -103,6 +110,12 @@ public class SimpleTank implements Agent {
     }
 
     @Override
+    public void setDir(double x, double y) {
+        this.dir.setXY(x,y);
+        this.dir.normalization();
+    }
+
+    @Override
     public SharpManager getSharpManager() {
         return sharpManager;
     }
@@ -137,11 +150,30 @@ public class SimpleTank implements Agent {
         gl.glVertex3f(x3 + dX,  y3 + dY,    +dZ);
     }
 
+    @Override
+    public double getX() {
+        return pos.getX();
+    }
+
+    @Override
+    public double getY() {
+        return pos.getY();
+    }
+
+    @Override
+    public void reset() {
+        resetFunction.reset(this);
+    }
+
     public TankState getTankState() {
         return tankState;
     }
 
     public void setTankState(TankState tankState) {
         this.tankState = tankState;
+    }
+
+    public void setResetFunction(ResetFunction resetFunction) {
+        this.resetFunction = resetFunction;
     }
 }

@@ -12,7 +12,7 @@ public class Game {
     private final List<Agent> agents = new ArrayList<Agent>();
     private Track track;
     private Thread mainThread;
-
+    protected long curTic;
     public void waitEnd(){
 
         try {
@@ -23,13 +23,13 @@ public class Game {
     }
 
     public void startSimulation(long tickLimit,int millisPerTick){
-
+        curTic = 0;
         mainThread = new Thread( new SimulationRunnable(this,tickLimit,millisPerTick) );
         mainThread.start();
     }
 
     public void tick(){
-
+        curTic++;
         boolean agentsAreDead = true;
         for(Agent agent:agents){
             if(!collision(agent)) {
@@ -69,5 +69,9 @@ public class Game {
     public List<Agent> getAgents() {
 
         return agents;
+    }
+
+    public long getCurTic() {
+        return curTic;
     }
 }
