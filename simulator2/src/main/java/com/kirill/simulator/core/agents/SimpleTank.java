@@ -5,6 +5,7 @@ import com.kirill.simulator.core.interfaces.Agent;
 import com.kirill.simulator.core.interfaces.OnlyReadableTrack;
 import com.kirill.simulator.core.interfaces.ResetFunction;
 import com.kirill.simulator.core.math.Vector2f;
+import com.kirill.simulator.core.math.genetics.Chromosome;
 import com.kirill.simulator.core.sensors.Sharp;
 import com.kirill.simulator.core.sensors.SharpManager;
 
@@ -45,6 +46,7 @@ public class SimpleTank implements Agent {
 
     @Override
     public void tick() {
+        double angleSpeed = 5*Math.PI/180;
         if(leftOfPath<0){
             return;
         }
@@ -64,10 +66,10 @@ public class SimpleTank implements Agent {
                 leftOfPath-=maxSpeed;
                 break;
             case LEFTTURN:
-                this.dir.turn(-Math.PI/180);
+                this.dir.turn(-angleSpeed);
                 break;
             case RIGHTTURN:
-                this.dir.turn(+Math.PI/180);
+                this.dir.turn(+angleSpeed);
                 break;
             default:
 
@@ -190,5 +192,19 @@ public class SimpleTank implements Agent {
 
     public void setLeftOfPath(double leftOfPath) {
         this.leftOfPath = leftOfPath;
+    }
+    @Override
+    public void setChromosome(Chromosome chromosome) {
+        simpleTankControl.setChromosome(chromosome);
+    }
+
+    @Override
+    public Chromosome getChromosome() {
+        return simpleTankControl.getChromosome();
+    }
+
+    @Override
+    public int getNumOfGens() {
+        return simpleTankControl.getNumOfGens();
     }
 }

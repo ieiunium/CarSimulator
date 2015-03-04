@@ -10,7 +10,7 @@ import java.awt.*;
 /**
  * Created by kirill-good on 23.2.15.
  */
-public interface Agent {
+public interface Agent extends Chromosomal{
     public void tick();
     public void setTrack(OnlyReadableTrack onlyReadableTrack);
     public boolean collision();

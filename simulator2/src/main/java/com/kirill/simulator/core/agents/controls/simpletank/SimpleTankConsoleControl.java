@@ -1,6 +1,7 @@
 package com.kirill.simulator.core.agents.controls.simpletank;
 
 import com.kirill.simulator.core.agents.SimpleTank;
+import com.kirill.simulator.core.math.genetics.Chromosome;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -73,5 +74,20 @@ public class SimpleTankConsoleControl implements SimpleTankControl,Runnable {
 
     public void setTank(SimpleTank simpleTank) {
         this.simpleTank = simpleTank;
+    }
+
+    @Override
+    public void setChromosome(Chromosome chromosome) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Chromosome getChromosome() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int getNumOfGens() {
+        throw new UnsupportedOperationException();
     }
 }
