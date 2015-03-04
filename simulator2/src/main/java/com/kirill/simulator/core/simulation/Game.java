@@ -32,7 +32,7 @@ public class Game {
         curTic++;
         boolean agentsAreDead = true;
         for(Agent agent:agents){
-            if(!collision(agent)) {
+            if(!agent.collision()) {
                 agent.tick();
                 agentsAreDead = false;
             }

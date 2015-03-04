@@ -65,7 +65,6 @@ public class SimulationRunnable implements Runnable {
     }
 
     public void startRun(long tickLimit){
-
         while( tickLimit-- > 0 ){
             game.tick();
         }

@@ -81,6 +81,8 @@ public class SimpleTank implements Agent {
 
     @Override
     public boolean collision() {
+        //return track.getPix((int)pos.getX(),(int)pos.getY());
+
         double halfLength = length /2;
         double tmpX = ( -dir.getY()*width );
         double tmpY = ( +dir.getX()*width );
@@ -96,6 +98,7 @@ public class SimpleTank implements Agent {
              ||track.getPix(x2,y2)
              ||track.getPix(x3,y3)
              ||track.getPix(x4,y4);
+
     }
 
     @Override

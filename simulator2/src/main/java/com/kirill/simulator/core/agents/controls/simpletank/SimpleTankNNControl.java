@@ -15,11 +15,10 @@ public class SimpleTankNNControl implements SimpleTankControl,Chromosomal {
     private NeuralNetwork nn;
     private double in[],out[];
 
-    public SimpleTankNNControl() {
-        int config[] = {3,4};
+    public SimpleTankNNControl(int config[],ActivationFunction activationFunction) {
         in = new double[config[0]];
         out = new double[config[config.length-1]];
-        nn = new NeuralNetwork(config,new ActivationFunction());
+        nn = new NeuralNetwork(config,activationFunction);
     }
 
     @Override

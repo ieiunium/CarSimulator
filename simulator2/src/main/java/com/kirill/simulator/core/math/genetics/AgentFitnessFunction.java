@@ -30,6 +30,8 @@ public class AgentFitnessFunction extends FitnessFunction {
 
     @Override
     public double fitness(Chromosome chromosome) {
+
+
         chromosomal.setChromosome(chromosome);
         agent.reset();
         double x1 = agent.getX();

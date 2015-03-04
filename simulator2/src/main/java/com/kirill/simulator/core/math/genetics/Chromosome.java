@@ -43,7 +43,7 @@ public class Chromosome  implements Comparable {
     public void crossOver(Chromosome mother,Chromosome father){
         final int border = random.nextInt(gens.length);
         int i;
-        int p = 1;
+        int p = 0;
         for(i = 0; i < border; i++){
             gens[i] = father.gens[i];
             if(random.nextInt(father.gens.length)<p){
