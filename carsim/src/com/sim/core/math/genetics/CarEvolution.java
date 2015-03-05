@@ -1,12 +1,8 @@
 package com.sim.core.math.genetics;
 
-import com.sim.core.CarControls.NNControlForSimpleTank;
-import com.sim.core.CarControls.SimpleIntegerNeuralNetworkControl;
 import com.sim.core.CarControls.SimpleNeuralNetworkControl;
 import com.sim.core.Sensors.Sharp;
 import com.sim.core.items.Car;
-import com.sim.core.items.SimpleTank;
-import com.sim.core.items.Tank;
 import com.sim.core.items.Track;
 import com.sim.core.math.neural.integer.IntegerNeuralNetwork;
 import com.sim.simulation.Game;
@@ -110,7 +106,7 @@ public class CarEvolution extends ChromosomeManager{
         adapter.startPaint();
 
         for(Chromosome i:list){
-            Car car = new Tank();
+            Car car = new Car();
             car.setMaxWheelsAngle(Math.PI / 3);
             car.setMaxSpeed(2);
             car.setLength(50);
@@ -140,13 +136,13 @@ public class CarEvolution extends ChromosomeManager{
         adapter.startPaint();
 
         for(Chromosome i:list){
-            Car car = new SimpleTank();
+            Car car = new Car();
             car.setMaxWheelsAngle(Math.PI / 3);
             car.setMaxSpeed(2);
             car.setLength(50);
             car.setWidth(3);
             //SimpleIntegerNeuralNetworkControl simpleNeuralNetworkControl = new SimpleIntegerNeuralNetworkControl();
-            NNControlForSimpleTank simpleNeuralNetworkControl= new NNControlForSimpleTank();
+            SimpleNeuralNetworkControl simpleNeuralNetworkControl = new SimpleNeuralNetworkControl();
             car.setCarControl(simpleNeuralNetworkControl);
             car.addSharp(new Sharp(5, 80, -Math.PI / 4));
             car.addSharp(new Sharp(5,80,0));
@@ -154,7 +150,7 @@ public class CarEvolution extends ChromosomeManager{
             car.setLeftOfPath(200000);
             car.setPos(50,200);
             car.setDir(0, 1);
-            int gens[] = new int[i.gens.length];
+            double gens[] = new double[i.gens.length];
 
             System.out.print(car.getId() + "[ ");
             for(int j = 0;j<gens.length;j++){
@@ -178,7 +174,7 @@ public class CarEvolution extends ChromosomeManager{
         game.setTrack(track);
 
         for(Chromosome i:list){
-            Car car = new Tank();
+            Car car = new Car();
             car.setMaxWheelsAngle(Math.PI / 3);
             car.setMaxSpeed(2);
             car.setLength(50);

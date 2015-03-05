@@ -1,13 +1,9 @@
 package com.runner;
 
-import com.sim.core.CarControls.NNControlForSimpleTank;
-import com.sim.core.CarControls.SimpleTankConsoleControl;
 import com.sim.core.interfaces.CarControl;
 import com.sim.core.items.Car;
 import com.sim.core.CarControls.SimpleNeuralNetworkControl;
 import com.sim.core.Sensors.Sharp;
-import com.sim.core.items.SimpleTank;
-import com.sim.core.items.Tank;
 import com.sim.core.math.genetics.CarEvolution;
 import com.sim.core.math.genetics.Chromosome;
 import com.sim.simulation.Game;
@@ -24,15 +20,14 @@ public class Main {
 	// write your code here
         //test();
         //testSimpleTank();
-        Car car = new SimpleTank();
+        Car car = new Car();
         car.setPos(50,50);
         car.setDir(1, 0);
         car.setMaxWheelsAngle(Math.PI / 3);
         car.setMaxSpeed(2);
         car.setLength(50);
         car.setWidth(3);
-        //SimpleNeuralNetworkControl simpleNeuralNetworkControl = new SimpleNeuralNetworkControl();
-        NNControlForSimpleTank simpleNeuralNetworkControl= new NNControlForSimpleTank();
+        SimpleNeuralNetworkControl simpleNeuralNetworkControl = new SimpleNeuralNetworkControl();
         car.setCarControl(simpleNeuralNetworkControl);
         car.addSharp(new Sharp(5, 80, -Math.PI / 4));
         car.addSharp(new Sharp(5,80,0));
@@ -52,58 +47,7 @@ public class Main {
         carEvolution.showAll2(chromosomeList, tr);
 
     }
-    public static void testSimpleTank(){
-        Car car = new SimpleTank();
-        car.setPos(50,50);
-        car.setDir(1, 0);
-        car.setMaxWheelsAngle(Math.PI / 3);
-        car.setMaxSpeed(1);
-        car.setLength(50);
-        car.setWidth(20);
-        //SimpleTankConsoleControl simpleCarControl = new SimpleTankConsoleControl();
-        NNControlForSimpleTank nnControlForSimpleTank= new NNControlForSimpleTank();
-        car.setCarControl(nnControlForSimpleTank);
-        car.addSharp(new Sharp(5, 80, -Math.PI / 4));
-        car.addSharp(new Sharp(5,80,0));
-        car.addSharp(new Sharp(5,80,+Math.PI/4));
-        car.setLeftOfPath(Integer.MAX_VALUE);
-        Track tr = new Track(600,300);
-        tr.loadFromFile("track.map");
-        Game game = new Game();
-        game.setTrack(tr);
-        game.addCar(car);
-        GameSwingVideoAdapter adapter = new GameSwingVideoAdapter(game);
-        adapter.startPaint();
-        game.startRealTimeSimulation();
-        game.waitEnd();
-        //System.out.println(simpleNeuralNetworkControl);
-        while (true);
-    }
     public static void test(){
-        Car car = new Tank();
-        car.setPos(50,50);
-        car.setDir(1, 0);
-        car.setMaxWheelsAngle(Math.PI / 3);
-        car.setMaxSpeed(2);
-        car.setLength(50);
-        car.setWidth(20);
-        SimpleCarControl simpleCarControl = new SimpleCarControl();
-        SimpleNeuralNetworkControl simpleNeuralNetworkControl = new SimpleNeuralNetworkControl();
-        car.setCarControl(simpleCarControl);
-        car.addSharp(new Sharp(5, 80, -Math.PI / 4));
-        car.addSharp(new Sharp(5,80,0));
-        car.addSharp(new Sharp(5,80,+Math.PI/4));
-        car.setLeftOfPath(Integer.MAX_VALUE);
-        Track tr = new Track(600,300);
-        tr.loadFromFile("track.map");
-        Game game = new Game();
-        game.setTrack(tr);
-        game.addCar(car);
-        GameSwingVideoAdapter adapter = new GameSwingVideoAdapter(game);
-        adapter.startPaint();
-        game.startRealTimeSimulation();
-        game.waitEnd();
-        System.out.println(simpleNeuralNetworkControl);
         while (true);
     }
     public static void editor(){
