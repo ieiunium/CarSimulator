@@ -1,8 +1,8 @@
 package com.swing;
 
-import com.sim.core.items.Car;
-import com.sim.core.interfaces.CarControl;
-import com.sim.core.items.Tank;
+import com.sim.core.agents.Car;
+import com.sim.core.agents.CarControl;
+import com.sim.core.math.genetics.Chromosome;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
  * Created by kirill-good on 4.2.15.
  */
 public class SimpleCarControl implements CarControl {
+    protected Car car;
     private JSlider sl1 = new JSlider(0,-100,100,0);
     private JSlider sl2 = new JSlider(1,-100,100,0);
     private JButton b1 = new JButton();
@@ -34,7 +35,7 @@ public class SimpleCarControl implements CarControl {
         frame.setVisible(true);
     }
     @Override
-    public void tick(Car car) {
+    public void tick() {
         frame.setTitle(sl1.getValue()+" "+sl2.getValue());
         /*if(car instanceof Tank) {
             //sl1.setOrientation(1);
@@ -42,7 +43,27 @@ public class SimpleCarControl implements CarControl {
             //sl1.setOrientation(0);
 
         }*/
-        car.setAction(sl1.getValue(),sl2.getValue());
+
+    }
+
+    @Override
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    @Override
+    public void setChromosome(Chromosome chromosome) {
+
+    }
+
+    @Override
+    public Chromosome getChromosome() {
+        return null;
+    }
+
+    @Override
+    public int getNumOfGens() {
+        return 0;
     }
 }
 

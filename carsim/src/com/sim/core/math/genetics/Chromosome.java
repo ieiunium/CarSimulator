@@ -1,5 +1,7 @@
 package com.sim.core.math.genetics;
 
+import com.sim.core.interfaces.Chromosomal;
+
 import java.util.Random;
 
 /**
@@ -15,6 +17,10 @@ public class Chromosome implements Comparable {
         for(int i=0;i<gens.length;i++){
             gens[i] = random.nextBoolean()?-1:1 * random.nextDouble();
         }
+    }
+
+    public Chromosome(double[] gens) {
+        this.gens = gens;
     }
     private Chromosome(){
 
@@ -81,5 +87,13 @@ public class Chromosome implements Comparable {
     }
     public double fitness(){
         return fitnessValue;
+    }
+
+    public double[] getGens() {
+        return gens;
+    }
+
+    public void setGens(double[] gens) {
+        this.gens = gens;
     }
 }

@@ -1,14 +1,18 @@
 package com.sim.core.CarControls;
 
-import com.sim.core.interfaces.CarControl;
-import com.sim.core.items.Car;
+import com.sim.core.agents.Car;
+import com.sim.core.agents.CarControl;
+import com.sim.core.interfaces.*;
 import com.sim.core.Sensors.Sharp;
+import com.sim.core.math.genetics.Chromosome;
 import com.sim.core.math.neural.NeuralNetwork;
+
 
 /**
  * Created by kirill-good on 5.2.15.
  */
 public class SimpleNeuralNetworkControl implements CarControl {
+    protected Car car;
     protected NeuralNetwork nn;
     protected double in[];
     protected double out[];
@@ -29,13 +33,14 @@ public class SimpleNeuralNetworkControl implements CarControl {
         out = new double[2];
     }
     @Override
-    public void tick(Car car) {
-        Sharp[] sharps = car.getSharps();
+    public void tick() {
+        Sharp[] sharps = car.getSharpManager().getSharps();
         in[0] = sharps[0].getValue();
         in[1] = sharps[1].getValue();
         in[2] = sharps[2].getValue();
         out = nn.getOut(in);
-        car.setAction((int) (out[0] * 100), (int) (out[1] * 100));
+        car.setSpeed( (int)(out[0]*100) );
+        car.setWheelsAngle( (int)(out[1]*100) );
     }
 
     @Override
@@ -43,5 +48,25 @@ public class SimpleNeuralNetworkControl implements CarControl {
         return "SimpleNeuralNetworkControl{" +
                 "nn=" + nn +
                 '}';
+    }
+
+    @Override
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    @Override
+    public void setChromosome(Chromosome chromosome) {
+        nn.setGens(chromosome.getGens());
+    }
+
+    @Override
+    public Chromosome getChromosome() {
+        return new Chromosome(nn.getGens().clone());
+    }
+
+    @Override
+    public int getNumOfGens() {
+        return nn.numOfGens();
     }
 }

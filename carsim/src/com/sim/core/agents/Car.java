@@ -1,18 +1,18 @@
-package com.sim.core.items;
+package com.sim.core.agents;
 
-import com.sim.core.interfaces.CarControl;
-import com.sim.core.interfaces.OnlyReadableTrack;
+import com.sim.core.interfaces.*;
 import com.sim.core.CarControls.SimpleNeuralNetworkControl;
 import com.sim.core.Sensors.Sharp;
 import com.sim.core.Sensors.SharpManager;
 import com.sim.core.math.Vector2f;
+import com.sim.core.math.genetics.Chromosome;
 
 import java.awt.*;
 
 /**
  * Created by kirill-good on 3.2.15.
  */
-public class Car{
+public class Car implements Agent,Chromosomal{
     protected static int carId=0;
     protected int id = carId++;
     protected Vector2f pos = new Vector2f(0,0)
@@ -27,8 +27,9 @@ public class Car{
     protected SharpManager sharpManager = new SharpManager();
     protected OnlyReadableTrack track = null;
     protected double leftOfPath = 100;
+    protected ResetFunction resetFunction;
     public Car(){
-
+        this.carControl.setCar(this);
     }
     public Car(Vector2f pos
             , Vector2f dir
@@ -57,19 +58,18 @@ public class Car{
             this.width = width;
         }
         this.carControl=carControl;
+        this.carControl.setCar(this);
         if(carControl==null) {
             this.carControl = new SimpleNeuralNetworkControl();
         }
     }
-
     public void tick(){
         sharpManager.tick(track,pos,dir,length);
-        carControl.tick(this);
+        carControl.tick();
         double realSpeed = speed*maxSpeed/100.0;
         if(leftOfPath < Math.abs(realSpeed)){
             realSpeed = leftOfPath;
         }
-
         leftOfPath -= Math.abs(realSpeed);
         double k = 0.2;
         double skidding = (k + (1-k) * Math.exp(Math.abs(speed)/100.0));
@@ -100,10 +100,6 @@ public class Car{
         }
 
     }
-    public void setAction(int in1,int in2){
-        this.setWheelsAngle(in1);
-        this.setSpeed(in2);
-    }
     public double getRealSpeed(int x){
         return x*maxSpeed/100.0;
     }
@@ -121,6 +117,7 @@ public class Car{
 
     public void setCarControl(CarControl carControl) {
         this.carControl = carControl;
+        this.carControl.setCar(this);
     }
 
     public int getSpeed() {
@@ -134,11 +131,9 @@ public class Car{
             this.speed = speed;
         }
     }
-
     public int getWheelsAngle() {
         return wheelsAngle;
     }
-
     public void setWheelsAngle(int wheelsAngle) {
         if(Math.abs(wheelsAngle)>100){
             this.wheelsAngle = Integer.signum(wheelsAngle) * 100;
@@ -146,57 +141,51 @@ public class Car{
             this.wheelsAngle = wheelsAngle;
         }
     }
-
     public double getMaxWheelsAngle() {
         return maxWheelsAngle;
     }
-
     public void setMaxWheelsAngle(double maxWheelsAngle) {
         this.maxWheelsAngle = maxWheelsAngle;
     }
-
     public int getLength() {
         return length;
     }
-
     public void setLength(int length) {
         this.length = length;
     }
-
     public int getWidth() {
         return width;
     }
-
     public void setWidth(int width) {
         this.width = width;
     }
-
     public double getMaxSpeed() {
         return maxSpeed;
     }
-
     public void setMaxSpeed(double maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
-
     public Vector2f getPos() {
         return pos;
     }
-
     public void setPos(double x,double y) {
         this.pos.setX(x);
         this.pos.setY(y);
     }
-
     public Vector2f getDir() {
         return dir;
     }
-
     public void setDir(double x,double y) {
         this.dir.setX(x);
         this.dir.setY(y);
         this.dir.normalization();
     }
+
+    @Override
+    public SharpManager getSharpManager() {
+        return sharpManager;
+    }
+
     public double getHeadX() {
         return pos.getX()+dir.getX()*length;
     }
@@ -206,6 +195,22 @@ public class Car{
     public void addSharp(Sharp sharp){
         sharpManager.addSharp(sharp);
     }
+
+    @Override
+    public double getX() {
+        return pos.getX();
+    }
+
+    @Override
+    public double getY() {
+        return pos.getY();
+    }
+
+    @Override
+    public void reset() {
+        resetFunction.reset(this);
+    }
+
     public void removeSharp(Sharp sharp){
         sharpManager.removeSharp(sharp);
     }
@@ -220,6 +225,15 @@ public class Car{
         this.track = track;
     }
 
+    @Override
+    public boolean collision() {
+        int x1 = (int)getX();
+        int y1 = (int)getY();
+        int x2 = (int)getHeadX();
+        int y2 = (int)getHeadY();
+        return track.getPix(x1,y1) || track.getPix(x2,y2);
+    }
+
     public int getId() {
         return id;
     }
@@ -231,5 +245,20 @@ public class Car{
         int y2 = (int)this.getHeadY() + DY;
         g.drawString(String.valueOf(id),(x1+x2)/2,(y1+y2)/2);
         g.drawLine(x1,y1,x2,y2);
+    }
+
+    @Override
+    public void setChromosome(Chromosome chromosome) {
+        carControl.setChromosome(chromosome);
+    }
+
+    @Override
+    public Chromosome getChromosome() {
+        return carControl.getChromosome();
+    }
+
+    @Override
+    public int getNumOfGens() {
+        return carControl.getNumOfGens();
     }
 }

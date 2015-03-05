@@ -2,7 +2,7 @@ package com.sim.core.math.genetics;
 
 import com.sim.core.CarControls.SimpleNeuralNetworkControl;
 import com.sim.core.Sensors.Sharp;
-import com.sim.core.items.Car;
+import com.sim.core.agents.Car;
 import com.sim.core.items.Track;
 import com.sim.core.math.neural.integer.IntegerNeuralNetwork;
 import com.sim.simulation.Game;
@@ -10,7 +10,6 @@ import com.swing.GameSwingVideoAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -196,7 +195,7 @@ public class CarEvolution extends ChromosomeManager{
         List<Car> l = game.getCars();
         list.clear();
         for(Car i:l){
-            if(game.collision(i)){
+            if(i.collision()){
 
             }else{
                 double p[] = ((SimpleNeuralNetworkControl) i.getCarControl()).getGens();

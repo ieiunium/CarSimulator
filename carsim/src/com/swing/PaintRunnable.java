@@ -1,6 +1,6 @@
 package com.swing;
 
-import com.sim.core.items.Car;
+import com.sim.core.agents.Car;
 import com.sim.simulation.Game;
 import com.sim.core.items.Track;
 

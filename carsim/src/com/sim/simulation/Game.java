@@ -1,6 +1,6 @@
 package com.sim.simulation;
 
-import com.sim.core.items.Car;
+import com.sim.core.agents.Car;
 import com.sim.core.items.Track;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class Game{
     public void tick(){
         boolean carsAreDead = true;
         for(Car car:cars){
-            if(!collision(car)) {
+            if(!car.collision()) {
                 car.tick();
                 carsAreDead = false;
             }
@@ -53,18 +53,6 @@ public class Game{
         if(carsAreDead){
             mainThread.stop();
         }
-    }
-
-    public boolean collision(Car car){
-        int x1 = (int)car.getPos().getX();
-        int y1 = (int)car.getPos().getY();
-        int x2 = (int)car.getHeadX();
-        int y2 = (int)car.getHeadY();
-        boolean res=false;
-        if( track.getPix(x1,y1) || track.getPix(x2,y2)){
-            res=true;
-        }
-        return res;
     }
 
     public Track getTrack() {

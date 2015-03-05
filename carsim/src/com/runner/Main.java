@@ -1,15 +1,12 @@
 package com.runner;
 
-import com.sim.core.interfaces.CarControl;
-import com.sim.core.items.Car;
+import com.sim.core.agents.Car;
 import com.sim.core.CarControls.SimpleNeuralNetworkControl;
 import com.sim.core.Sensors.Sharp;
 import com.sim.core.math.genetics.CarEvolution;
 import com.sim.core.math.genetics.Chromosome;
 import com.sim.simulation.Game;
 import com.sim.core.items.Track;
-import com.swing.GameSwingVideoAdapter;
-import com.swing.SimpleCarControl;
 import com.swing.TrackEditor;
 
 import java.util.List;
@@ -21,7 +18,7 @@ public class Main {
         //test();
         //testSimpleTank();
         Car car = new Car();
-        car.setPos(50,50);
+        car.setPos(50, 50);
         car.setDir(1, 0);
         car.setMaxWheelsAngle(Math.PI / 3);
         car.setMaxSpeed(2);
@@ -31,7 +28,7 @@ public class Main {
         car.setCarControl(simpleNeuralNetworkControl);
         car.addSharp(new Sharp(5, 80, -Math.PI / 4));
         car.addSharp(new Sharp(5,80,0));
-        car.addSharp(new Sharp(5,80,+Math.PI/4));
+        car.addSharp(new Sharp(5, 80, +Math.PI / 4));
         car.setLeftOfPath(530);
         Track tr = new Track(600,300);
         tr.loadFromFile("g2.map");
