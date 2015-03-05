@@ -1,10 +1,7 @@
-package com.sim.core.agents;
+package com.sim.core.agents.car;
 
-import com.sim.core.agents.Car;
 import com.sim.core.interfaces.AgentControl;
 import com.sim.core.interfaces.Chromosomal;
-import sun.management.*;
-import sun.management.Agent;
 
 /**
  * Created by kirill-good on 4.2.15.

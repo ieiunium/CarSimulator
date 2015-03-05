@@ -1,8 +1,5 @@
-package com.sim.core.CarControls;
+package com.sim.core.agents.car;
 
-import com.sim.core.agents.Car;
-import com.sim.core.agents.CarControl;
-import com.sim.core.interfaces.*;
 import com.sim.core.Sensors.Sharp;
 import com.sim.core.math.genetics.Chromosome;
 import com.sim.core.math.neural.NeuralNetwork;
@@ -40,7 +37,7 @@ public class SimpleNeuralNetworkControl implements CarControl {
         in[2] = sharps[2].getValue();
         out = nn.getOut(in);
         car.setSpeed( (int)(out[0]*100) );
-        car.setWheelsAngle( (int)(out[1]*100) );
+        car.setWheelsAngle((int) (out[1] * 100));
     }
 
     @Override

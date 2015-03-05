@@ -1,6 +1,8 @@
 package com.sim.core.math.genetics;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by kirill-good on 11.2.15.
@@ -8,15 +10,17 @@ import java.util.Arrays;
 public class ChromosomeManager {
 
     protected Chromosome chromosomes[] = null;
-    public ChromosomeManager(final int numberOfChromosome,int gensPerChromosome){
+    protected FitnessFunction fitnessFunction;
+
+    public ChromosomeManager(final int numberOfChromosome,int gensPerChromosome,FitnessFunction fitnessFunction){
+        this.fitnessFunction = fitnessFunction;
         chromosomes = new Chromosome[numberOfChromosome];
         for(int i = 0;i< numberOfChromosome;i++){
             chromosomes[i]= new Chromosome(gensPerChromosome);
+            chromosomes[i].setFitnessFunction(fitnessFunction);
         }
     }
-    public ChromosomeManager(Chromosome chromosomes[]){
-        this.chromosomes = chromosomes;
-    }
+
     public void evolution(int steps){
 
         Chromosome children[] = chromosomes.clone();

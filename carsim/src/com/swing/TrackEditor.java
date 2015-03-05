@@ -1,6 +1,6 @@
 package com.swing;
 
-import com.sim.core.items.Track;
+import com.sim.simulation.Track;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +8,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
 
 /**
  * Created by kirill-good on 4.2.15.

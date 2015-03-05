@@ -1,4 +1,4 @@
-package com.sim.core.math.neural;
+package com.sim.core.math.neural.functions;
 
 /**
  * Created by kirill-good on 10.2.15.

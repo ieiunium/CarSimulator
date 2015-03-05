@@ -1,7 +1,6 @@
 package com.sim.simulation;
 
-import com.sim.core.agents.Car;
-import com.sim.core.items.Track;
+import com.sim.core.agents.car.Car;
 
 import java.util.ArrayList;
 import java.util.List;

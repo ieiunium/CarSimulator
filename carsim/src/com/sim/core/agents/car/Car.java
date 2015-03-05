@@ -1,7 +1,6 @@
-package com.sim.core.agents;
+package com.sim.core.agents.car;
 
 import com.sim.core.interfaces.*;
-import com.sim.core.CarControls.SimpleNeuralNetworkControl;
 import com.sim.core.Sensors.Sharp;
 import com.sim.core.Sensors.SharpManager;
 import com.sim.core.math.Vector2f;

@@ -1,5 +1,7 @@
 package com.sim.core.math.neural;
 
+import com.sim.core.math.neural.functions.ActivationFunction;
+
 import java.util.Random;
 
 /**
