@@ -47,8 +47,10 @@ public class Main {
         fitnessFunction.setCar(car);
         fitnessFunction.setGame(game);
         fitnessFunction.setSimpleNeuralNetworkControl(simpleNeuralNetworkControl);
+        fitnessFunction.setTresHold(600);
+        fitnessFunction.setTickLimit(2000);
 
-        ChromosomeManager chromosomeManager = new ChromosomeManager(4000,car.getNumOfGens(),fitnessFunction);
+        ChromosomeManager chromosomeManager = new ChromosomeManager(1000,car.getNumOfGens(),fitnessFunction);
         chromosomeManager.evolution(5);
         List<Chromosome> chromosomeList = fitnessFunction.getChromosomeList();
         tr.loadFromFile("track.map");

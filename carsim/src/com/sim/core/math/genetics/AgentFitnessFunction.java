@@ -15,6 +15,9 @@ public class AgentFitnessFunction extends FitnessFunction{
     protected Game game;
     protected List<Chromosome> chromosomeList = new ArrayList<Chromosome>();
     protected SimpleNeuralNetworkControl simpleNeuralNetworkControl;
+    protected int tickLimit;
+    protected int tresHold;
+
     public double fitness(Chromosome chromosome){
         simpleNeuralNetworkControl.setGens(chromosome.gens);
         car.setPos(50,50);
@@ -24,18 +27,32 @@ public class AgentFitnessFunction extends FitnessFunction{
         car.setWheelsAngle(0);
         double x = car.getPos().getX();
         double y = car.getPos().getY();
-        game.startSimulation(2000);
+        game.startSimulation(tickLimit);
         game.waitEnd();
         double x1 = car.getPos().getX();
         double y1 = car.getPos().getY();
         double res = Math.hypot(x1-x,y1-y);
-        if(res>400){
+        if(res>tresHold){
             chromosomeList.add(chromosome.getCopy());
         }
         //System.out.println(Math.hypot(x1-x,y1-y));
         return res;
     }
+    public int getTickLimit() {
+        return tickLimit;
+    }
 
+    public void setTickLimit(int tickLimit) {
+        this.tickLimit = tickLimit;
+    }
+
+    public int getTresHold() {
+        return tresHold;
+    }
+
+    public void setTresHold(int tresHold) {
+        this.tresHold = tresHold;
+    }
     public Car getCar() {
         return car;
     }
