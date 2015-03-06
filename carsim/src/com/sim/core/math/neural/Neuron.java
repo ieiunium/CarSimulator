@@ -10,9 +10,10 @@ import java.util.Random;
 public class Neuron{
     protected double T;
     protected double w[];
-    protected ActivationFunction activationFunction = new ActivationFunction();
+    protected ActivationFunction activationFunction;
 
-    public Neuron(int n){
+    public Neuron(int n,ActivationFunction activationFunction){
+        this.activationFunction = activationFunction;
         Random random = new Random();
         w = new double[n];
         T = (random.nextBoolean()?1:-1) * random.nextDouble();

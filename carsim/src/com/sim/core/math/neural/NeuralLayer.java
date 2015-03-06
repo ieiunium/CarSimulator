@@ -1,5 +1,7 @@
 package com.sim.core.math.neural;
 
+import com.sim.core.math.neural.functions.ActivationFunction;
+
 /**
  * Created by kirill-good on 10.2.15.
  */
@@ -7,11 +9,11 @@ public class NeuralLayer {
     protected Neuron neuron[];
     protected double outs[];
 
-    public NeuralLayer(int in,int out){
+    public NeuralLayer(int in,int out,ActivationFunction activationFunction){
         neuron = new Neuron[out];
         outs = new double[out];
         for(int i = 0;i<neuron.length;i++){
-            neuron[i] = new Neuron(in);
+            neuron[i] = new Neuron(in,activationFunction);
             outs[i] = 0;
         }
     }

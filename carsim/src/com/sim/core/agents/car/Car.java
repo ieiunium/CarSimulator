@@ -22,13 +22,13 @@ public class Car implements Agent,Chromosomal{
     protected int width=10;
     protected int speed=0;
     protected double maxSpeed=5;
-    protected CarControl carControl = new SimpleNeuralNetworkControl();;
+    protected CarControl carControl;
     protected SharpManager sharpManager = new SharpManager();
     protected OnlyReadableTrack track = null;
     protected double leftOfPath = 100;
     protected ResetFunction resetFunction;
     public Car(){
-        this.carControl.setCar(this);
+
     }
     public Car(Vector2f pos
             , Vector2f dir
@@ -58,9 +58,6 @@ public class Car implements Agent,Chromosomal{
         }
         this.carControl=carControl;
         this.carControl.setCar(this);
-        if(carControl==null) {
-            this.carControl = new SimpleNeuralNetworkControl();
-        }
     }
     public void tick(){
         sharpManager.tick(track,pos,dir,length);

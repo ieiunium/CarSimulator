@@ -3,6 +3,7 @@ package com.sim.core.agents.car;
 import com.sim.core.Sensors.Sharp;
 import com.sim.core.math.genetics.Chromosome;
 import com.sim.core.math.neural.NeuralNetwork;
+import com.sim.core.math.neural.functions.ActivationFunction;
 
 
 /**
@@ -22,10 +23,9 @@ public class SimpleNeuralNetworkControl implements CarControl {
     public void setGens(double[] gens){
         nn.setGens(gens);
     }
-    public SimpleNeuralNetworkControl(){
+    public SimpleNeuralNetworkControl(int config[],ActivationFunction activationFunction){
 
-        int []config={3,2};
-        nn = new NeuralNetwork(config);
+        nn = new NeuralNetwork(config,activationFunction);
         in = new double[3];
         out = new double[2];
     }

@@ -6,6 +6,7 @@ import com.sim.core.Sensors.Sharp;
 import com.sim.core.math.genetics.AgentFitnessFunction;
 import com.sim.core.math.genetics.Chromosome;
 import com.sim.core.math.genetics.ChromosomeManager;
+import com.sim.core.math.neural.functions.ThActivationFunction;
 import com.sim.simulation.Game;
 import com.sim.simulation.Track;
 import com.swing.GameSwingVideoAdapter;
@@ -14,7 +15,7 @@ import com.swing.TrackEditor;
 import java.util.List;
 
 public class Main {
-
+    static int []config={3,2};
     public static void main(String[] args) {
 	// write your code here
         //test();
@@ -26,7 +27,8 @@ public class Main {
         car.setMaxSpeed(2);
         car.setLength(50);
         car.setWidth(3);
-        SimpleNeuralNetworkControl simpleNeuralNetworkControl = new SimpleNeuralNetworkControl();
+
+        SimpleNeuralNetworkControl simpleNeuralNetworkControl = new SimpleNeuralNetworkControl(config,new ThActivationFunction());
         car.setCarControl(simpleNeuralNetworkControl);
         car.addSharp(new Sharp(5, 80, -Math.PI / 4));
         car.addSharp(new Sharp(5,80,0));
@@ -43,8 +45,8 @@ public class Main {
         fitnessFunction.setGame(game);
         fitnessFunction.setSimpleNeuralNetworkControl(simpleNeuralNetworkControl);
 
-        ChromosomeManager chromosomeManager = new ChromosomeManager(400,car.getNumOfGens(),fitnessFunction);
-        chromosomeManager.evolution(10000);
+        ChromosomeManager chromosomeManager = new ChromosomeManager(4000,car.getNumOfGens(),fitnessFunction);
+        chromosomeManager.evolution(30);
         List<Chromosome> chromosomeList = fitnessFunction.getChromosomeList();
         tr.loadFromFile("track.map");
         //carEvolution.removeCrashed(chromosomeList,tr);
@@ -78,7 +80,7 @@ public class Main {
             car.setLength(50);
             car.setWidth(3);
             //SimpleIntegerNeuralNetworkControl simpleNeuralNetworkControl = new SimpleIntegerNeuralNetworkControl();
-            SimpleNeuralNetworkControl simpleNeuralNetworkControl = new SimpleNeuralNetworkControl();
+            SimpleNeuralNetworkControl simpleNeuralNetworkControl = new SimpleNeuralNetworkControl(config,new ThActivationFunction());
             car.setCarControl(simpleNeuralNetworkControl);
             car.addSharp(new Sharp(5, 80, -Math.PI / 4));
             car.addSharp(new Sharp(5,80,0));

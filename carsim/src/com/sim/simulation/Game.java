@@ -1,6 +1,7 @@
 package com.sim.simulation;
 
 import com.sim.core.agents.car.Car;
+import com.sim.core.interfaces.Agent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 public class Game{
 
 
-    private final List<Car> cars = new ArrayList<Car>();
+    private final List<Agent> agents = new ArrayList<Agent>();
     private Track track;
     private Thread mainThread;
 
@@ -43,9 +44,9 @@ public class Game{
     }
     public void tick(){
         boolean carsAreDead = true;
-        for(Car car:cars){
-            if(!car.collision()) {
-                car.tick();
+        for(Agent agent: agents){
+            if(!agent.collision()) {
+                agent.tick();
                 carsAreDead = false;
             }
         }
@@ -59,16 +60,16 @@ public class Game{
     }
     public void setTrack(Track track) {
         this.track = track;
-        for(Car car:cars){
-            car.setTrack(this.track);
+        for(Agent agent: agents){
+            agent.setTrack(this.track);
         }
     }
     public void addCar(Car car){
-        cars.add(car);
+        agents.add(car);
         car.setTrack(this.track);
     }
-    public List<Car> getCars() {
-        return cars;
+    public List<Agent> getAgents() {
+        return agents;
     }
 }
 

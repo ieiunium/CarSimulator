@@ -1,6 +1,7 @@
 package com.swing;
 
 import com.sim.core.agents.car.Car;
+import com.sim.core.interfaces.Agent;
 import com.sim.simulation.Game;
 import com.sim.simulation.Track;
 
@@ -15,7 +16,7 @@ public class PaintRunnable implements Runnable{
     public static final int DX =0;
     public static final int DY =30;
     private volatile Game game;
-    private volatile List<Car> cars;
+    private volatile List<Agent> agents;
     private JFrame frame;
     private Track track;
     private long millisPerTicks = 20;
@@ -23,7 +24,7 @@ public class PaintRunnable implements Runnable{
     public PaintRunnable(Game game, JFrame frame) {
         this.game = game;
         this.frame = frame;
-        cars = this.game.getCars();
+        agents = this.game.getAgents();
         track = game.getTrack();
     }
 
@@ -52,8 +53,8 @@ public class PaintRunnable implements Runnable{
                 g.drawOval(i+DX,j+DY,1,1);
             }
         }
-        for(Car car:cars){
-            car.paint(g,DX,DY);
+        for(Agent agent: agents){
+            agent.paint(g, DX, DY);
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.sim.core.math.neural;
 
+import com.sim.core.math.neural.functions.ActivationFunction;
+
 import java.util.Arrays;
 
 /**
@@ -9,10 +11,10 @@ public class NeuralNetwork {
     private NeuralLayer layer[];
     private double []gens;
     protected NeuralNetwork(){}
-    public NeuralNetwork(int config[]){
+    public NeuralNetwork(int config[],ActivationFunction activationFunction){
         layer = new NeuralLayer[config.length-1];
         for(int i=0;i<config.length-1;i++){
-            layer[i] = new NeuralLayer(config[i],config[i+1]);
+            layer[i] = new NeuralLayer(config[i],config[i+1],activationFunction);
         }
         gens = new double[numOfGens()];
     }
