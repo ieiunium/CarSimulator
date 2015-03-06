@@ -204,6 +204,8 @@ public class Car implements Agent,Chromosomal{
 
     @Override
     public void reset() {
+        this.speed = 0;
+        this.wheelsAngle = 0;
         resetFunction.reset(this);
     }
 

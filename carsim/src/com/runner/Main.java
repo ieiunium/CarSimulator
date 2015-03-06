@@ -4,6 +4,8 @@ import com.sim.core.agents.car.Car;
 import com.sim.core.agents.car.NNCarFactory;
 import com.sim.core.agents.car.SimpleNeuralNetworkControl;
 import com.sim.core.Sensors.Sharp;
+import com.sim.core.interfaces.Agent;
+import com.sim.core.interfaces.ResetFunction;
 import com.sim.core.math.genetics.AgentFitnessFunction;
 import com.sim.core.math.genetics.Chromosome;
 import com.sim.core.math.genetics.ChromosomeManager;
@@ -37,6 +39,14 @@ public class Main {
         car.addSharp(new Sharp(5,80,0));
         car.addSharp(new Sharp(5, 80, +Math.PI / 4));
         car.setLeftOfPath(530);
+        car.setResetFunction(new ResetFunction() {
+            @Override
+            public void reset(Agent agent) {
+                agent.setPos(50,50);
+                agent.setDir(1, 0);
+                agent.setLeftOfPath(1100);
+            }
+        });
         Track tr = new Track(600,300);
         tr.loadFromFile("g2.map");
         Game game = new Game();
@@ -44,9 +54,8 @@ public class Main {
         game.addCar(car);
         AgentFitnessFunction fitnessFunction = new AgentFitnessFunction();
 
-        fitnessFunction.setCar(car);
+        fitnessFunction.setAgent(car);
         fitnessFunction.setGame(game);
-        fitnessFunction.setSimpleNeuralNetworkControl(simpleNeuralNetworkControl);
         fitnessFunction.setTresHold(600);
         fitnessFunction.setTickLimit(2000);
 
