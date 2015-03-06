@@ -207,6 +207,11 @@ public class Car implements Agent,Chromosomal{
         resetFunction.reset(this);
     }
 
+    @Override
+    public void setResetFunction(ResetFunction resetFunction) {
+        this.resetFunction = resetFunction;
+    }
+
     public void removeSharp(Sharp sharp){
         sharpManager.removeSharp(sharp);
     }

@@ -1,4 +1,4 @@
-package com.sim.simulation;
+package com.sim.core.simulation;
 
 import com.sim.core.interfaces.OnlyReadableTrack;
 

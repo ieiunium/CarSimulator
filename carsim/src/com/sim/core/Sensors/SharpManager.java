@@ -12,6 +12,11 @@ import java.util.List;
 public class SharpManager {
     private List<Sharp> sharps = new ArrayList<Sharp>();
     private Sharp[] arrayOfSharps = {};
+    public void addSharp(List<Sharp> sharpList){
+        for(Sharp i: sharpList) {
+            sharps.add(i.getCopy());
+        }
+    }
     public void addSharp(Sharp sharp){
         sharps.add(sharp);
         makeArray();

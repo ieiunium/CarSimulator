@@ -1,14 +1,15 @@
 package com.runner;
 
 import com.sim.core.agents.car.Car;
+import com.sim.core.agents.car.NNCarFactory;
 import com.sim.core.agents.car.SimpleNeuralNetworkControl;
 import com.sim.core.Sensors.Sharp;
 import com.sim.core.math.genetics.AgentFitnessFunction;
 import com.sim.core.math.genetics.Chromosome;
 import com.sim.core.math.genetics.ChromosomeManager;
 import com.sim.core.math.neural.functions.ThActivationFunction;
-import com.sim.simulation.Game;
-import com.sim.simulation.Track;
+import com.sim.core.simulation.Game;
+import com.sim.core.simulation.Track;
 import com.swing.GameSwingVideoAdapter;
 import com.swing.TrackEditor;
 
@@ -20,6 +21,8 @@ public class Main {
 	// write your code here
         //test();
         //testSimpleTank();
+        //teachingNNCar();
+        //test();
         Car car = new Car();
         car.setPos(50, 50);
         car.setDir(1, 0);
@@ -46,13 +49,17 @@ public class Main {
         fitnessFunction.setSimpleNeuralNetworkControl(simpleNeuralNetworkControl);
 
         ChromosomeManager chromosomeManager = new ChromosomeManager(4000,car.getNumOfGens(),fitnessFunction);
-        chromosomeManager.evolution(30);
+        chromosomeManager.evolution(5);
         List<Chromosome> chromosomeList = fitnessFunction.getChromosomeList();
         tr.loadFromFile("track.map");
         //carEvolution.removeCrashed(chromosomeList,tr);
 
         showAll2(chromosomeList, tr);
 
+    }
+    public static void teachingNNCar(){
+        NNCarFactory nnCarFactory = new NNCarFactory();
+        //nnCarFactory.
     }
     public static void test(){
         while (true);

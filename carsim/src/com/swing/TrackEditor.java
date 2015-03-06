@@ -1,6 +1,6 @@
 package com.swing;
 
-import com.sim.simulation.Track;
+import com.sim.core.simulation.Track;
 
 import javax.swing.*;
 import java.awt.*;

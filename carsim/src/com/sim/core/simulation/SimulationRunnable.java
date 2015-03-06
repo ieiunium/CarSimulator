@@ -1,4 +1,4 @@
-package com.sim.simulation;
+package com.sim.core.simulation;
 
 /**
  * Created by kirill-good on 4.2.15.

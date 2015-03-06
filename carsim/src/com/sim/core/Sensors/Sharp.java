@@ -16,4 +16,7 @@ public class Sharp {
     public double getValue(){
         return value;
     }
+    public Sharp getCopy(){
+        return new Sharp(min,max,angle);
+    }
 }

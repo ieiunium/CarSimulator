@@ -2,7 +2,7 @@ package com.sim.core.math.genetics;
 
 import com.sim.core.agents.car.Car;
 import com.sim.core.agents.car.SimpleNeuralNetworkControl;
-import com.sim.simulation.Game;
+import com.sim.core.simulation.Game;
 
 import java.util.ArrayList;
 import java.util.List;

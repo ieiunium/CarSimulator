@@ -1,6 +1,6 @@
 package com.swing;
 
-import com.sim.simulation.Game;
+import com.sim.core.simulation.Game;
 
 import javax.swing.*;
 
