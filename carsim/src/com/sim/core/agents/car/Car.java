@@ -27,6 +27,7 @@ public class Car implements Agent,Chromosomal{
     protected OnlyReadableTrack track = null;
     protected double leftOfPath = 100;
     protected ResetFunction resetFunction;
+    protected Color color = Color.black;
     public Car(){
 
     }
@@ -242,6 +243,7 @@ public class Car implements Agent,Chromosomal{
     }
 
     public void paint(Graphics g,int DX,int DY){
+        g.setColor(color);
         int x1 = (int)this.getPos().getX() + DX;
         int y1 = (int)this.getPos().getY() + DY;
         int x2 = (int)this.getHeadX() + DX;
@@ -263,5 +265,13 @@ public class Car implements Agent,Chromosomal{
     @Override
     public int getNumOfGens() {
         return carControl.getNumOfGens();
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

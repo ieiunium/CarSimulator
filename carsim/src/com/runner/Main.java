@@ -16,6 +16,7 @@ import com.sim.core.simulation.Track;
 import com.swing.GameSwingVideoAdapter;
 import com.swing.TrackEditor;
 
+import java.awt.*;
 import java.util.List;
 
 public class Main {
@@ -33,11 +34,12 @@ public class Main {
         nnCarFactory.setLength(50);
         nnCarFactory.setWidth(3);
         nnCarFactory.setConfigNN(config);
-        nnCarFactory.setActivationFunction(new ActivationFunction());
+        nnCarFactory.setActivationFunction(new ThActivationFunction());
         nnCarFactory.getSharpList().add(new Sharp(5, 80, -Math.PI / 4));
         nnCarFactory.getSharpList().add(new Sharp(5,80,0));
         nnCarFactory.getSharpList().add(new Sharp(5, 80, +Math.PI / 4));
         nnCarFactory.setLeftOfPath(Integer.MAX_VALUE);
+        nnCarFactory.setColor(Color.RED);
         nnCarFactory.setResetFunction(new ResetFunction() {
             @Override
             public void reset(Agent agent) {
@@ -61,7 +63,7 @@ public class Main {
         chromosomeManager.evolution(1);
         List<Chromosome> chromosomeList = fitnessFunction.getChromosomeList();
         tr.loadFromFile("megatrack.map");
-        showAll(chromosomeList, tr,nnCarFactory);
+        showAll(chromosomeList, tr, nnCarFactory);
     }
     public static void test(){
         while (true);
