@@ -7,6 +7,7 @@ import com.sim.core.interfaces.ResetFunction;
 import com.sim.core.math.Vector2f;
 import com.sim.core.math.neural.functions.ActivationFunction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +24,7 @@ public class NNCarFactory implements AgentFactory{
     protected ResetFunction resetFunction;
     protected ActivationFunction activationFunction;
     protected int configNN[];
-    protected List<Sharp> sharpList;
+    protected List<Sharp> sharpList = new ArrayList<Sharp>();
     @Override
     public Agent getNewAgent() {
         Car car = new Car();
@@ -35,7 +36,7 @@ public class NNCarFactory implements AgentFactory{
         car.setWidth(width);
         car.setLeftOfPath(leftOfPath);
         car.setResetFunction(resetFunction);
-        car.setCarControl(new SimpleNeuralNetworkControl(configNN,activationFunction));
+        car.setCarControl(new SimpleNNCarControl(configNN,activationFunction));
         car.sharpManager.addSharp(sharpList);
         return car;
     }
@@ -124,6 +125,11 @@ public class NNCarFactory implements AgentFactory{
     }
 
 
+    public List<Sharp> getSharpList() {
+        return sharpList;
+    }
 
-
+    public void setSharpList(List<Sharp> sharpList) {
+        this.sharpList = sharpList;
+    }
 }

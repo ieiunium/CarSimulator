@@ -1,7 +1,5 @@
 package com.sim.core.math.genetics;
 
-import com.sim.core.agents.car.Car;
-import com.sim.core.agents.car.SimpleNeuralNetworkControl;
 import com.sim.core.interfaces.Agent;
 import com.sim.core.simulation.Game;
 

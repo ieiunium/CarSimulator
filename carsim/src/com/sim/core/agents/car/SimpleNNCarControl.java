@@ -9,7 +9,7 @@ import com.sim.core.math.neural.functions.ActivationFunction;
 /**
  * Created by kirill-good on 5.2.15.
  */
-public class SimpleNeuralNetworkControl implements CarControl {
+public class SimpleNNCarControl implements CarControl {
     protected Car car;
     protected NeuralNetwork nn;
     protected double in[];
@@ -23,7 +23,7 @@ public class SimpleNeuralNetworkControl implements CarControl {
     public void setGens(double[] gens){
         nn.setGens(gens);
     }
-    public SimpleNeuralNetworkControl(int config[],ActivationFunction activationFunction){
+    public SimpleNNCarControl(int config[], ActivationFunction activationFunction){
 
         nn = new NeuralNetwork(config,activationFunction);
         in = new double[3];

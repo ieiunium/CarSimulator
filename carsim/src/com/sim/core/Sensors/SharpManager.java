@@ -16,6 +16,7 @@ public class SharpManager {
         for(Sharp i: sharpList) {
             sharps.add(i.getCopy());
         }
+        makeArray();
     }
     public void addSharp(Sharp sharp){
         sharps.add(sharp);
