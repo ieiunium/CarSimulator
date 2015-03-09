@@ -5,18 +5,17 @@ package com.sim.core.Sensors;
  */
 public class Sharp {
     public final double max;
-    public final double min;
+    public final double min = 1;
     public final double angle;
     protected double value;
-    public Sharp(double min, double max, double angle) {
+    public Sharp(double max, double angle) {
         this.max = max;
-        this.min = min;
         this.angle = angle;
     }
     public double getValue(){
         return value;
     }
     public Sharp getCopy(){
-        return new Sharp(min,max,angle);
+        return new Sharp(max,angle);
     }
 }

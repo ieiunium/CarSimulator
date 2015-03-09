@@ -50,4 +50,20 @@ public class ChromosomeManager {
             chromosomes = tmp;
         }
     }
+
+    public Chromosome[] getChromosomes() {
+        return chromosomes;
+    }
+
+    public void setChromosomes(Chromosome[] chromosomes) {
+        this.chromosomes = chromosomes;
+    }
+
+    public FitnessFunction getFitnessFunction() {
+        return fitnessFunction;
+    }
+
+    public void setFitnessFunction(FitnessFunction fitnessFunction) {
+        this.fitnessFunction = fitnessFunction;
+    }
 }

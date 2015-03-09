@@ -2,6 +2,7 @@ package com.sim.core.math.genetics;
 
 import com.sim.core.interfaces.Agent;
 import com.sim.core.simulation.Game;
+import com.swing.GameSwingVideoAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,11 @@ public class AgentFitnessFunction extends FitnessFunction{
         double res = Math.hypot(x1-x,y1-y);
         if(res>tresHold){
             chromosomeList.add(chromosome.getCopy());
+            /*agent.reset();
+            GameSwingVideoAdapter gameSwingVideoAdapter = new GameSwingVideoAdapter(game);
+            gameSwingVideoAdapter.startPaint();
+            game.startRealTimeSimulation();
+            game.waitEnd();*/
         }
         //System.out.println(Math.hypot(x1-x,y1-y));
         return res;

@@ -15,15 +15,17 @@ public class Game{
     private final List<Agent> agents = new ArrayList<Agent>();
     private Track track;
     private Thread mainThread;
-
+    private int curTick;
     public Game(){
 
     }
     public void startSimulation(){
+        curTick = 0;
         mainThread = new Thread(new SimulationRunnable(this));
         mainThread.start();
     }
     public void startSimulation(int tickLimit){
+        curTick = 0;
         mainThread = new Thread(new SimulationRunnable(this,tickLimit));
         mainThread.start();
     }
@@ -35,10 +37,12 @@ public class Game{
         }
     }
     public void startRealTimeSimulation(){
+        curTick = 0;
         mainThread = new Thread(new RealTimeSimulationRunnable(this));
         mainThread.start();
     }
     public void startRealTimeSimulation(int tickLimit){
+        curTick = 0;
         mainThread = new Thread(new RealTimeSimulationRunnable(this, tickLimit));
         mainThread.start();
     }
@@ -47,12 +51,16 @@ public class Game{
         for(Agent agent: agents){
             if(!agent.collision()) {
                 agent.tick();
-                carsAreDead = false;
+                if(agent.getLeftOfPath()>0){
+                    carsAreDead = false;
+                }
             }
+
         }
         if(carsAreDead){
             mainThread.stop();
         }
+        curTick ++;
     }
 
     public Track getTrack() {
@@ -70,6 +78,10 @@ public class Game{
     }
     public List<Agent> getAgents() {
         return agents;
+    }
+
+    public int getCurTick() {
+        return curTick;
     }
 }
 

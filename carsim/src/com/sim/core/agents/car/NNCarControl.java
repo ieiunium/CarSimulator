@@ -9,7 +9,7 @@ import com.sim.core.math.neural.functions.ActivationFunction;
 /**
  * Created by kirill-good on 5.2.15.
  */
-public class SimpleNNCarControl implements CarControl {
+public class NNCarControl implements CarControl {
     protected Car car;
     protected NeuralNetwork nn;
     protected double in[];
@@ -23,18 +23,18 @@ public class SimpleNNCarControl implements CarControl {
     public void setGens(double[] gens){
         nn.setGens(gens);
     }
-    public SimpleNNCarControl(int config[], ActivationFunction activationFunction){
+    public NNCarControl(int config[], ActivationFunction activationFunction){
 
         nn = new NeuralNetwork(config,activationFunction);
-        in = new double[3];
-        out = new double[2];
+        in = new double[config[0]];
+        out = new double[config[config.length-1]];
     }
     @Override
     public void tick() {
         Sharp[] sharps = car.getSharpManager().getSharps();
-        in[0] = sharps[0].getValue();
-        in[1] = sharps[1].getValue();
-        in[2] = sharps[2].getValue();
+        for(int i = 0;i<sharps.length;i++){
+            in[i] = sharps[i].getValue();
+        }
         out = nn.getOut(in);
         car.setSpeed( (int)(out[0]*100) );
         car.setWheelsAngle((int) (out[1] * 100));

@@ -38,7 +38,7 @@ public class NNCarFactory implements AgentFactory{
         car.setWidth(width);
         car.setLeftOfPath(leftOfPath);
         car.setResetFunction(resetFunction);
-        car.setCarControl(new SimpleNNCarControl(configNN, activationFunction));
+        car.setCarControl(new NNCarControl(configNN, activationFunction));
         car.setColor(color);
         car.sharpManager.addSharp(sharpList);
         return car;
