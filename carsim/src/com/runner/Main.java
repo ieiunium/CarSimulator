@@ -4,6 +4,7 @@ import com.sim.core.agents.car.Car;
 import com.sim.core.agents.car.NNCarFactory;
 import com.sim.core.Sensors.Sharp;
 import com.sim.core.agents.tank.NNTankConrtol;
+import com.sim.core.agents.tank.NNTankFactory;
 import com.sim.core.agents.tank.Tank;
 import com.sim.core.agents.tank.TankState;
 import com.sim.core.interfaces.Agent;
@@ -37,21 +38,23 @@ public class Main {
         track.loadFromFile("g2.map");
         game.setTrack(track);
 
+        NNTankFactory nnTankFactory = new NNTankFactory();
 
-        Tank tank = new Tank();
-        tank.setWidth(10);
-        tank.setLength(50);
-        tank.setTankState(TankState.STOP);
-        tank.setPos(50,50);
-        tank.setDir(1,0);
+        //Tank tank = new Tank();
+        nnTankFactory.setWidth(10);
+        nnTankFactory.setLength(50);
+        nnTankFactory.setDirx(1);
+        nnTankFactory.setDiry(0);
+        nnTankFactory.setPosx(50);
+        nnTankFactory.setPosy(50);
         int []config={3,4};
-        NNTankConrtol nnTankConrtol = new NNTankConrtol(config,new ActivationFunction());
-        tank.setTankControl(nnTankConrtol);
-        tank.addSharp(new Sharp(80, -Math.PI / 4));
-        tank.addSharp(new Sharp(80, 0));
-        tank.addSharp(new Sharp(80, +Math.PI / 4));
-        tank.setColor(Color.BLACK);
-        tank.setResetFunction(new ResetFunction() {
+        nnTankFactory.setConfigNN(config);
+        nnTankFactory.setActivationFunction(new ActivationFunction());
+        nnTankFactory.getSharpList().add(new Sharp(80, -Math.PI / 4));
+        nnTankFactory.getSharpList().add(new Sharp(80, 0));
+        nnTankFactory.getSharpList().add(new Sharp(80, +Math.PI / 4));
+        nnTankFactory.setColor(Color.BLACK);
+        nnTankFactory.setResetFunction(new ResetFunction() {
             @Override
             public void reset(Agent agent) {
                 agent.setPos(50, 50);
@@ -59,6 +62,7 @@ public class Main {
                 agent.setLeftOfPath(900);
             }
         });
+        Tank tank = (Tank) nnTankFactory.getNewAgent();
         game.addAgent(tank);
 
         AgentFitnessFunction fitnessFunction = new AgentFitnessFunction();
