@@ -63,10 +63,25 @@ public class NeuralNetwork {
 
     @Override
     public String toString() {
-        getGens();
-        return "NeuralNetwork{" +
-                "gens=" + Arrays.toString(gens) +
-                '}';
+        StringBuilder sb = new StringBuilder("NN{");
+        for(NeuralLayer i: layer){
+            sb.append("L{");
+            for(Neuron j: i.neuron){
+                sb.append("N{");
+                sb.append("T=");
+                sb.append(j.T);
+                sb.append(" ");
+                sb.append("w[]={");
+                for(int k=0;k<j.w.length;k++){
+                    sb.append((int)(j.w[k]*10000));
+                    sb.append(" ");
+                }
+                sb.append("}} ");
+            }
+            sb.append("} ");
+        }
+        sb.append("} ");
+        return sb.toString();
     }
 }
 

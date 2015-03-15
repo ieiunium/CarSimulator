@@ -71,4 +71,9 @@ public class NNTankConrtol implements TankControl{
     public int getNumOfGens() {
         return nn.numOfGens();
     }
+
+    @Override
+    public String toString() {
+        return nn.toString();
+    }
 }

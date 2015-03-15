@@ -8,6 +8,7 @@ import com.sim.core.agents.tank.NNTankFactory;
 import com.sim.core.agents.tank.Tank;
 import com.sim.core.agents.tank.TankState;
 import com.sim.core.interfaces.Agent;
+import com.sim.core.interfaces.AgentFactory;
 import com.sim.core.interfaces.Chromosomal;
 import com.sim.core.interfaces.ResetFunction;
 import com.sim.core.math.genetics.AgentFitnessFunction;
@@ -28,8 +29,43 @@ import static java.lang.System.exit;
 
 public class Main {
     public static void main(String[] args) {
-        testTank();
-        teachingNNCar();
+        //testTank();
+        //test();
+        //teachingNNCar();
+        NNTankFactory nnTankFactory = new NNTankFactory();
+
+        //Tank tank = new Tank();
+        nnTankFactory.setWidth(10);
+        nnTankFactory.setLength(50);
+        nnTankFactory.setDirx(1);
+        nnTankFactory.setDiry(0);
+        nnTankFactory.setPosx(50);
+        nnTankFactory.setPosy(50);
+        int []config={3,4};
+        nnTankFactory.setAngleTurn(Math.PI/4);
+        nnTankFactory.setConfigNN(config);
+        nnTankFactory.setActivationFunction(new ActivationFunction());
+        nnTankFactory.getSharpList().add(new Sharp(80, -Math.PI / 4));
+        //nnTankFactory.getSharpList().add(new Sharp(80, -Math.PI / 2));
+        nnTankFactory.getSharpList().add(new Sharp(80, 0));
+        //nnTankFactory.getSharpList().add(new Sharp(80, +Math.PI / 2));
+        nnTankFactory.getSharpList().add(new Sharp(80, +Math.PI / 4));
+        nnTankFactory.setColor(Color.BLACK);
+        nnTankFactory.setResetFunction(new ResetFunction() {
+            @Override
+            public void reset(Agent agent) {
+                agent.setPos(50, 50);
+                agent.setDir(1, 0);
+                agent.setLeftOfPath(900);
+            }
+        });
+        Track track = new Track(0,0);
+        track.loadFromFile("g2.map");
+        Track track2 = new Track(0,0);
+        track2.loadFromFile("track.map");
+        //track2.loadFromPNG("g3.png");
+        List<Agent> agents = teachAgents(1000,1,nnTankFactory,track);
+        runAgents(agents,track2);
         test();
     }
     public static void testTank(){
@@ -70,7 +106,7 @@ public class Main {
         fitnessFunction.setGame(game);
         fitnessFunction.setTresHold(700);
         fitnessFunction.setTickLimit(2000);
-        ChromosomeManager chromosomeManager = new ChromosomeManager(10000,tank.getNumOfGens(),fitnessFunction);
+        ChromosomeManager chromosomeManager = new ChromosomeManager(5000,tank.getNumOfGens(),fitnessFunction);
         chromosomeManager.evolution(1);
 
         List<Chromosome> chromosomes = fitnessFunction.getChromosomeList();
@@ -160,6 +196,7 @@ public class Main {
         game.waitEnd();
     }
     public static void test(){
+        System.out.println("end");
         while (true);
     }
     public static void editor(){
@@ -179,6 +216,40 @@ public class Main {
         return res;
     }
 
+    public static List<Agent> teachAgents(int numOfAgents,int steps,AgentFactory agentFactory,Track track){
+        Game game = new Game();
+        game.setTrack(track);
+        Agent agent = agentFactory.getNewAgent();
+        AgentFitnessFunction fitnessFunction = new AgentFitnessFunction();
+        fitnessFunction.setAgent(agent);
+        fitnessFunction.setGame(game);
+        fitnessFunction.setTresHold(400);
+        fitnessFunction.setTickLimit(2000);
+        game.addAgent(agent);
+        ChromosomeManager chromosomeManager = new ChromosomeManager(numOfAgents,agent.getNumOfGens(),fitnessFunction);
+        chromosomeManager.evolution(steps);
+        List<Chromosome> chromosomes = fitnessFunction.getChromosomeList();
+        List<Agent> agents = new ArrayList<Agent>();
+        for(Chromosome i:chromosomes) {
+            Agent a = agentFactory.getNewAgent();
+            a.setChromosome(i);
+            agents.add(a);
+        }
+        return agents;
+    }
+    public static void runAgents(List<Agent> agents,Track track){
+        Game game = new Game();
+        game.setTrack(track);
+        GameSwingVideoAdapter adapter = new GameSwingVideoAdapter(game);
+        adapter.startPaint();
+        for(Agent i:agents){
+            game.addAgent(i);
+            i.setLeftOfPath(Integer.MAX_VALUE);
+            System.out.println(i);
+        }
+        game.startRealTimeSimulation();
+        game.waitEnd();
+    }
     public static void showAllCar(List<Chromosome> list,Track track, NNCarFactory nnCarFactory){
         System.out.println(list.size());
         Game game = new Game();

@@ -29,21 +29,48 @@ public class ChromosomeManager {
             for(Chromosome i: chromosomes){
                 i.calcFitness();
             }
+
             Arrays.sort(chromosomes);
             System.out.println(step + " " + chromosomes[0].fitness());
             int half = chromosomes.length / 2;
-            for (int i = 0; i < half; i++) {
+            for (int i = 0; i < chromosomes.length; i++) {
 
                 int i1 = Chromosome.random.nextInt(half);
                 int i2;
+                double s;
                 do{
                     i2 = Chromosome.random.nextInt(half);
                 }while (i1==i2);
                 Chromosome d1 = chromosomes[i1].getCopy();
                 Chromosome d2 = chromosomes[i2].getCopy();
-                Chromosome.crossOver(d1, d2);
-                children[i * 2] = d1;
-                children[i * 2 + 1] = d2;
+                children[i] = Chromosome.crossOver(d1, d2);
+                //System.out.println("\t"+ Chromosome.dist(d1,d2));
+            }
+            Chromosome tmp[] = children;
+            children = chromosomes;
+            chromosomes = tmp;
+        }
+    }
+
+    public void mutationOnly(int steps){
+        Chromosome children[] = chromosomes.clone();
+        //List<Chromosome> children = new LinkedList<Chromosome>();
+        for(int step = 0; step < steps; step++) {
+
+            for(Chromosome i: chromosomes){
+                i.calcFitness();
+            }
+
+            Arrays.sort(chromosomes);
+            System.out.println(step + " " + chromosomes[0].fitness());
+            int half = chromosomes.length / 2;
+
+            for (int i = 0; i < chromosomes.length; i++) {
+
+                int i1 = Chromosome.random.nextInt(half);
+                children[i] = chromosomes[i].getCopy();
+                //children[i].mutation();
+                System.out.println("\t"+ chromosomes[i].getFitnessValue());
             }
             Chromosome tmp[] = children;
             children = chromosomes;

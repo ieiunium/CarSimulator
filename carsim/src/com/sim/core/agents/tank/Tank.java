@@ -74,6 +74,12 @@ public class Tank implements Agent {
     }
 
     @Override
+    public String toString() {
+
+        return "{"+this.id+"; " + tankControl.toString() + " ]";
+    }
+
+    @Override
     public void setTrack(OnlyReadableTrack onlyReadableTrack) {
         this.track = onlyReadableTrack;
     }

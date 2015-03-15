@@ -37,36 +37,25 @@ public class Chromosome implements Comparable {
 
     public Chromosome getCopy(){
         Chromosome chromosome = new Chromosome();
-        chromosome.gens = this.gens.clone();
+        chromosome.gens = new double[this.gens.length];
+        for (int i = 0;i<gens.length;i++){
+            chromosome.gens[i] = this.gens[i];
+        }
+        chromosome.setFitnessFunction(this.fitnessFunction);
         return chromosome;
     }
-    public static void crossOver(Chromosome mother,Chromosome father){
-        if(mother.gens.length!=father.gens.length){
-            return;
+    public static Chromosome crossOver(Chromosome mother,Chromosome father){
+
+        double gens[] = new double[father.gens.length];
+        for(int i = 0; i < father.gens.length; i++){
+            if(random.nextBoolean()){
+                gens[i] = father.gens[i];
+                gens[i] = mother.gens[i];
+            }
         }
-        /*final int border = random.nextInt(mother.gens.length);
-        for(int i = 0; i < border; i++){
-            double  tmp = father.gens[i];
-            father.gens[i] = mother.gens[i];
-            mother.gens[i] = tmp;
-        }*/
-        /*for(int i = 0; i < father.gens.length; i++){
-            if(random.nextDouble()<0){
-                double  tmp = father.gens[i];
-                father.gens[i] = mother.gens[i];
-                mother.gens[i] = tmp;
-            }
-        }*/
-        /*for(int i = 0; i < father.gens.length; i++){
-            if(random.nextInt(father.gens.length)<10){
-                father.gens[i] = ( random.nextBoolean()?1:-1 ) * random.nextDouble();
-            }
-            if(random.nextInt(father.gens.length)<10){
-                mother.gens[i] = ( random.nextBoolean()?1:-1 ) * random.nextDouble();
-            }
-        }*/
-        //father.gens[random.nextInt(mother.gens.length)] = ( random.nextBoolean()?1:-1 ) * random.nextDouble();
-        //mother.gens[random.nextInt(mother.gens.length)] = ( random.nextBoolean()?1:-1 ) * random.nextDouble();
+        Chromosome res = new Chromosome(gens);
+        res.setFitnessFunction(mother.fitnessFunction);
+        return res;
     }
 
     @Override
@@ -102,5 +91,28 @@ public class Chromosome implements Comparable {
 
     public void setGens(double[] gens) {
         this.gens = gens;
+    }
+
+    public static double dist(Chromosome mother,Chromosome father){
+        double s = 0;
+        for(int i = 0 ; i< mother.gens.length;i++){
+            s += Math.pow(mother.gens[i] - father.gens[i],2);
+        }
+        return Math.sqrt(s);
+    }
+    public void mutation(){
+        for(int i = 0 ; i< gens.length;i++){
+            if(random.nextInt(gens.length)<1){
+                gens[i] += random.nextDouble()*0.2 - 0.1;
+            }
+        }
+    }
+
+    public double getFitnessValue() {
+        return fitnessValue;
+    }
+
+    public void setFitnessValue(double fitnessValue) {
+        this.fitnessValue = fitnessValue;
     }
 }

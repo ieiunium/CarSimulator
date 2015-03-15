@@ -2,6 +2,9 @@ package com.sim.core.simulation;
 
 import com.sim.core.interfaces.OnlyReadableTrack;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 
 /**
@@ -10,6 +13,11 @@ import java.io.*;
 public class Track implements OnlyReadableTrack {
     private boolean field[][];
     private int height, width;
+    public Track(){
+        this.height = 480;
+        this.width = 640;
+        clear();
+    }
     public Track(int width, int height){
         if(width<1){
             width=640;
@@ -91,5 +99,41 @@ public class Track implements OnlyReadableTrack {
     @Override
     public int getHeight() {
         return height;
+    }
+
+    public void saveToPNG(String fileName){
+        BufferedImage image = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
+        try {
+            image.getGraphics().clearRect(0,0,width,height);
+            for(int i = 0; i< height; i++){
+                for(int j = 0; j< width; j++){
+                    if(field[i][j]) {
+                        image.setRGB(j,i, Color.BLACK.getRGB());
+                    }else{
+                        image.setRGB(j,i, Color.WHITE.getRGB());
+                    }
+                }
+            }
+            ImageIO.write(image, "png", new File(fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void loadFromPNG(String fileName){
+        try {
+            BufferedImage image = ImageIO.read(new File(fileName));
+            height = image.getHeight();
+            width = image.getWidth();
+            clear();
+            for(int i=0;i<height;i++){
+                for(int j = 0;j< width;j++){
+                    field[i][j] = image.getRGB(j,i)==Color.BLACK.getRGB();
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

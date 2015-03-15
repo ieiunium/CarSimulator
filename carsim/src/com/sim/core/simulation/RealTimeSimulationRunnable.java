@@ -40,7 +40,7 @@ public class RealTimeSimulationRunnable implements Runnable{
 
                 ticks++;
                 time = System.currentTimeMillis()-t0;
-                //System.out.println((time/ticks));
+                //System.out.println((ticks));
                 try {
                     Thread.sleep(millisPerTicks,0);
                 } catch (InterruptedException e) {
