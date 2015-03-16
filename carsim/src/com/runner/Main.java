@@ -29,12 +29,10 @@ import static java.lang.System.exit;
 
 public class Main {
     public static void main(String[] args) {
-        //testTank();
-        //test();
+        testTank2();test();
         //teachingNNCar();
         NNTankFactory nnTankFactory = new NNTankFactory();
 
-        //Tank tank = new Tank();
         nnTankFactory.setWidth(10);
         nnTankFactory.setLength(50);
         nnTankFactory.setDirx(1);
@@ -46,9 +44,7 @@ public class Main {
         nnTankFactory.setConfigNN(config);
         nnTankFactory.setActivationFunction(new ActivationFunction());
         nnTankFactory.getSharpList().add(new Sharp(80, -Math.PI / 4));
-        //nnTankFactory.getSharpList().add(new Sharp(80, -Math.PI / 2));
         nnTankFactory.getSharpList().add(new Sharp(80, 0));
-        //nnTankFactory.getSharpList().add(new Sharp(80, +Math.PI / 2));
         nnTankFactory.getSharpList().add(new Sharp(80, +Math.PI / 4));
         nnTankFactory.setColor(Color.BLACK);
         nnTankFactory.setResetFunction(new ResetFunction() {
@@ -64,10 +60,11 @@ public class Main {
         Track track2 = new Track(0,0);
         track2.loadFromFile("track.map");
         //track2.loadFromPNG("g3.png");
-        List<Agent> agents = teachAgents(1000,1,nnTankFactory,track);
+        List<Agent> agents = teachAgents(2000,1,nnTankFactory,track);
         runAgents(agents,track2);
         test();
     }
+
     public static void testTank(){
         Game game = new Game();
         Track track = new Track(1,1);
@@ -121,6 +118,54 @@ public class Main {
             game.waitEnd();
         }
 
+        test();
+    }
+    public static void testTank2(){
+        Game game = new Game();
+        Track track = new Track(1,1);
+        track.loadFromFile("track.map");
+        game.setTrack(track);
+        NNTankFactory nnTankFactory = new NNTankFactory();
+
+        nnTankFactory.setWidth(10);
+        nnTankFactory.setLength(20);
+        nnTankFactory.setDirx(1);
+        nnTankFactory.setDiry(0);
+        nnTankFactory.setPosx(50);
+        nnTankFactory.setPosy(50);
+        int []config={3,4};
+        nnTankFactory.setAngleTurn(Math.PI/3);
+        nnTankFactory.setMaxSpeed(1);
+        nnTankFactory.setConfigNN(config);
+        nnTankFactory.setActivationFunction(new ActivationFunction());
+        nnTankFactory.getSharpList().add(new Sharp(30, -Math.PI / 4));
+        nnTankFactory.getSharpList().add(new Sharp(30, 0));
+        nnTankFactory.getSharpList().add(new Sharp(30, +Math.PI / 4));
+        nnTankFactory.setColor(Color.BLACK);
+        nnTankFactory.setResetFunction(new ResetFunction() {
+            @Override
+            public void reset(Agent agent) {
+                agent.setPos(50, 50);
+                agent.setDir(1, 0);
+                agent.setLeftOfPath(900);
+            }
+        });
+        Tank tank = (Tank) nnTankFactory.getNewAgent();
+
+        double g[] = {0.3073595417361915, 0.07170497651057406, 0.9378396317173809, -1.0, -1.0, 0.35614603379139276, 0.8921644606814901, -1.0, 0.0407533859678717, 0.791787444526719, -1.0, 0.18696419762406913, -1.0, 0.8634842194193174, 0.28726041280780945, -1.0};
+        for (int i = 0; i < g.length; i++) {
+            g[i] = (int)(g[i]*10);
+        }
+        tank.setChromosome(new Chromosome(g));
+
+        game.addAgent(tank);
+
+        GameSwingVideoAdapter gameSwingVideoAdapter = new GameSwingVideoAdapter(game);
+        System.out.println(tank);
+        tank.setLeftOfPath(Integer.MAX_VALUE);
+        gameSwingVideoAdapter.startPaint();
+        game.startRealTimeSimulation(1000000);
+        game.waitEnd();
         test();
     }
     public static void teachingNNCar(){
@@ -223,7 +268,7 @@ public class Main {
         AgentFitnessFunction fitnessFunction = new AgentFitnessFunction();
         fitnessFunction.setAgent(agent);
         fitnessFunction.setGame(game);
-        fitnessFunction.setTresHold(400);
+        fitnessFunction.setTresHold(500);
         fitnessFunction.setTickLimit(2000);
         game.addAgent(agent);
         ChromosomeManager chromosomeManager = new ChromosomeManager(numOfAgents,agent.getNumOfGens(),fitnessFunction);
@@ -243,11 +288,17 @@ public class Main {
         GameSwingVideoAdapter adapter = new GameSwingVideoAdapter(game);
         adapter.startPaint();
         for(Agent i:agents){
+            i.reset();
             game.addAgent(i);
             i.setLeftOfPath(Integer.MAX_VALUE);
-            System.out.println(i);
+            System.out.print(((Tank) i).getId() + "{");
+            double g[] = i.getChromosome().getGens();
+            for(int j=0;j<g.length;j++){
+                System.out.print(g[j]+", ");
+            }
+            System.out.println("}");
         }
-        game.startRealTimeSimulation();
+        game.startRealTimeSimulation(1000);
         game.waitEnd();
     }
     public static void showAllCar(List<Chromosome> list,Track track, NNCarFactory nnCarFactory){

@@ -58,6 +58,8 @@ public class NeuralNetwork {
                     }
                 }
             }
+        }else{
+            throw new RuntimeException("bad gen's length");
         }
     }
 
@@ -69,7 +71,7 @@ public class NeuralNetwork {
             for(Neuron j: i.neuron){
                 sb.append("N{");
                 sb.append("T=");
-                sb.append(j.T);
+                sb.append(j.T*10000);
                 sb.append(" ");
                 sb.append("w[]={");
                 for(int k=0;k<j.w.length;k++){
@@ -80,7 +82,13 @@ public class NeuralNetwork {
             }
             sb.append("} ");
         }
-        sb.append("} ");
+        sb.append("}+{ ");
+        double g[] = getGens();
+        for(int i=0;i<g.length;i++){
+            sb.append(g[i]);
+            sb.append(", ");
+        }
+        sb.append("}");
         return sb.toString();
     }
 }

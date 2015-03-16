@@ -96,10 +96,10 @@ public class Tank implements Agent {
     @Override
     public void paint(Graphics g, int dx, int dy) {
         g.setColor(color);
-        int x1 = (int)(this.pos.getX() + this.dir.getX() * length*0.5);
-        int y1 = (int)(this.pos.getY() + this.dir.getY() * length*0.5);
-        int x2 = (int)(this.pos.getX() - this.dir.getX() * length*0.5);
-        int y2 = (int)(this.pos.getY() - this.dir.getY() * length*0.5);
+        int x1 = dx+(int)(this.pos.getX() + this.dir.getX() * length*0.5);
+        int y1 = dy+(int)(this.pos.getY() + this.dir.getY() * length*0.5);
+        int x2 = dx+(int)(this.pos.getX() - this.dir.getX() * length*0.5);
+        int y2 = dy+(int)(this.pos.getY() - this.dir.getY() * length*0.5);
         g.drawString(String.valueOf(id),dx + (x1+x2)/2,dy + (y1+y2)/2);
         g.drawLine(x1,y1,x2,y2);
     }
@@ -233,5 +233,9 @@ public class Tank implements Agent {
 
     public OnlyReadableTrack getTrack() {
         return track;
+    }
+
+    public int getId() {
+        return id;
     }
 }
