@@ -39,7 +39,7 @@ public class AgentServices {
         }
         return agents;
     }
-    public static void runAgents(List<Agent> agents,Track track){
+    public static void runAgents(int tickLimit,List<Agent> agents,Track track){
         Game game = new Game();
         game.setTrack(track);
         GameSwingVideoAdapter adapter = new GameSwingVideoAdapter(game);
@@ -48,14 +48,8 @@ public class AgentServices {
             i.reset();
             game.addAgent(i);
             i.setLeftOfPath(Integer.MAX_VALUE);
-            System.out.print(((Tank) i).getId() + "{");
-            double g[] = i.getChromosome().getGens();
-            for(int j=0;j<g.length;j++){
-                System.out.print(g[j]+", ");
-            }
-            System.out.println("}");
         }
-        game.startRealTimeSimulation(1000);
+        game.startRealTimeSimulation(tickLimit);
         game.waitEnd();
     }
 

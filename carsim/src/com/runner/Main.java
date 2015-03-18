@@ -30,7 +30,48 @@ import static java.lang.System.exit;
 
 public class Main {
     public static void main(String[] args) {
-        testTank2();
+        //testTank2();
+        testCar2();
+    }
+    public static void testCar2(){
+
+        NNCarFactory nnCarFactory = new NNCarFactory();
+        nnCarFactory.setPos(50,50);
+        nnCarFactory.setDir(1, 0);
+        nnCarFactory.setMaxWheelsAngle(Math.PI / 3);
+        nnCarFactory.setMaxSpeed(2);
+        nnCarFactory.setLength(50);
+        nnCarFactory.setWidth(3);
+        int []config={3,2};
+        nnCarFactory.setConfigNN(config);
+        nnCarFactory.setColor(Color.RED);
+        nnCarFactory.setActivationFunction(new ActivationFunction());
+        nnCarFactory.getSharpList().add(new Sharp(80, -Math.PI / 4));
+        nnCarFactory.getSharpList().add(new Sharp(80,0));
+        nnCarFactory.getSharpList().add(new Sharp(80, +Math.PI / 4));
+        nnCarFactory.setLeftOfPath(Integer.MAX_VALUE);
+        nnCarFactory.setResetFunction(new ResetFunction() {
+            @Override
+            public void reset(Agent agent) {
+                agent.setPos(50,50);
+                agent.setDir(1, 0);
+                agent.setLeftOfPath(1100);
+            }
+        });
+
+        Track track = new Track(0,0);
+        //track.loadFromFile("g2.map");
+        track.loadFromPNG("g3.png");
+        Track track2 = new Track(0,0);
+        track2.loadFromFile("track.map");
+        //track2.loadFromPNG("g3.png");
+        List<Agent> agents = teachAgents(900,10, 20, nnCarFactory, track);
+        int []config2={3,20,2};
+        nnCarFactory.setConfigNN(config2);
+        nnCarFactory.setActivationFunction(new ThActivationFunction());
+        nnCarFactory.setColor(Color.GREEN);
+        agents.addAll(teachAgents(900,10, 150, nnCarFactory, track));
+        runAgents(10000, agents, track2);
     }
     public static void testTank2(){
         NNTankFactory nnTankFactory = new NNTankFactory();
@@ -41,7 +82,7 @@ public class Main {
         nnTankFactory.setPosx(50);
         nnTankFactory.setPosy(50);
         int []config={3,4};
-        nnTankFactory.setAngleTurn(Math.PI/4);
+        nnTankFactory.setAngleTurn(Math.PI/8);
         nnTankFactory.setConfigNN(config);
         nnTankFactory.setActivationFunction(new ActivationFunction());
         nnTankFactory.getSharpList().add(new Sharp(80, -Math.PI / 4));
@@ -59,10 +100,10 @@ public class Main {
         Track track = new Track(0,0);
         track.loadFromFile("g2.map");
         Track track2 = new Track(0,0);
-        track2.loadFromFile("track.map");
-        //track2.loadFromPNG("g3.png");
-        List<Agent> agents = teachAgents(500,10, 150, nnTankFactory, track);
-        runAgents(agents,track2);
+        //track2.loadFromFile("track.map");
+        track2.loadFromPNG("g3.png");
+        List<Agent> agents = teachAgents(700,10, 100, nnTankFactory, track);
+        runAgents(10000,agents,track2);
         test();
     }
     public static void teachingNNCar(){
