@@ -53,30 +53,29 @@ public class ChromosomeManager {
     public void mutationOnly(int steps){
         //Chromosome children[] = chromosomes.clone();
         List<Chromosome> all = new LinkedList<Chromosome>();
-        Collections.addAll(all,chromosomes);
-        for(Chromosome i: all){
+
+        for(Chromosome i: chromosomes){
             i.calcFitness();
         }
-        Collections.sort(all);
-        Chromosome etalon = all.get(0);
-        all.clear();
         double p=1;
         for(int step = 0; step < steps; step++) {
 
             for (int i = 0; i < chromosomes.length; i++) {
+
                 p = (1-((double)step/steps))/2.0;
-                Chromosome ch = etalon.getCopy();
+                Chromosome ch = chromosomes[i].getCopy();
                 ch.mutation( p );
                 ch.calcFitness();
                 //System.out.println("[" + etalon.fitness()+" "+ch.fitness()+ " ] ");
-                if(ch.getFitnessValue()>etalon.getFitnessValue()){
-                    etalon = ch;
+                if(ch.getFitnessValue()>chromosomes[i].getFitnessValue()){
+                    chromosomes[i] = ch;
                 }else{
 
                 }
 
             }
-            System.out.println(step + " " + etalon.fitness() + " " +p);
+            //Arrays.sort(chromosomes);
+            System.out.println(step + " " + chromosomes[0].fitness() + " " +p);
         }
     }
 

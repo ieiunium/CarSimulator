@@ -70,7 +70,11 @@ public class Main {
         nnCarFactory.setConfigNN(config2);
         nnCarFactory.setActivationFunction(new ThActivationFunction());
         nnCarFactory.setColor(Color.GREEN);
-        agents.addAll(teachAgents(900,10, 150, nnCarFactory, track));
+        agents.addAll(teachAgents(900,10, 500, nnCarFactory, track));
+        //removeCrashedAgents(agents,track2);
+        track2.loadFromFile("track.map");
+        runAgents(1000, agents, track2);
+        track2.loadFromFile("megatrack.map");
         runAgents(10000, agents, track2);
     }
     public static void testTank2(){

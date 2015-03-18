@@ -11,6 +11,7 @@ import com.sim.core.math.genetics.ChromosomeManager;
 import com.swing.GameSwingVideoAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,7 +31,9 @@ public class AgentServices {
         ChromosomeManager chromosomeManager = new ChromosomeManager(numOfAgents,agent.getNumOfGens(),fitnessFunction);
         //chromosomeManager.evolution(steps);
         chromosomeManager.mutationOnly(steps);
-        List<Chromosome> chromosomes = fitnessFunction.getChromosomeList();
+        //List<Chromosome> chromosomes = fitnessFunction.getChromosomeList();
+        List<Chromosome> chromosomes = new ArrayList<Chromosome>();
+        Collections.addAll(chromosomes,chromosomeManager.getChromosomes());
         List<Agent> agents = new ArrayList<Agent>();
         for(Chromosome i:chromosomes) {
             Agent a = agentFactory.getNewAgent();
@@ -51,8 +54,24 @@ public class AgentServices {
         }
         game.startRealTimeSimulation(tickLimit);
         game.waitEnd();
+        adapter.kill();
     }
-
+    public static void removeCrashedAgents(List<Agent> agents,Track track){
+        Game game = new Game();
+        game.setTrack(track);
+        for(Agent i:agents){
+            i.reset();
+            game.addAgent(i);
+            i.setLeftOfPath(Integer.MAX_VALUE);
+        }
+        game.startSimulation(10000);
+        game.waitEnd();
+        for (int i = agents.size()-1; i >= 0; i--) {
+            if(agents.get(i).collision()){
+                agents.remove(i);
+            }
+        }
+    }
     public static List<Agent> agentBuilder(List<Chromosome> list,NNCarFactory nnCarFactory){
         List<Agent> res = new ArrayList<Agent>();
         for(Chromosome i:list){
