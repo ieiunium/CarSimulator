@@ -1,8 +1,6 @@
 package com.sim.core.math.genetics;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by kirill-good on 11.2.15.
@@ -53,28 +51,32 @@ public class ChromosomeManager {
     }
 
     public void mutationOnly(int steps){
-        Chromosome children[] = chromosomes.clone();
-        //List<Chromosome> children = new LinkedList<Chromosome>();
+        //Chromosome children[] = chromosomes.clone();
+        List<Chromosome> all = new LinkedList<Chromosome>();
+        Collections.addAll(all,chromosomes);
+        for(Chromosome i: all){
+            i.calcFitness();
+        }
+        Collections.sort(all);
+        Chromosome etalon = all.get(0);
+        all.clear();
+        double p=1;
         for(int step = 0; step < steps; step++) {
 
-            for(Chromosome i: chromosomes){
-                i.calcFitness();
-            }
-
-            Arrays.sort(chromosomes);
-            System.out.println(step + " " + chromosomes[0].fitness());
-            int half = chromosomes.length / 2;
-
             for (int i = 0; i < chromosomes.length; i++) {
+                p = (1-((double)step/steps))/2.0;
+                Chromosome ch = etalon.getCopy();
+                ch.mutation( p );
+                ch.calcFitness();
+                //System.out.println("[" + etalon.fitness()+" "+ch.fitness()+ " ] ");
+                if(ch.getFitnessValue()>etalon.getFitnessValue()){
+                    etalon = ch;
+                }else{
 
-                int i1 = Chromosome.random.nextInt(half);
-                children[i] = chromosomes[i].getCopy();
-                //children[i].mutation();
-                System.out.println("\t"+ chromosomes[i].getFitnessValue());
+                }
+
             }
-            Chromosome tmp[] = children;
-            children = chromosomes;
-            chromosomes = tmp;
+            System.out.println(step + " " + etalon.fitness() + " " +p);
         }
     }
 

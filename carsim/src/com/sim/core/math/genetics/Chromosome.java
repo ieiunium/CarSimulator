@@ -100,10 +100,11 @@ public class Chromosome implements Comparable {
         }
         return Math.sqrt(s);
     }
-    public void mutation(){
+    public void mutation(double p){
         for(int i = 0 ; i< gens.length;i++){
-            if(random.nextInt(gens.length)<1){
-                gens[i] += random.nextDouble()*0.2 - 0.1;
+            if(random.nextDouble()<p){
+                //gens[i] += random.nextDouble()*0.2 - 0.1;
+                gens[i] = random.nextDouble()*2 - 1;
             }
         }
     }
