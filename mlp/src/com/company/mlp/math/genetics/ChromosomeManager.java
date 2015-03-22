@@ -57,12 +57,12 @@ public class ChromosomeManager {
         for(Chromosome i: chromosomes){
             i.calcFitness();
         }
-        double p=1;
+        double p=0.01;
         for(int step = 0; step < steps; step++) {
 
             for (int i = 0; i < chromosomes.length; i++) {
 
-                p = (1-((double)step/steps))/2.0;
+                //p = ((double)(step%50)/100.0);
                 Chromosome ch = chromosomes[i].getCopy();
                 ch.mutation( p );
                 ch.calcFitness();
