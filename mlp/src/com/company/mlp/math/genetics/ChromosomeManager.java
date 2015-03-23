@@ -57,22 +57,24 @@ public class ChromosomeManager {
         for(Chromosome i: chromosomes){
             i.calcFitness();
         }
-        double p=0.01;
-        for(int step = 0; step < steps; step++) {
+        double p=0.0003;
+        Chromosome ch = chromosomes[0].getCopy();
+        for(int step = 0; step < steps || chromosomes[0].fitness() < -0.4; step++) {
 
             for (int i = 0; i < chromosomes.length; i++) {
 
                 //p = ((double)(step%50)/100.0);
-                Chromosome ch = chromosomes[i].getCopy();
+                ch.setGens(chromosomes[i]);
                 ch.mutation( p );
                 ch.calcFitness();
                 //System.out.println("[" + etalon.fitness()+" "+ch.fitness()+ " ] ");
                 if(ch.getFitnessValue()>chromosomes[i].getFitnessValue()){
+                    Chromosome tmp = chromosomes[i];
                     chromosomes[i] = ch;
+                    ch = tmp;
                 }else{
 
                 }
-
             }
             //Arrays.sort(chromosomes);
             System.out.println(step + " " + chromosomes[0].fitness() + " " +p);

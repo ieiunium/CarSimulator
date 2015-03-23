@@ -19,7 +19,7 @@ public class FitnessFunction {
     List<Image> images = new ArrayList<Image>();
 
     public FitnessFunction() {
-        for(int i = 0;i < 2;i++) {
+        for(int i = 0;i < 10;i++) {
             Image im = new Image(new File(i+".png"));
             images.add(im);
             double in[] = im.getImageF();
@@ -38,6 +38,7 @@ public class FitnessFunction {
         }
         return -res;
     }
+
     public static double getE(double in[],double out[]){
         double res = 0;
         if(in.length!=out.length){

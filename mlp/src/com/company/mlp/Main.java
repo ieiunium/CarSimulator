@@ -18,11 +18,13 @@ public class Main {
 
     public static void main(String[] args) {
 	// write your code here
+        long t = System.currentTimeMillis();
+
         int config[] = {9*9, 20, 10, 20, 9*9};
         NeuralNetwork nn = new NeuralNetwork(config, new ThActivationFunction());
-
+        System.out.println(nn.numOfGens());
         ChromosomeManager chromosomeManager = new ChromosomeManager(1,nn.numOfGens(),new FitnessFunction());
-        chromosomeManager.mutationOnly(200000);
+        chromosomeManager.mutationOnly(100);
         Chromosome chromosomes[] = chromosomeManager.getChromosomes();
         for(Chromosome chr:chromosomes) {
             nn.setGens(chr.getGens());
@@ -39,5 +41,9 @@ public class Main {
             }
             plotter1.setVisible(true);
         }
+        t = System.currentTimeMillis() - t;
+        System.out.println( (t/1000)%60 + "s" );
+        System.out.println( t/60000+ "m" );
+        System.out.println( t/(1000 * 60 * 60)+ "h" );
     }
 }

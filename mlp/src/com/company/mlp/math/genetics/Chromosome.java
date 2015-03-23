@@ -91,13 +91,6 @@ public class Chromosome implements Comparable {
         this.gens = gens;
     }
 
-    public static double dist(Chromosome mother,Chromosome father){
-        double s = 0;
-        for(int i = 0 ; i< mother.gens.length;i++){
-            s += Math.pow(mother.gens[i] - father.gens[i],2);
-        }
-        return Math.sqrt(s);
-    }
     public void mutation(double p){
         for(int i = 0 ; i< gens.length;i++){
             if(random.nextDouble()<p){
@@ -113,5 +106,11 @@ public class Chromosome implements Comparable {
 
     public void setFitnessValue(double fitnessValue) {
         this.fitnessValue = fitnessValue;
+    }
+
+    public void setGens(Chromosome chromosome) {
+        for (int i = 0; i < gens.length; i++) {
+            this.gens[i] = chromosome.gens[i];
+        }
     }
 }
