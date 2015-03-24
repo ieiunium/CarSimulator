@@ -57,9 +57,11 @@ public class ChromosomeManager {
         for(Chromosome i: chromosomes){
             i.calcFitness();
         }
-        double p=0.0003;
+        //double p=0.0003;
+        double p=1.5*1.0/chromosomes[0].gens.length;
+
         Chromosome ch = chromosomes[0].getCopy();
-        for(int step = 0; step < steps || chromosomes[0].fitness() < -0.4; step++) {
+        for(int step = 0; step < steps || chromosomes[0].fitness() < -0.3; step++) {
 
             for (int i = 0; i < chromosomes.length; i++) {
 

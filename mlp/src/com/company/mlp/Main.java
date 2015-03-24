@@ -26,6 +26,7 @@ public class Main {
         ChromosomeManager chromosomeManager = new ChromosomeManager(1,nn.numOfGens(),new FitnessFunction());
         chromosomeManager.mutationOnly(100);
         Chromosome chromosomes[] = chromosomeManager.getChromosomes();
+
         for(Chromosome chr:chromosomes) {
             nn.setGens(chr.getGens());
             Plotter plotter1 = new Plotter();
@@ -37,6 +38,7 @@ public class Main {
                 double out[] = nn.getOut(in);
 
                 //plotter1.getBufferedImageList().add(im.getImage());
+                plotter1.getBufferedImageList().add(im.getImage());
                 plotter1.getBufferedImageList().add(new Image(out, 9, 9).getImage());
             }
             plotter1.setVisible(true);
