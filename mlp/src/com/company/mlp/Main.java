@@ -36,7 +36,10 @@ public class Main {
                 images.add(im);
                 double in[] = im.getImageF();
                 double out[] = nn.getOut(in);
-
+                for (int j = 0; j < in.length; j++) {
+                    System.out.println(in[i]+" "+out[i]);
+                }
+                System.out.println();
                 //plotter1.getBufferedImageList().add(im.getImage());
                 plotter1.getBufferedImageList().add(im.getImage());
                 plotter1.getBufferedImageList().add(new Image(out, 9, 9).getImage());
