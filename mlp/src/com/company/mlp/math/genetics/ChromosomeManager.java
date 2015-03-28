@@ -50,7 +50,7 @@ public class ChromosomeManager {
         }
     }
 
-    public void mutationOnly(int steps){
+    public void mutationOnly(double E,int steps){
         //Chromosome children[] = chromosomes.clone();
         List<Chromosome> all = new LinkedList<Chromosome>();
 
@@ -61,7 +61,7 @@ public class ChromosomeManager {
         double p=1.5*1.0/chromosomes[0].gens.length;
 
         Chromosome ch = chromosomes[0].getCopy();
-        for(int step = 0; step < steps || chromosomes[0].fitness() < -0.3; step++) {
+        for(int step = 0; step < steps || chromosomes[0].fitness() < E; step++) {
 
             for (int i = 0; i < chromosomes.length; i++) {
 
