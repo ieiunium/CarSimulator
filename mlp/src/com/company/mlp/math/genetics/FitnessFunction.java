@@ -1,6 +1,7 @@
 package com.company.mlp.math.genetics;
 
 import com.company.mlp.math.neural.NeuralNetwork;
+import com.company.mlp.math.neural.functions.SiActivationFunction;
 import com.company.mlp.math.neural.functions.ThActivationFunction;
 import com.company.mlp.nn.Image;
 import com.company.mlp.nn.Plotter;
@@ -15,7 +16,7 @@ import java.util.List;
 public class FitnessFunction {
     int config[] = {9*9, 20, 10, 20, 9*9};
     //int config[] = {9*9,1000, 9*9};
-    NeuralNetwork nn = new NeuralNetwork(config, new ThActivationFunction());
+    NeuralNetwork nn = new NeuralNetwork(config, new SiActivationFunction());
     List<Image> images = new ArrayList<Image>();
 
     public FitnessFunction() {

@@ -4,6 +4,7 @@ import com.company.mlp.math.genetics.Chromosome;
 import com.company.mlp.math.genetics.ChromosomeManager;
 import com.company.mlp.math.genetics.FitnessFunction;
 import com.company.mlp.math.neural.NeuralNetwork;
+import com.company.mlp.math.neural.functions.SiActivationFunction;
 import com.company.mlp.math.neural.functions.ThActivationFunction;
 import com.company.mlp.nn.Image;
 import com.company.mlp.nn.Plotter;
@@ -22,10 +23,10 @@ public class Main {
         long t = System.currentTimeMillis();
 
         int config[] = {9*9, 20, 10, 20, 9*9};
-        NeuralNetwork nn = new NeuralNetwork(config, new ThActivationFunction());
+        NeuralNetwork nn = new NeuralNetwork(config, new SiActivationFunction());
         System.out.println(nn.numOfGens());
         ChromosomeManager chromosomeManager = new ChromosomeManager(1,nn.numOfGens(),new FitnessFunction());
-        chromosomeManager.mutationOnly(-0.3,100);
+        chromosomeManager.mutationOnly(-0.28,100);
         Chromosome chromosomes[] = chromosomeManager.getChromosomes();
         for (int k = 0; k < 1; k++) {
             for(Chromosome chr:chromosomes) {

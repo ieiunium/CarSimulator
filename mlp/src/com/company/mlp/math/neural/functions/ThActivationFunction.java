@@ -8,4 +8,9 @@ public class ThActivationFunction extends ActivationFunction {
     public double F(double x) {
         return 2/(1+Math.exp(-x))-1;
     }
+
+    @Override
+    public double dF(double y) {
+        return (1.0-y)*(1.0-y);
+    }
 }
