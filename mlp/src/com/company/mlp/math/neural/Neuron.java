@@ -12,6 +12,8 @@ import java.util.Random;
 public class Neuron{
     protected double T;
     protected double w[];
+    protected double g;
+    protected double out;
     protected ActivationFunction activationFunction;
 
     public Neuron(int n,ActivationFunction activationFunction){
@@ -28,6 +30,9 @@ public class Neuron{
         for(int i = 0;i<w.length;i++){
             res += w[i]*x[i];
         }
-        return activationFunction.F(res);
+        out = activationFunction.F(res);
+        return out;
     }
+
+
 }

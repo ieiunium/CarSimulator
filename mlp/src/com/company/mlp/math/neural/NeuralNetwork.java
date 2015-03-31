@@ -28,34 +28,33 @@ public class NeuralNetwork {
         for (int i = 0; i < layer.length; i++) {
             g[i] = new double[layer[i].neuron.length];
         }
-
+        NeuralLayer lastLayer = layer[layer.length-1];
         while (true){
             E0 = 0;
             for (int i = 0; i < in.length; i++) {
                 double curOut[] = this.getOut(in[i]);
-                double Ed = FitnessFunction.getE(in[i],curOut);
+                double Ed = FitnessFunction.getE(out[i],curOut);
                 E0+=Ed;
+
+                lastLayer.calcError(a,out[i]);
+                for (int j = layer.length-2; j >=0 ; j--) {
+                    layer[j].calcError(a,layer[j+1]);
+                }
+                double y[] = in[i];
+                for (int j = 0; j < layer.length; j++) {
+                    for (int k = 0; k < layer[j].neuron.length; k++) {
+                        for (int l = 0; l < layer[j].neuron[k].w.length; l++) {
+                            layer[j].neuron[k].w[l] -= a * layer[j].neuron[k].g * layer[j].neuron[k].activationFunction.dF(layer[j].neuron[k].out) * y[l];
+                        }
+                        layer[j].neuron[k].T += a * layer[j].neuron[k].g * layer[j].neuron[k].activationFunction.dF(layer[j].neuron[k].out);
+                    }
+                    y = layer[j].outs;
+                }
             }
             System.out.println(E0);
             if(E0 < E){
                 break;
             }
-            for (int i = 0; i < in.length; i++) {
-                double curOut[] = this.getOut(in[i]);
-                for (int j = 0; j < g[layer.length-1].length; j++) {
-                    g[layer.length-1][j] = curOut[j] - out[i][j];
-                }
-
-                for (int k = layer.length-2; k >= 0; k--) {
-                    for (int j = 0; j < g[k].length; j++) {
-                        g[k][j] = 0;
-                        for (int l = 0; l < g[k+1].length; l++) {
-                            g[k][j] += g[k+1][l] * activationFunction.dF(layer[k+1].outs[l]) * layer[k].outs[j];
-                        }
-                    }
-                }
-            }
-
             //System.exit(0);
         }
     }

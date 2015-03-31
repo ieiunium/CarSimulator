@@ -9,6 +9,7 @@ import com.company.mlp.nn.Plotter;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -25,8 +26,10 @@ public class MainBPL {
         for (int i = 0; i < 10; i++) {
             Image im = new Image(new File(i + ".png"));
             inn[i] = im.getImageF().clone();
+            System.out.println(Arrays.toString(inn[i]));
         }
-        nn.bpl(inn,inn,0.3,0.01);
+        System.exit(0);
+        //nn.bpl(inn,inn,0.3,0.000001);
 
 
         Plotter plotter1 = new Plotter();
