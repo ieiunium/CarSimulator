@@ -26,7 +26,7 @@ public class Main {
         NeuralNetwork nn = new NeuralNetwork(config, new SiActivationFunction());
         System.out.println(nn.numOfGens());
         ChromosomeManager chromosomeManager = new ChromosomeManager(1,nn.numOfGens(),new FitnessFunction());
-        chromosomeManager.mutationOnly(-0.28,100);
+        chromosomeManager.mutationOnly(-0.028,100);
         Chromosome chromosomes[] = chromosomeManager.getChromosomes();
         for (int k = 0; k < 1; k++) {
             for(Chromosome chr:chromosomes) {

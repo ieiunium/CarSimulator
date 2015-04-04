@@ -37,7 +37,7 @@ public class FitnessFunction {
             double out[] = nn.getOut(in);
             res += getE(in,out);
         }
-        return -res;
+        return -res/images.size();
     }
 
     public static double getE(double in[],double out[]){
