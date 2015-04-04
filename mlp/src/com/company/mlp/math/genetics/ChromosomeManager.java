@@ -9,6 +9,8 @@ public class ChromosomeManager {
 
     protected Chromosome chromosomes[] = null;
     protected FitnessFunction fitnessFunction;
+    private volatile double fitnessT = Double.NaN;
+    private volatile double stepT = Double.NaN;
 
     public ChromosomeManager(final int numberOfChromosome,int gensPerChromosome,FitnessFunction fitnessFunction){
         this.fitnessFunction = fitnessFunction;
@@ -52,13 +54,27 @@ public class ChromosomeManager {
 
     public void mutationOnly(double E,int steps){
         //Chromosome children[] = chromosomes.clone();
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    System.out.println(stepT + " " + fitnessT);
+                    try {
+                        Thread.sleep(250);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        t.start();
         List<Chromosome> all = new LinkedList<Chromosome>();
 
         for(Chromosome i: chromosomes){
             i.calcFitness();
         }
         //double p=0.0003;
-        double p=1.5*1.0/chromosomes[0].gens.length;
+        double p=1.4*1.0/chromosomes[0].gens.length;
 
         Chromosome ch = chromosomes[0].getCopy();
         for(int step = 0; step < steps || chromosomes[0].fitness() < E; step++) {
@@ -79,8 +95,11 @@ public class ChromosomeManager {
                 }
             }
             //Arrays.sort(chromosomes);
-            System.out.println(step + " " + chromosomes[0].fitness() + " " +p);
+            stepT = step;
+            fitnessT = -chromosomes[0].fitness();
+            //System.out.println(step + " " + chromosomes[0].fitness() + " " +p);
         }
+        t.stop();
     }
 
     public Chromosome[] getChromosomes() {

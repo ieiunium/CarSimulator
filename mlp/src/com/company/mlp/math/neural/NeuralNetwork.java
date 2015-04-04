@@ -99,7 +99,7 @@ public class NeuralNetwork {
                 }
             }
         }else{
-            throw new RuntimeException("bad gen's length");
+            throw new RuntimeException("bad gen's length: expected="+this.gens.length+"; but lenght="+gens.length);
         }
     }
 
@@ -130,6 +130,14 @@ public class NeuralNetwork {
         }
         sb.append("}");
         return sb.toString();
+    }
+
+    public NeuralLayer[] getLayer() {
+        return layer;
+    }
+
+    public void setLayer(NeuralLayer[] layer) {
+        this.layer = layer;
     }
 }
 

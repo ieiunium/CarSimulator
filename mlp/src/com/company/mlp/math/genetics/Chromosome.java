@@ -7,7 +7,7 @@ import java.util.Random;
  */
 public class Chromosome implements Comparable {
     protected double gens[];
-    private FitnessFunction fitnessFunction = new FitnessFunction();
+    private FitnessFunction fitnessFunction;
     private double fitnessValue;
     public static final Random random = new Random();
     public Chromosome(final int numberOfGens){

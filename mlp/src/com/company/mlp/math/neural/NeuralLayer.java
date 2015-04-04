@@ -17,7 +17,7 @@ public class NeuralLayer {
             outs[i] = 0;
         }
     }
-    double[] getOut(double x[]){
+    public double[] getOut(double x[]){
         for(int i = 0;i<neuron.length;i++){
             outs[i] = neuron[i].getOut(x);
         }
@@ -51,5 +51,13 @@ public class NeuralLayer {
         }
 
 
+    }
+
+    public double[] getOuts() {
+        return outs;
+    }
+
+    public void setOuts(double[] outs) {
+        this.outs = outs;
     }
 }
