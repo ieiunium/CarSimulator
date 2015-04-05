@@ -65,17 +65,18 @@ public class Main {
         Track track2 = new Track(0,0);
         track2.loadFromFile("track.map");
         //track2.loadFromPNG("g3.png");
-        List<Agent> agents = teachAgents(900,10, 20, nnCarFactory, track);
-        int []config2={3,20,2};
+        List<Agent> agents = teachAgents(900,3, 300, nnCarFactory, track);
+        int []config2={3,3,2};
         nnCarFactory.setConfigNN(config2);
         nnCarFactory.setActivationFunction(new ThActivationFunction());
         nnCarFactory.setColor(Color.GREEN);
-        agents.addAll(teachAgents(900,10, 500, nnCarFactory, track));
+        agents.addAll(teachAgents(900,50, 500, nnCarFactory, track));
         //removeCrashedAgents(agents,track2);
         track2.loadFromFile("track.map");
-        runAgents(1000, agents, track2);
-        track2.loadFromFile("megatrack.map");
-        runAgents(10000, agents, track2);
+        removeCrashedAgents(agents,track2);
+        runAgents(1000000, agents, track2);
+        //track2.loadFromFile("megatrack.map");
+        //runAgents(10000, agents, track2);
     }
     public static void testTank2(){
         NNTankFactory nnTankFactory = new NNTankFactory();

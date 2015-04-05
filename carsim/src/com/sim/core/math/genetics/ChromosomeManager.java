@@ -62,7 +62,7 @@ public class ChromosomeManager {
 
             for (int i = 0; i < chromosomes.length; i++) {
 
-                p = (1-((double)step/steps))/2.0;
+                p = 2.0/chromosomes[i].gens.length;
                 Chromosome ch = chromosomes[i].getCopy();
                 ch.mutation( p );
                 ch.calcFitness();
@@ -74,7 +74,7 @@ public class ChromosomeManager {
                 }
 
             }
-            //Arrays.sort(chromosomes);
+            Arrays.sort(chromosomes);
             System.out.println(step + " " + chromosomes[0].fitness() + " " +p);
         }
     }
