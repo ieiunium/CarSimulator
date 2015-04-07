@@ -22,6 +22,9 @@ import com.swing.GameSwingVideoAdapter;
 import com.swing.TrackEditor;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +33,47 @@ import static java.lang.System.exit;
 
 public class Main {
     public static void main(String[] args) {
-        //testTank2();
-        testCar2();
+        long time = System.currentTimeMillis();
+        final List<Agent> agents1 = testTank2();
+        final List<Agent> agents2 = testCar2();
+        time = System.currentTimeMillis() - time;
+        System.out.println(time/1000.0);
+        final Track track = new Track(0,0);
+        track.loadFromFile("track.map");
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        while(true) {
+            try {
+                System.out.println("ready");
+                br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    runAgents(1000, agents1, track);
+                }
+            });
+            t.start();
+            try {
+                System.out.println("ready");
+                br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            t.stop();
+            t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    runAgents(2000, agents2, track);
+                }
+            });
+            t.start();
+        }
+        //runAgents(1000000, agents1, track);
+        //runAgents(1000000, agents2, track);
     }
-    public static void testCar2(){
+    public static List<Agent> testCar2(){
 
         NNCarFactory nnCarFactory = new NNCarFactory();
         nnCarFactory.setPos(50,50);
@@ -74,11 +114,12 @@ public class Main {
         //removeCrashedAgents(agents,track2);
         track2.loadFromFile("track.map");
         removeCrashedAgents(agents,track2);
-        runAgents(1000000, agents, track2);
+        //runAgents(1000000, agents, track2);
         //track2.loadFromFile("megatrack.map");
         //runAgents(10000, agents, track2);
+        return agents;
     }
-    public static void testTank2(){
+    public static List<Agent> testTank2(){
         NNTankFactory nnTankFactory = new NNTankFactory();
         nnTankFactory.setWidth(10);
         nnTankFactory.setLength(50);
@@ -93,7 +134,7 @@ public class Main {
         nnTankFactory.getSharpList().add(new Sharp(80, -Math.PI / 4));
         nnTankFactory.getSharpList().add(new Sharp(80, 0));
         nnTankFactory.getSharpList().add(new Sharp(80, +Math.PI / 4));
-        nnTankFactory.setColor(Color.BLACK);
+        nnTankFactory.setColor(Color.RED);
         nnTankFactory.setResetFunction(new ResetFunction() {
             @Override
             public void reset(Agent agent) {
@@ -105,11 +146,17 @@ public class Main {
         Track track = new Track(0,0);
         track.loadFromFile("g2.map");
         Track track2 = new Track(0,0);
-        //track2.loadFromFile("track.map");
-        track2.loadFromPNG("g3.png");
-        List<Agent> agents = teachAgents(700,10, 100, nnTankFactory, track);
-        runAgents(10000,agents,track2);
-        test();
+        track2.loadFromFile("track.map");
+        //track2.loadFromPNG("g3.png");
+
+        List<Agent> agents = teachAgents(700,10, 500, nnTankFactory, track);
+        nnTankFactory.setActivationFunction(new ThActivationFunction());
+        nnTankFactory.setColor(Color.GREEN);
+        nnTankFactory.setConfigNN(new int[]{3,3,4});
+        agents.addAll(teachAgents(700,10, 500, nnTankFactory, track));
+        removeCrashedAgents(agents,track2);
+        //runAgents(1000000,agents,track2);
+        return agents;
     }
     public static void teachingNNCar(){
         int []config={3,2};

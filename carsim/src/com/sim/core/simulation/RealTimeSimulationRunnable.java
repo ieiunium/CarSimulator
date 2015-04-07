@@ -5,7 +5,7 @@ package com.sim.core.simulation;
  */
 public class RealTimeSimulationRunnable implements Runnable{
     private Game game;
-    private long millisPerTicks = 10;
+    private long millisPerTicks = 30;
     private final int tickLimit;
     public RealTimeSimulationRunnable(Game game) {
         this.game = game;

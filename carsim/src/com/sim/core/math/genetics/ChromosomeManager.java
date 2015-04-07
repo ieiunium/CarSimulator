@@ -76,6 +76,9 @@ public class ChromosomeManager {
             }
             Arrays.sort(chromosomes);
             System.out.println(step + " " + chromosomes[0].fitness() + " " +p);
+            if(chromosomes[0].fitness()>900){
+                break;
+            }
         }
     }
 
