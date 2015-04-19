@@ -55,6 +55,8 @@ public class FitnessFunction {
                 System.out.printf("%.2f\t",i.getOut()[j]);
             }
             System.out.println();
+            System.out.print("E = ");
+            System.out.println(i.getE(out));
             System.out.println("===================");
         }
     }
