@@ -43,21 +43,63 @@ public class FitnessFunction {
     }
 
     public void testNN(Chromosome chromosome){
+        int counter = 0;
+        double E0 = 0;
+        int all = learningSet.size();
         nn.setGens(chromosome.getGens());
-        System.out.println("out\tetalon");
+        //System.out.println("out\tetalon");
         for(Example i: learningSet){
             double out[] = nn.getOut(i.getIn());
+            E0 += i.getE(out);
+            int maxOut = 0;
+            int maxEta = 0;
             for (int j = 0; j < out.length; j++) {
-                System.out.printf("%.2f\t",out[j]);
+                if(out[j]>out[maxOut]){
+                    maxOut = j;
+                }
+                //System.out.printf("%.2f\t",out[j]);
             }
-            System.out.println();
+            //System.out.println();
             for (int j = 0; j < i.getOut().length; j++) {
-                System.out.printf("%.2f\t",i.getOut()[j]);
+                if(i.getOut()[j]>i.getOut()[maxEta]){
+                    maxEta = j;
+                }
+                //System.out.printf("%.2f\t",i.getOut()[j]);
             }
-            System.out.println();
-            System.out.print("E = ");
-            System.out.println(i.getE(out));
-            System.out.println("===================");
+            //System.out.println();
+            //System.out.print("E = ");
+            //System.out.println(i.getE(out));
+            /*System.out.print("Out = ");
+            System.out.println(maxOut);
+            System.out.print("Eta = ");
+            System.out.println(maxEta);
+            System.out.println("===================");*/
+            if(maxEta == maxOut){
+                counter++;
+            }
         }
+        E0 /= learningSet.size();
+        System.out.print("counter = ");
+        System.out.println(counter);
+        System.out.print("all = ");
+        System.out.println(all);
+        System.out.print("E0 = ");
+        System.out.println(E0);
+    }
+
+    public NeuralNetwork getNn() {
+        return nn;
+    }
+
+    public void setNn(NeuralNetwork nn) {
+        this.nn = nn;
+    }
+
+    public List<Example> getLearningSet() {
+        return learningSet;
+    }
+
+    public void setLearningSet(List<Example> learningSet) {
+        this.learningSet = learningSet;
     }
 }

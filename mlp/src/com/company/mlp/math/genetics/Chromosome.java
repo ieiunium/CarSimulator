@@ -95,7 +95,7 @@ public class Chromosome implements Comparable {
         for(int i = 0 ; i< gens.length;i++){
             if(random.nextDouble()<p){
                 //gens[i] += random.nextDouble()*0.2 - 0.1;
-                gens[i] += ( random.nextDouble()*2 - 1 ) * 0.05;
+                gens[i] += ( random.nextDouble()*2 - 1 ) * 0.01;
             }
         }
     }

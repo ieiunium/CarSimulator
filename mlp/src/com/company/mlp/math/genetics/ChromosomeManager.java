@@ -74,7 +74,7 @@ public class ChromosomeManager {
             i.calcFitness();
         }
         //double p=0.0003;
-        double p=1.4*1.0/chromosomes[0].gens.length;
+        double p=0.25;//1.4*1.0/chromosomes[0].gens.length;
 
         Chromosome ch = chromosomes[0].getCopy();
         for(int step = 0; step < steps || chromosomes[0].fitness() < E; step++) {
@@ -116,5 +116,8 @@ public class ChromosomeManager {
 
     public void setFitnessFunction(FitnessFunction fitnessFunction) {
         this.fitnessFunction = fitnessFunction;
+        for(Chromosome i: chromosomes){
+            i.setFitnessFunction(fitnessFunction);
+        }
     }
 }

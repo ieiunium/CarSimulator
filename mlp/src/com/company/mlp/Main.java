@@ -11,7 +11,9 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -21,38 +23,47 @@ import java.util.Random;
  */
 public class Main {
     static Random random = new Random();
-    static String src = "./t10k-images-9x9/";
+    static String srcLearn = "./t10k-images-9x9/";
+    static String srcTest = "./t10k-images-9x9/";
     public static void main(String[] args) {
         // write your code here
         long t = System.currentTimeMillis();
-        List<Example> learningSet = loadMnist(6g);
+        //List<Example> learningSet = loadMnist(10, srcLearn);
         //System.exit(0);
-        int config[] = {9*9,30,20,10};
+        int config[] = {9*9,300,100,10};
         NeuralNetwork nn = new NeuralNetwork(config, new SiActivationFunction());
         System.out.println(nn.numOfGens());
-        FitnessFunction fitnessFunction = new FitnessFunction(nn,learningSet);
 
+        FitnessFunction fitnessFunction = new FitnessFunction(nn,null);
         ChromosomeManager chromosomeManager = new ChromosomeManager(1,nn.numOfGens(),fitnessFunction);
-        chromosomeManager.mutationOnly(-0.05,100);
+        int indexes[] = {10, 20};
+        double errors[] = {0.6, 0.5};
+        for (int i = 0; i < indexes.length; i++) {
+            fitnessFunction.setLearningSet(loadMnist(indexes[i], srcLearn));
+            chromosomeManager.mutationOnly(-errors[i],100);
+        }
+
         Chromosome chromosomes[] = chromosomeManager.getChromosomes();
-        fitnessFunction.testNN(chromosomes[0]);
+
         t = System.currentTimeMillis() - t;
         System.out.println( (t/1000)%60 + "s" );
         System.out.println( t/60000+ "m" );
         System.out.println( t/(1000 * 60 * 60)+ "h" );
+
+        new FitnessFunction(nn,loadMnist(900, srcLearn)).testNN(chromosomes[0]);
     }
-    public static List<Example> loadMnist(int imagesNum){
+    public static List<Example> loadMnist(int imagesNum,String src){
         List<Example> res = new ArrayList<Example>();
         for (int i = 0; i < 10; i++) {
             for (int c = 0; c < imagesNum; c++) {
                 try {
                     String path = src+String.valueOf(i)+"_"+ String.valueOf(c) + ".bmp";
-                    System.out.println(i+" "+path);
+                    //System.out.println(i+" "+path);
                     double out[] = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
                     out[i] = 1;
                     res.add(new Example(openPicture(path), out));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
             }
         }
