@@ -73,17 +73,17 @@ public class ChromosomeManager {
         for(Chromosome i: chromosomes){
             i.calcFitness();
         }
-        //double p=0.0003;
-        double p=0.25;//1.4*1.0/chromosomes[0].gens.length;
+
+        double d = 0.01;
 
         Chromosome ch = chromosomes[0].getCopy();
         for(int step = 0; step < steps || chromosomes[0].fitness() < E; step++) {
+            d = 0.1 / (1+(int)(step/300));
 
             for (int i = 0; i < chromosomes.length; i++) {
 
-                //p = ((double)(step%50)/100.0);
                 ch.setGens(chromosomes[i]);
-                ch.mutation( p );
+                ch.mutation( d );
                 ch.calcFitness();
                 //System.out.println("[" + etalon.fitness()+" "+ch.fitness()+ " ] ");
                 if(ch.getFitnessValue()>chromosomes[i].getFitnessValue()){

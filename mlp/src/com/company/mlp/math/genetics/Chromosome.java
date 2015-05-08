@@ -13,7 +13,7 @@ public class Chromosome implements Comparable {
     public Chromosome(final int numberOfGens){
         gens = new double[numberOfGens];
         for(int i=0;i<gens.length;i++){
-            gens[i] = random.nextBoolean()?-1:1 * random.nextDouble();
+            gens[i] = (2 * random.nextDouble() - 1)*0.1;
         }
     }
 
@@ -91,12 +91,9 @@ public class Chromosome implements Comparable {
         this.gens = gens;
     }
 
-    public void mutation(double p){
+    public void mutation(double delta){
         for(int i = 0 ; i< gens.length;i++){
-            if(random.nextDouble()<p){
-                //gens[i] += random.nextDouble()*0.2 - 0.1;
-                gens[i] += ( random.nextDouble()*2 - 1 ) * 0.01;
-            }
+            gens[i] += ( random.nextDouble()*2 - 1 ) * delta;
         }
     }
 
